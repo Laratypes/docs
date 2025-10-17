@@ -285,7 +285,7 @@ export default defineConfig({
       options: {
         appId: process.env.ALGOLIA_APP_ID || '',
         apiKey: process.env.ALGOLIA_API_KEY || '',
-        indexName: 'laratype',
+        indexName: 'Laratype Documentation',
       },
     },
   },
