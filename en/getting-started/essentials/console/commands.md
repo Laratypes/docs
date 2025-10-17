@@ -1,6 +1,6 @@
 # Commands
 
-Laratype provides a number of utility commands to help you manage and develop your application. These commands can be run from the command line (CLI) and are typically used to create new components, run the development server, and perform other tasks. You can learn more [here](/en/sauf/introduction.md).
+Laratype provides a number of utility commands to help you manage and develop your application. These commands can be run from the command line (CLI) and are typically used to create new components, run the development server, and perform other tasks. You can learn more [here](/en/getting-started/sauf/introduction.md).
 
 However, you can create your own custom commands to serve the specific needs of your application. Below is a basic guide on how to create and use commands in Laratype.
 
