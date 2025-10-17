@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: Quickstart
-      link: /quick-start
+      link: /en/introduction/quick-start
     - theme: alt
       text: API Examples
       link: /api-examples

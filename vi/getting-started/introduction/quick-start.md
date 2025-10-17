@@ -23,13 +23,17 @@ $ pnpm create laratype@latest
 $ yarn create laratype@latest
 ```
 
+```sh [bun]
+$ bun create laratype@latest
+```
+
 :::
 
 Dòng lệnh trên sẽ thực thi [create-laratype](https://www.npmjs.com/package/create-laratype), và tạo ra một ứng dụng Laratype mới trong thư mục hiện tại. Bạn có thể đặt tên dự án, lựa chọn các tùy chọn cấu hình và bắt đầu phát triển ứng dụng của mình ngay lập tức.
 
 ```md
 √ Enter the name of your package: ... laratype-test
-√ Do you want to use Prisma? ... yes
+√ Do you want to use ORM? ... yes
 Your project laratype-test has been initialized.
 cd laratype-test
 npm install
@@ -56,6 +60,12 @@ pnpm dev
 cd <project-name>
 yarn install
 yarn dev
+```
+
+```sh [bun]
+cd <project-name>
+bun install
+bun dev
 ```
 
 :::

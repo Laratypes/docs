@@ -30,16 +30,20 @@ Laratype dựa trên cấu trúc dự án của [Laravel](https://laravel.com/do
 - [`database/`](#database): Chứa các tệp cơ sở dữ liệu. ([Laravel database directory](https://laravel.com/docs/12.x/structure#the-database-directory))
 - [`public/`](#public): Thư mục công khai, chứa các tệp tĩnh. ([Laravel public directory](https://laravel.com/docs/12.x/structure#the-public-directory))
 - [`routes/`](#routes): Chứa các tệp định nghĩa route. ([Laravel routes directory](https://laravel.com/docs/12.x/structure#the-routes-directory))
+- [`storage/`](#storage): Chứa các tệp lưu trữ, bao gồm các tệp nhật ký và các tệp khác. ([Laravel storage directory](https://laravel.com/docs/12.x/structure#the-storage-directory))
 
 
 ### 1. /src {#src}
 `src` là thư mục chứa mã nguồn của ứng dụng, bao gồm các thành phần như controller, model, và view.
 
-#### ./console
+#### 1.1 ./console
 `console` là thư mục chứa các lệnh khởi chạy tùy chỉnh cho ứng dụng. ([The Console Directory](https://laravel.com/docs/12.x/structure#the-console-directory))
 
-#### ./http
+#### 1.2 ./http
 `http` là thư mục chứa các thành phần liên quan đến HTTP, bao gồm các controller, request, và resource. ([The Http Directory](https://laravel.com/docs/12.x/structure#the-http-directory))
+
+#### 1.3 ./providers
+`providers` là thư mục chứa các service provider của ứng dụng. ([The Providers Directory](https://laravel.com/docs/12.x/structure#the-providers-directory))
 
 ### 2. /config {#config}
 `config` là thư mục chứa các tệp cấu hình cho ứng dụng, cho phép tùy chỉnh các thiết lập như kết nối cơ sở dữ liệu, thông tin API, và các tham số khác. ([The Config Directory](https://laravel.com/docs/12.x/structure#the-config-directory))
