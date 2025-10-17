@@ -1,6 +1,6 @@
 # Quick Start
 
-## Creating a Laratype App {#creating-laratype-app}
+## Creating an Application {#creating-laratype-app}
 
 ::: info Prerequisites
 - Command line support
@@ -23,19 +23,24 @@ $ pnpm create laratype@latest
 $ yarn create laratype@latest
 ```
 
+```sh [bun]
+$ bun create laratype@latest
+```
+
 :::
 
-The above command will run [create-laratype](https://www.npmjs.com/package/create-laratype) and create a new Laratype application in the current directory. You can name your project, choose configuration options, and start developing your application immediately.
+The command above will execute [create-laratype](https://www.npmjs.com/package/create-laratype) and create a new Laratype application in the current directory. You can name your project, choose configuration options, and start developing your application immediately.
 
 ```md
 √ Enter the name of your package: ... laratype-test
-√ Do you want to use Prisma? ... yes
+√ Do you want to use ORM? ... yes
 Your project laratype-test has been initialized.
 cd laratype-test
 npm install
+
 ```
 
-After the project is created, install the dependencies and start the development server
+After the project has been created, install the dependencies and start the dev server:
 
 ::: code-group
 
@@ -55,6 +60,12 @@ pnpm dev
 cd <project-name>
 yarn install
 yarn dev
+```
+
+```sh [bun]
+cd <project-name>
+bun install
+bun dev
 ```
 
 :::
