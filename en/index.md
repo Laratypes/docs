@@ -9,10 +9,10 @@ hero:
   actions:
     - theme: brand
       text: Quickstart
-      link: /en/introduction/quick-start
+      link: /en/getting-started/introduction/quick-start
     - theme: alt
       text: API Examples
-      link: /api-examples
+      link: /en/api/introduction
 
 features:
   - title: Familiarity Laravel
