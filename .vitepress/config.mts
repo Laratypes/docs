@@ -9,6 +9,16 @@ export default defineConfig({
   rewrites: {
     'vi/:rest*': ':rest*'
   },
+  head: [
+    [
+      'link',
+      {
+        rel: 'icon',
+        type: 'image/png',
+        href: '/assets/logo.png'
+      }
+    ]
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
 
