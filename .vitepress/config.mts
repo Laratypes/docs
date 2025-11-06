@@ -21,7 +21,10 @@ export default defineConfig({
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-
+    editLink: {
+      pattern: 'https://github.com/Laratypes/docs/edit/main/:path',
+      text: 'Edit this page on GitHub'
+    },
     logo: '/assets/logo.png',
     sidebar: {
       '/getting-started/': [
@@ -41,11 +44,29 @@ export default defineConfig({
               text: 'Http',
               base: '/getting-started/essentials/http/',
               items: [
+                { text: 'Introduction', link: 'introduction' },
+                { text: 'Routing', link: 'routing' },
                 { text: 'Middleware', link: 'middleware' },
                 { text: 'Request', link: 'request' },
                 { text: 'Controller', link: 'controller' },
-                { text: 'Model', link: 'model' },
               ]
+            },
+            {
+              text: 'Security',
+              base: '/getting-started/essentials/security/',
+              items: [
+                { text: 'Introduction', link: 'introduction' },
+                { text: 'Authentication', link: 'authentication' },
+                { text: 'Authorization', link: 'authorization' },
+              ]
+            },
+            {
+              text: 'Database',
+              base: '/getting-started/essentials/database/',
+              items: [
+                { text: 'Introduction', link: 'introduction' },
+                { text: 'Model', link: 'model' },
+              ],
             },
             {
               text: 'Console',
@@ -172,11 +193,29 @@ export default defineConfig({
               text: 'Http',
               base: '/en/getting-started/essentials/http/',
               items: [
+                { text: 'Introduction', link: 'introduction' },
+                { text: 'Routing', link: 'routing' },
                 { text: 'Middleware', link: 'middleware' },
                 { text: 'Request', link: 'request' },
                 { text: 'Controller', link: 'controller' },
-                { text: 'Model', link: 'model' },
               ]
+            },
+            {
+              text: 'Security',
+              base: '/en/getting-started/essentials/security/',
+              items: [
+                { text: 'Introduction', link: 'introduction' },
+                { text: 'Authentication', link: 'authentication' },
+                { text: 'Authorization', link: 'authorization' },
+              ]
+            },
+            {
+              text: 'Database',
+              base: '/en/getting-started/essentials/database/',
+              items: [
+                { text: 'Introduction', link: 'introduction' },
+                { text: 'Model', link: 'model' },
+              ],
             },
             {
               text: 'Console',
