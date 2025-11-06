@@ -1,0 +1,9 @@
+{
+  "vue.server.includeLanguages": [
+    "vue"
+  ],
+  "cSpell.words": [
+    "chặt",
+    "chính"
+  ]
+}

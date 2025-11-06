@@ -6,6 +6,9 @@ hero:
   name: "Laratype"
   text: "The Next-generation TypeSafe RESTFul API"
   tagline: Fast and Reliable API Development
+  image:
+    src: /assets/logo.png
+    alt: Laratype Logo
   actions:
     - theme: brand
       text: Quickstart

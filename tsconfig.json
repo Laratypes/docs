@@ -1,0 +1,13 @@
+{
+  "include": [
+    ".vitepress/**/*.ts",
+    ".vitepress/**/*.vue",
+    ".vitepress/**/*.md",
+  ],
+  "vueCompilerOptions": {
+    "vitePressExtensions": [".md"],
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
