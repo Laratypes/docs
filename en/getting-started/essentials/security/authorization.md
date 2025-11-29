@@ -12,13 +12,14 @@ Gates are small authorization callbacks, typically used for short checks or simp
 
 ### Generating Gates
 
-Gates are declared in the `gates/` directory of your project. You can create Gate files manually.
+> [!INFO]
+> Gates are declared in the `src/gates/` directory of your project. You can create Gate files manually.
 
 Below is a simple Gate example that allows a user to update a profile if they are the owner or an admin.
 
+::: code-group
 
-```ts
-// gates/UpdateUserGate.ts
+```ts [UpdateUserGate.ts]
 import { Gate } from "@laratype/auth";
 import { User } from "../models/User";
 import { Admin } from "../models/Admin";
@@ -36,6 +37,7 @@ export default class UpdateUserGate extends Gate {
   }
 }
 ```
+:::
 
 If you prefer a generator, you can use the CLI to scaffold a Gate:
 
@@ -55,12 +57,34 @@ $ bunx sauf make:gate UpdateUserGate
 
 :::
 
+> [!TIP]
+> You can create multiple Gates at once by passing multiple names.
+
+::: details See more
+
+::: code-group
+
+```sh [npx]
+$ npx sauf make:gate UpdateUserGate CreateUserGate
+```
+
+```sh [pnpx]
+$ pnpx sauf make:gate UpdateUserGate CreateUserGate
+```
+
+```sh [bunx]
+$ bunx sauf make:gate UpdateUserGate CreateUserGate
+```
+
+:::
+
 ### Authorizing Actions
 
 After defining a Gate, you can use it anywhere in your project, such as in controllers or middleware.
 
-```ts {16}
-// UserController.ts
+::: code-group
+
+```ts [UserController.ts]{16}
 import { Controller } from "@laratype/http";
 import { Auth, GateGuard } from "@laratype/auth";
 import { User } from "../../models/User";
@@ -84,14 +108,19 @@ export default class UserController extends Controller {
   }
 }
 ```
+:::
 
-#### Authorizing or Throwing Exceptions (coming soon) <Badge type="warning" text="coming soon" />
+#### Authorizing or Throwing Exceptions <Badge type="warning" text="coming soon" />
 
-A helper/facade that attempts authorization and throws an `AuthorizationError` if unauthorized (similar to `authorizeOrFail`) is planned and will be added once the API is stabilized.
+> [!NOTE]
+> A helper/facade that attempts authorization and throws an `AuthorizationError` if unauthorized (similar to `authorizeOrFail`) is planned and will be added once the API is stabilized.
 
 ## Policies
 
 Policies organize authorization logic related to a specific model. Use policies when you have multiple actions (view, create, update, delete, ...) on a resource/model.
+
+> [!INFO]
+> Policies are declared in the `src/policies/` directory of your project. You can create Policy files manually.
 
 ### Creating Policies
 
@@ -119,11 +148,11 @@ $ bunx sauf make:policy PostPolicy --model Post
 
 The command above will create `src/policies/PostPolicy.ts` with basic methods (`view`, `viewAny`, `create`, `update`, `delete`, `forceDelete`, `restore`).
 
-- Manually Registering Policies
-
 After creating a policy, you need to register it so the framework can map the Model to its Policy by adding the `UsePolicy()` decorator to the model:
 
-```ts {7,12}
+::: code-group
+
+```ts [User.ts]{7,12}
 import { UsePolicy } from "@laratype/auth"
 import { Model } from "@laratype/database"
 import { Entity } from "@laratype/database"
@@ -138,13 +167,14 @@ export class User extends Model {
 export interface User extends UsePolicy<UserPolicy> {}
 
 ```
+:::
 
 ### Writing Policies
 
 A policy typically receives the `User` (actor) and the target model (if any) or additional parameters, and returns boolean or null.
 
-```ts
-// UserPolicy.ts
+::: code-group
+```ts [UserPolicy.ts]
 import { Policy } from "@laratype/auth";
 import { User } from "../models/User";
 import { Admin } from "../models/Admin";
@@ -167,6 +197,7 @@ export default class UserPolicy extends Policy {
   }
 }
 ```
+:::
 
 In the example above, `viewAny` and `view` return `true`, meaning anyone can view a user's information, but `update` only returns true when acting on their own record.
 
@@ -187,8 +218,9 @@ Common policy methods:
 
 The `before` method runs prior to other policy methods. If it returns true/false, the other methods are skipped and that value is the final decision; if it returns null, normal checks continue.
 
-```ts
-// UserPolicy.ts
+::: code-group
+
+```ts [UserPolicy.ts]
 import { Policy } from "@laratype/auth";
 import { User } from "../models/User";
 import { Admin } from "../models/Admin";
@@ -196,11 +228,13 @@ import { Admin } from "../models/Admin";
 export default class UserPolicy extends Policy {
 	// ... other methods
 
+  // [!code focus:3]
 	public before(actor: User | Admin, ability: string): boolean | null {
-    return actor instanceof Admin ? true : null;
-  }
+      return actor instanceof Admin ? true : null;
+    }
 }
 ```
+:::
 
 In this example, when the actor is an `Admin`, `before` returns true so the Admin is allowed to perform any action.
 
@@ -214,8 +248,9 @@ A model with a registered policy receives a `can` method to check abilities easi
 
 Assuming you registered `PostPolicy` for the `Post` model, you can check permissions like this:
 
-```ts {19}
-// UserController.ts
+::: code-group
+
+```ts [UserController.ts]{18}
 import { Controller, Request } from "@laratype/http";
 import { Auth } from "@laratype/auth";
 import { User } from "../../models/User";
@@ -242,6 +277,7 @@ export default class UserController extends Controller {
   }
 }
 ```
+:::
 
 In the example above, we use `can`/`cannot` to check permissions before performing the delete action. If unauthorized, `UnauthorizedException` is thrown.
 
@@ -261,7 +297,9 @@ if(actor.can('create', Post)) {
 
 You can protect routes using the `can` middleware to check permissions before hitting the controller:
 
-```ts {16,22}
+::: code-group
+
+```ts [api.ts]{16,22}
 const authGuardedRoutes: RouteOptions = {
   path: "/",
   middleware: [
@@ -270,7 +308,7 @@ const authGuardedRoutes: RouteOptions = {
   children: [
     {
       path: "/users",
-      controller: UserController.__invoke('store'),
+      controller: controller(UserController, 'store'),
       request: CreateUserRequest,
       method: "post",
       children: [
@@ -278,39 +316,40 @@ const authGuardedRoutes: RouteOptions = {
           path: '',
           method: 'get',
           can: can("viewAny", User),
-          controller: UserController.__invoke('index'),
+          controller: controller(UserController, 'index'),
         },
         {
           path: '/:user',
           method: 'get',
           can: can("view", "user"),
-          controller: UserController.__invoke('view'),
+          controller: controller(UserController, 'view'),
         },
         {
           path: '/:activeUser',
           method: 'patch',
           request: UpdateUserRequest,
-          controller: UserController.__invoke('update'),
+          controller: controller(UserController, 'update'),
         },
         {
           path: '/:id',
           method: 'delete',
-          controller: UserController.__invoke('delete'),
+          controller: controller(UserController, 'delete'),
         }
       ]
     },
     {
       path: "/me",
-      controller: UserController.__invoke('me'),
+      controller: controller(UserController, 'me'),
       method: "get"
     },
   ]
 }
 ```
+:::
 
 ##### With Route Model Binding
 
-Laratype supports automatic model binding from route parameters (see details in the routing docs). You can use the `can` middleware with the name of the bound parameter:
+Laratype supports automatic model binding from route parameters (see details [here](../http/routing.md#route-model-binding)). You can use the `can` middleware with the name of the bound parameter:
 
 - `can("action", "routeParamName")`
 

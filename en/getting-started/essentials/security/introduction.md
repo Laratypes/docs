@@ -20,4 +20,4 @@ $ bun add @laratype/auth
 
 :::
 
-When you initialize a Laratype project with `create-laratype`, the `@laratype/auth` package is included by default. You only need to configure authentication options in `config/auth.ts`.
+By default, when you initialize a Laratype project with `create-laratype`, the `@laratype/auth` package is already installed. You only need to configure authentication options in `config/auth.ts`.
