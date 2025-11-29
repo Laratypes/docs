@@ -6,7 +6,7 @@ export default defineAdditionalConfig({
       { text: 'Home', link: '/' },
       { text: 'Getting Started', link: '/vi/getting-started/introduction/quick-start' },
       { text: 'API', link: '/vi/api/introduction' },
-      { text: 'v0.5.3', link: 'https://github.com/Laratypes/Laratype' },
+      { text: 'v0.5.4', link: 'https://github.com/Laratypes/Laratype' },
     ],
     sidebar: {
       '/vi/getting-started/': [
