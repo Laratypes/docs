@@ -12,14 +12,16 @@ Laratype hỗ trợ nhiều loại service provider khác nhau, bao gồm:
 
 Đặc điểm chung của các service provider là chúng đều kế thừa từ lớp `ServiceProvider` và có thể ghi đè các phương thức như `register` và `boot` để thực hiện các hành động cụ thể khi ứng dụng khởi động.
 
-Ngoài ra các service provider đều sẽ có thuộc tính `transpile`, đây là `ViteDevServer instance`, mặc định khi Laratype khởi động sẽ truyền `ViteDevServer instance` vào thuộc tính này, bạn có thể sử dụng nó để truy cập các tính năng của Vite trong service provider của mình, hoặc biên dịch các tệp TypeScript trong quá trình phát triển.
+> [!INFO]
+> Các service provider được tổ chức trong thư mục `src/providers`.
 
 ## Tạo Service Provider
 
 Để tạo một service provider mới, bạn cần tạo một tệp TypeScript trong thư mục `src/providers`.
 
-```typescript
-// src/providers/RouteServiceProvider.ts
+::: code-group
+
+```ts [RouteServiceProvider.ts]
 
 import { defineRouteGroup } from "@laratype/http";
 import { RouteAppServiceProvider } from "@laratype/support";
@@ -33,14 +35,15 @@ export default class RouteServiceProvider extends RouteAppServiceProvider {
 }
 
 ```
+:::
 
 ## Đăng ký Service Provider
 
 Sau khi tạo service provider, bạn cần đăng ký nó trong tệp `config/providers.ts` để Laratype có thể sử dụng nó.
 
-```typescript{7}
-// config/providers.ts
+::: code-group
 
+```ts [config/providers.ts]{5}
 import { DatabaseServiceProvider } from "@laratype/database";
 import RouteServiceProvider from "../src/providers/RouteServiceProvider";
 
@@ -50,3 +53,4 @@ export default [
 ];
 
 ```
+:::

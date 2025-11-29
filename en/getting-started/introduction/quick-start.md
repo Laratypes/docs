@@ -7,7 +7,9 @@
 - [Node.js](https://nodejs.org/) version 20 or higher.
 :::
 
-In this section, you will learn how to create a new Laratype application. You can get started right away with the following command:
+Laratype provides a command-line tool to quickly create new applications. You can use `npx`, `pnpm`, `yarn` or `bun` via [create-laratype](https://www.npmjs.com/package/create-laratype) to create a new Laratype application.
+
+You can get started right away with the following command:
 
 ::: code-group
 

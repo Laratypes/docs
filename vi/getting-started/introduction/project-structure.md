@@ -1,3 +1,7 @@
+---
+ outline: deep
+---
+
 # Cấu trúc dự án
 
 ## Tổng quan
@@ -5,54 +9,62 @@
 ```md
 .
 ├───.vscode
-├───config
-├───database
-├───public
-├───routes
-├───src
-│   ├───console
-│   │   └───commands
-│   ├───http
-│   │   ├───controllers
-│   │   ├───requests
-│   │   └───resources
-│   └───providers
+├───app
+│   ├───config
+│   ├───database
+│   │   ├───factories
+│   │   └───seeders
+│   ├───declare
+│   ├───routes
+│   └───src
+│       ├───console
+│       │   └───commands
+│       ├───http
+│       │   ├───controllers
+│       │   ├───middleware
+│       │   ├───requests
+│       │   └───resources
+│       ├───models
+│       └───providers
+├───dist
 └───storage
     └───logs
 ```
 
 ## Chi tiết
 
-Laratype dựa trên cấu trúc dự án của [Laravel](https://laravel.com/docs/12.x/structure) với các thư mục chính như sau:
+Laratype xây dựng cấu trúc dựa trên cấu trúc dự án của [Laravel](https://laravel.com/docs/12.x/structure) với các thư mục chính như sau:
 
-- [`src/`](#src): Chứa mã nguồn của ứng dụng ([Laravel app directory](https://laravel.com/docs/12.x/structure#the-root-app-directory)).
-- [`config/`](#config): Chứa các tệp cấu hình. ([Laravel config directory](https://laravel.com/docs/12.x/structure#the-config-directory))
-- [`database/`](#database): Chứa các tệp cơ sở dữ liệu. ([Laravel database directory](https://laravel.com/docs/12.x/structure#the-database-directory))
-- [`public/`](#public): Thư mục công khai, chứa các tệp tĩnh. ([Laravel public directory](https://laravel.com/docs/12.x/structure#the-public-directory))
-- [`routes/`](#routes): Chứa các tệp định nghĩa route. ([Laravel routes directory](https://laravel.com/docs/12.x/structure#the-routes-directory))
-- [`storage/`](#storage): Chứa các tệp lưu trữ, bao gồm các tệp nhật ký và các tệp khác. ([Laravel storage directory](https://laravel.com/docs/12.x/structure#the-storage-directory))
+- [`app/`](#app): Chứa mã nguồn của ứng dụng.
+- [`dist/`](#dist): Chứa các tệp đã được build để triển khai trên môi trường production.
+- [`storage/`](#storage): Chứa các tệp lưu trữ như logs, cache, v.v.
 
+### /app {#app}
+`app` là thư mục chứa mã nguồn của ứng dụng.
 
-### 1. /src {#src}
-`src` là thư mục chứa mã nguồn của ứng dụng, bao gồm các thành phần như controller, model, và view.
+#### ./config {#config}
+`config` là thư mục chứa các tệp cấu hình cho ứng dụng, cho phép tùy chỉnh các thiết lập như kết nối cơ sở dữ liệu, thông tin API, và các tham số khác.
 
-#### 1.1 ./console
+#### ./database {#database}
+`database` là thư mục chứa các tệp cơ sở dữ liệu, bao gồm các migration, seeders, và các tệp khác liên quan đến cơ sở dữ liệu.
+
+#### ./declare {#declare}
+`declare` là thư mục chứa các khai báo kiểu TypeScript tùy chỉnh cho ứng dụng.
+
+#### ./routes {#routes}
+`routes` là thư mục chứa các tệp định nghĩa route cho ứng dụng, cho phép xác định các URL và hành động tương ứng.
+
+#### ./console
 `console` là thư mục chứa các lệnh khởi chạy tùy chỉnh cho ứng dụng. ([The Console Directory](https://laravel.com/docs/12.x/structure#the-console-directory))
 
-#### 1.2 ./http
-`http` là thư mục chứa các thành phần liên quan đến HTTP, bao gồm các controller, request, và resource. ([The Http Directory](https://laravel.com/docs/12.x/structure#the-http-directory))
+#### ./src {#src}
+`src` là thư mục chính chứa mã nguồn ứng dụng, nơi mà business logic được triển khai, bao gồm các thành phần như models, controllers, middleware, và providers,...
 
-#### 1.3 ./providers
-`providers` là thư mục chứa các service provider của ứng dụng. ([The Providers Directory](https://laravel.com/docs/12.x/structure#the-providers-directory))
+### /dist {#dist}
 
-### 2. /config {#config}
-`config` là thư mục chứa các tệp cấu hình cho ứng dụng, cho phép tùy chỉnh các thiết lập như kết nối cơ sở dữ liệu, thông tin API, và các tham số khác. ([The Config Directory](https://laravel.com/docs/12.x/structure#the-config-directory))
+`dist` là thư mục chứa các tệp đã được build để triển khai trên môi trường production. Thư mục này thường được tạo ra sau khi chạy lệnh build và không nên chỉnh sửa trực tiếp.
 
-### 3. /database {#database}
-`database` là thư mục chứa các tệp cơ sở dữ liệu, bao gồm các migration, seeders, và các tệp khác liên quan đến cơ sở dữ liệu. ([The Database Directory](https://laravel.com/docs/12.x/structure#the-database-directory))
+### /storage {#storage}
 
-### 4. /public {#public}
-`public` là thư mục công khai, chứa các tệp tĩnh như hình ảnh, CSS, và JavaScript. Đây là nơi mà người dùng có thể truy cập các tài nguyên tĩnh của ứng dụng. ([The Public Directory](https://laravel.com/docs/12.x/structure#the-public-directory))
+`storage` là thư mục chứa các tệp lưu trữ như logs, cache, và các tệp tạm thời khác. Thư mục này giúp quản lý dữ liệu ứng dụng một cách hiệu quả và an toàn.
 
-### 5. /routes {#routes}
-`routes` là thư mục chứa các tệp định nghĩa route cho ứng dụng, cho phép xác định các URL và hành động tương ứng. ([The Routes Directory](https://laravel.com/docs/12.x/structure#the-routes-directory))

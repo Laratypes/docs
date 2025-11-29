@@ -7,7 +7,9 @@
 - [Node.js](https://nodejs.org/) version 20 hoặc cao hơn.
 :::
 
-Trong phần này, bạn sẽ tìm hiểu cách khởi tạo một ứng dụng Laratype mới, có thể bắt đầu ngay với câu lệnh sau:
+Laratype cung cấp một công cụ dòng lệnh để khởi tạo nhanh các ứng dụng mới, bạn có thể sử dụng `npx`, `pnpm`, `yarn` hoặc `bun` thông qua [create-laratype](https://www.npmjs.com/package/create-laratype) để tạo một ứng dụng Laratype mới.
+
+Bạn có thể bắt đầu ngay với câu lệnh sau:
 
 ::: code-group
 

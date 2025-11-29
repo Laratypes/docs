@@ -5,19 +5,21 @@ outline: deep
 # Ủy quyền
 
 Ủy quyền (Authorization) xác định xem một người dùng đã xác thực có được phép thực hiện một hành động hoặc truy cập một tài nguyên hay không. Laratype cung cấp hai khái niệm chính để quản lý ủy quyền: Gates và Policies.
+
 ## Gates
 
 Gates là các định nghĩa quyền nhỏ, thường dùng cho các hành động ngắn gọn hoặc logic đơn giản không gắn chặt với một model cụ thể. Một Gate là một callback/closure nhận vào người dùng (và tuỳ chọn thêm tham số) và trả về boolean.
 
 ### Generating Gates
 
-Gates được khai báo tại thư mục `gates/` trong dự án của bạn. Bạn có thể tạo file Gate một cách thủ công.
+> [!INFO]
+> Gates được khai báo tại thư mục `src/gates/` trong dự án. Bạn có thể tạo file Gate một cách thủ công.
 
 Ví dụ ở dưới đây là một Gate đơn giản cho phép người dùng cập nhật thông tin cá nhân nếu họ là chính họ hoặc là admin.
 
+::: code-group
 
-```ts
-// gates/UpdateUserGate.ts
+```ts [UpdateUserGate.ts]
 import { Gate } from "@laratype/auth";
 import { User } from "../models/User";
 import { Admin } from "../models/Admin";
@@ -35,6 +37,7 @@ export default class UpdateUserGate extends Gate {
   }
 }
 ```
+:::
 
 Nếu bạn thích generator, có thể dùng lệnh CLI để tạo Gate:
 
@@ -54,12 +57,34 @@ $ bunx sauf make:gate UpdateUserGate
 
 :::
 
+> [!TIP]
+> Bạn có thể tạo nhiều Gates cùng lúc bằng cách truyền vào nhiều tên.
+
+::: details Xem thêm
+
+::: code-group
+
+```sh [npx]
+$ npx sauf make:gate UpdateUserGate CreateUserGate
+```
+
+```sh [pnpx]
+$ pnpx sauf make:gate UpdateUserGate CreateUserGate
+```
+
+```sh [bunx]
+$ bunx sauf make:gate UpdateUserGate CreateUserGate
+```
+
+:::
+
 ### Authorizing Actions
 
 Sau khi định nghĩa Gate, bạn có thể sử dụng trong bất kỳ đâu trong dự án, ví dụ trong controller hoặc middleware.
 
-```ts {16}
-// UserController.ts
+::: code-group
+
+```ts [UserController.ts]{16}
 import { Controller } from "@laratype/http";
 import { Auth, GateGuard } from "@laratype/auth";
 import { User } from "../../models/User";
@@ -83,14 +108,19 @@ export default class UserController extends Controller {
   }
 }
 ```
+:::
 
 #### Authorizing or Throwing Exceptions <Badge type="warning" text="coming soon" />
 
-Tính năng này sẽ cho phép gọi một helper/Facade để cố gắng ủy quyền và ném ra `AuthorizationError` nếu không được phép (tương tự `authorizeOrFail`). Mục này đang trong kế hoạch và sẽ được cập nhật sau khi API ổn định.
+> [!NOTE]
+> Tính năng này sẽ cho phép gọi một helper/Facade để cố gắng ủy quyền và ném ra `AuthorizationError` nếu không được phép (tương tự `authorizeOrFail`). Mục này đang trong kế hoạch và sẽ được cập nhật sau khi API ổn định.
 
 ## Policies
 
 Policies tập trung logic ủy quyền liên quan tới một model cụ thể. Dùng policies khi bạn có nhiều hành động (view, create, update, delete, ...) trên một resource/model.
+
+> [!INFO]
+> Policies được khai báo tại thư mục `src/policies/` trong dự án. Bạn có thể tạo file Policy một cách thủ công.
 
 ### Tạo policies
 
@@ -118,11 +148,11 @@ $ bunx sauf make:policy PostPolicy --model Post
 
 Lệnh trên sẽ tạo file `src/policies/PostPolicy.ts` với các method cơ bản (`view`, `viewAny`, `create`, `update`, `delete`, `forceDelete`, `restore`).
 
-- Manually Registering Policies
-
 Sau khi tạo, bạn cần đăng ký policy để framework biết cách map giữa Model và Policy bằng cách thêm `UsePolicy()` `decorator` vào model:
 
-```ts {7,12}
+::: code-group
+
+```ts [User.ts]{7,12}
 import { UsePolicy } from "@laratype/auth"
 import { Model } from "@laratype/database"
 import { Entity } from "@laratype/database"
@@ -137,13 +167,14 @@ export class User extends Model {
 export interface User extends UsePolicy<UserPolicy> {}
 
 ```
+:::
 
 ### Writing policies
 
 Một policy thường nhận `User` (hiện tại) và model target (nếu có) hoặc các tham số bổ sung, giá trị trả về boolean hoặc null.
 
-```ts
-// UserPolicy.ts
+::: code-group
+```ts [UserPolicy.ts]
 import { Policy } from "@laratype/auth";
 import { User } from "../models/User";
 import { Admin } from "../models/Admin";
@@ -166,6 +197,7 @@ export default class UserPolicy extends Policy {
   }
 }
 ```
+:::
 
 Ở ví dụ trên, `viewAny` và `view` luôn trả về `true`, điều này "đại diện" cho việc bất kỳ ai cũng có thể xem thông tin của một user. Tuy nhiên, chỉ được phép `update` khi là chính họ.
 
@@ -186,8 +218,9 @@ Common methods trong policy:
 
 Phương thức `before` chạy trước các method khác trong policy. Nếu nó trả về true/false thì các method còn lại bị bỏ qua và giá trị đó là quyết định cuối cùng; nếu trả về null, kiểm tra sẽ tiếp tục bình thường.
 
-```ts
-// UserPolicy.ts
+::: code-group
+
+```ts [UserPolicy.ts]
 import { Policy } from "@laratype/auth";
 import { User } from "../models/User";
 import { Admin } from "../models/Admin";
@@ -195,11 +228,13 @@ import { Admin } from "../models/Admin";
 export default class UserPolicy extends Policy {
 	// ... other methods
 
+  // [!code focus:3]
 	public before(actor: User | Admin, ability: string): boolean | null {
-    return actor instanceof Admin ? true : null;
-  }
+      return actor instanceof Admin ? true : null;
+    }
 }
 ```
+:::
 
 Trong ví dụ trên, khi actor là `Admin`, `before` trả về true nên Admin được phép thực hiện mọi hành động.
 
@@ -213,8 +248,9 @@ Mỗi model có được khai báo có policy sẽ có phương thức `can` đ�
 
 Giả sử bạn đã đăng ký `PostPolicy` cho `Post` model, bạn có thể kiểm tra quyền bằng model như sau:
 
-```ts {19}
-// UserController.ts
+::: code-group
+
+```ts [UserController.ts]{18}
 import { Controller, Request } from "@laratype/http";
 import { Auth } from "@laratype/auth";
 import { User } from "../../models/User";
@@ -241,6 +277,7 @@ export default class UserController extends Controller {
   }
 }
 ```
+:::
 
 Ở ví dụ trên, chúng ta đã sử dụng phương thức `can` để kiểm tra quyền của người dùng trước khi thực hiện hành động xóa. Nếu người dùng không có quyền, `UnauthorizedException` sẽ được ném ra.
 
@@ -260,7 +297,9 @@ if(actor.can('create', Post)) {
 
 Bạn cũng có thể bảo vệ route bằng middleware `can` để kiểm tra quyền trước khi vào controller:
 
-```ts {16,22}
+::: code-group
+
+```ts [api.ts]{16,22}
 const authGuardedRoutes: RouteOptions = {
   path: "/",
   middleware: [
@@ -269,7 +308,7 @@ const authGuardedRoutes: RouteOptions = {
   children: [
     {
       path: "/users",
-      controller: UserController.__invoke('store'),
+      controller: controller(UserController, 'store'),
       request: CreateUserRequest,
       method: "post",
       children: [
@@ -277,35 +316,36 @@ const authGuardedRoutes: RouteOptions = {
           path: '',
           method: 'get',
           can: can("viewAny", User),
-          controller: UserController.__invoke('index'),
+          controller: controller(UserController, 'index'),
         },
         {
           path: '/:user',
           method: 'get',
           can: can("view", "user"),
-          controller: UserController.__invoke('view'),
+          controller: controller(UserController, 'view'),
         },
         {
           path: '/:activeUser',
           method: 'patch',
           request: UpdateUserRequest,
-          controller: UserController.__invoke('update'),
+          controller: controller(UserController, 'update'),
         },
         {
           path: '/:id',
           method: 'delete',
-          controller: UserController.__invoke('delete'),
+          controller: controller(UserController, 'delete'),
         }
       ]
     },
     {
       path: "/me",
-      controller: UserController.__invoke('me'),
+      controller: controller(UserController, 'me'),
       method: "get"
     },
   ]
 }
 ```
+:::
 
 ##### With Route Model Binding
 

@@ -16,12 +16,13 @@ Laratype offers convenient authentication helpers via middleware and the `Auth` 
 
 By adding middleware, Laratype will automatically authenticate users based on the Bearer token in the request header. You don't need to do anything else to enable this feature.
 
-```ts {7}
-// LocalAuthenticationMiddleware.ts
+::: code-group
+
+```ts [LocalAuthMiddleware.ts]{6}
 import { Passport } from "@laratype/auth";
 import { Middleware, type MiddlewareHandler } from "@laratype/http";
 
-export default class LocalAuthentication extends Middleware {
+export default class LocalAuthMiddleware extends Middleware {
   handle: MiddlewareHandler = async (request, res, next) => {
     const handler = await Passport.authenticate("web");
 
@@ -29,38 +30,46 @@ export default class LocalAuthentication extends Middleware {
   };
 }
 ```
+:::
 
-`Passport.authenticate('web')` uses the `web` guard defined in `config/auth.ts`. You can customize authentication options there.
+> [!INFO]
+> `Passport.authenticate('web')` uses the `web` guard defined in `config/auth.ts`. You can customize authentication options there.
 
-Add `LocalAuthenticationMiddleware.ts` to the route or route group you want to protect:
+Add `LocalAuthMiddleware.ts` to the route or route group you want to protect:
 
-```ts {10}
-import LocalAuthentication from "../middleware/LocalAuthenticationMiddleware";
+::: code-group
+
+```ts [api.ts]{12}
+import { controller } from "@laratype/http";
+import LoginController from "../src/http/controllers/LoginController";
+import LocalAuthMiddleware from "../src/http/middleware/LocalAuthMiddleware";
 
 export default {
   path: "/auth",
   children: [
     {
       path: "/login",
-      controller: LoginController.__invoke("me"),
+      controller: controller(LoginController, 'me'),
       middleware: [
-        LocalAuthentication
+        LocalAuthMiddleware
       ],
       method: "get",
     },
   ],
 };
 ```
+:::
 
 ### Retrieving the Authenticated User
 
 In a controller or anywhere with access to the request/context, you can get the current user like this:
 
-```ts
+::: code-group
+
+```ts [ProfileController.ts]
 import { Request } from "@laratype/http";
 import { Auth } from "@laratype/auth";
 
-// Controller example
 export default class ProfileController {
   async show(request: Request) {
     const user = Auth.user<User>(); // returns User model | null
@@ -73,26 +82,30 @@ export default class ProfileController {
   }
 }
 ```
+:::
 
 ### Generating Tokens
 
 Laratype supports generating JWT tokens for user authentication. You can use `AuthVerification.sign` to create a token for an authenticated user.
 
-```ts
-// LoginController.ts
+::: code-group
+
+```ts [LoginController.ts]
+// See more at: https://github.com/Laratypes/Laratype/tree/master/examples/basic
 import { Auth, AuthVerification } from "@laratype/auth";
 import { Controller, Request } from "@laratype/http";
 import { User } from "../../models/User";
 
 export default class LoginController extends Controller {
-
+  // [!code focus:14]
   async login(request: Request) {
-    // Assume the user has already been authenticated successfully
-    const user = Auth.user<User>()
-    const jwtToken = await AuthVerification.sign(user, {
-      name: "Default Token", // Token name
-      abilities: "*", // Token abilities
+    const authenticated = Auth.user<User>()
+    const jwtToken = await authenticated.generateToken({
+      name: "Default Token",
+      abilities: "*",
     });
+
+    const user = authenticated.getUser();
 
     return {
       user,
@@ -101,12 +114,14 @@ export default class LoginController extends Controller {
   }
 }
 ```
+:::
 
 ### Verifying Tokens
 
 Laratype supports JWT token verification through the `AuthGuard` middleware. This middleware automatically checks the token in the `Authorization` header of the request.
 
-You can also verify tokens manually without using the protecting middleware, then customize the authentication logic in your controller or service.
+> [!TIP]
+> You can verify tokens manually without using the [Protecting Routes middleware](#protecting-routes), then customize the authentication logic in your controller or service.
 
 ```ts
 import { AuthVerification } from "@laratype/auth";
@@ -121,13 +136,16 @@ const user = await AuthVerification.verify(token);
 return {
   user,
 }
+
 ```
 
 ### Protecting Routes
 
 Use the `AuthGuard` middleware to protect routes in the router:
 
-```ts {2,7}
+::: code-group
+
+```ts [api.ts]{2,7}
 import { RouteOptions } from "@laratype/http";
 import { AuthGuard } from "@laratype/auth";
 
@@ -139,33 +157,78 @@ const authGuardedRoutes: RouteOptions = {
   children: [
     {
       path: "/me",
-      controller: UserController.__invoke('me'),
+      controller: UserController.__invoke("me"),
       method: "get",
     },
   ],
 };
 ```
+:::
 
-The `AuthGuard` middleware returns a 401 error if the request is not authenticated.
+> [!INFO]
+> The `AuthGuard` middleware returns a 401 error if the request is not authenticated.
 
-### Login Throttling (coming soon) <Badge type="warning" text="coming soon" />
+### Login Throttling <Badge type="warning" text="coming soon" />
 
 A login throttling feature will be added soon. The goal is to reduce brute-force attacks by limiting failed login attempts by IP or account within a time window.
 
-## Manually Authenticating Users (coming soon) <Badge type="warning" text="coming soon" />
+## Manually Authenticating Users
 
-You will be able to manually authenticate (log in) users in a controller or service.
+In some cases, you may want to manually authenticate users without using middleware.
 
-### Specifying Additional Conditions (coming soon) <Badge type="warning" text="coming soon" />
+::: code-group
 
-Support for specifying extra conditions when authenticating (for example: allow login only if `is_active = true`) will be introduced in a future update.
+```ts [LoginController.ts]
+// See more at: https://github.com/Laratypes/Laratype/tree/master/examples/basic
+import { Auth, AuthVerification } from "@laratype/auth";
+import { Controller, Request } from "@laratype/http";
+import { User } from "../../models/User";
 
-### Accessing Specific Guard Instances (coming soon) <Badge type="warning" text="coming soon" />
+export default class LoginController extends Controller {
+  // [!code focus:23]
+  async manualLogin(request: Request) {
+    const data = req.validated();
 
-### Remembering Users (coming soon) <Badge type="warning" text="coming soon" />
+    const attempt = await Auth.guard<User>('web').attempt(data)
 
-A "remember me" (token TTL) system will be added with configuration guidance in `config/auth.ts`.
+    if(!attempt) {
+      return new UnauthorizedException({
+        message: "Invalid credentials",
+      });
+    }
+    
+    const jwtToken = await attempt.generateToken({
+      name: "Default Token",
+      abilities: "*",
+    });
 
-## Logout and Deactivating Tokens (coming soon) <Badge type="warning" text="coming soon" />
+    const user = attempt.getUser();
 
-Instructions for logout and token deactivation will be added in future updates.
+    return {
+      user,
+      token: jwtToken,
+    }
+  }
+}
+```
+:::
+
+### Specifying Additional Conditions <Badge type="warning" text="coming soon" />
+
+> [!NOTE]
+> Support for specifying extra conditions when authenticating (for example: allow login only if `is_active = true`) will be introduced in a future update.
+
+### Accessing Specific Guard Instances <Badge type="warning" text="coming soon" />
+
+> [!NOTE]
+> Instructions for accessing specific Guard instances will be added in future updates.
+
+### Remembering Users <Badge type="warning" text="coming soon" />
+
+> [!NOTE]
+> A "remember me" (token TTL) system will be added with configuration guidance in `config/auth.ts`.
+
+## Logout and Deactivating Tokens <Badge type="warning" text="coming soon" />
+
+> [!NOTE]
+> Instructions for logout and token deactivation will be added in future updates.

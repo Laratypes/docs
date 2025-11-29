@@ -10,13 +10,14 @@ Routing là một phần quan trọng trong bất kỳ framework web nào, và L
 
 ### Định nghĩa Routes
 
-Routes được đăng ký trong Service Provider, mặc định `create-laratype` đã tạo sẵn `src/providers/RouteServiceProvider.ts` cho bạn. `RouteServiceProvider.ts` sẽ import file định nghĩa routes từ `src/routes/api.ts`, tuy nhiên bạn có thể thay đổi theo ý muốn.
+Routes được đăng ký trong Service Provider, mặc định `create-laratype` đã tạo sẵn `src/providers/RouteServiceProvider.ts` cho bạn. `RouteServiceProvider.ts` sẽ import file định nghĩa routes từ `/app/routes/api.ts`, tuy nhiên bạn có thể thay đổi theo ý muốn.
 
 Laratype tổ chức routers theo nhóm (groups) để dễ quản lý. Mặc định, `api.ts` đã có sẵn một nhóm route cho API:
 
-```ts
-// api.ts
-import { RouteOptions } from "@laratype/http";
+::: code-group
+
+```ts [api.ts]
+import { RouteOptions, controller } from "@laratype/http";
 import { BaseController } from "../src/http/controllers/BaseController";
 import { Web } from "../src/http/middleware/Middleware";
 
@@ -25,14 +26,18 @@ export const baseRouteApi: RouteOptions = {
   middleware: [
     Web
   ],
-  controller: BaseController.__invoke('home'),
+  controller: controller(BaseController, 'home'),
   method: "get",
 }
 ```
 
+:::
+
 Giống Laravel, các route có tính nhóm (grouped routes) giúp bạn dễ dàng áp dụng middleware, tiền tố (prefix) cho nhiều route cùng lúc.
 
-```ts
+::: code-group
+
+```ts [api.ts]
 //...
 
 export const baseRouteApi: RouteOptions = {
@@ -40,30 +45,34 @@ export const baseRouteApi: RouteOptions = {
   middleware: [
     Web
   ],
-  controller: BaseController.__invoke('home'),
+  controller: controller(BaseController, 'home'),
   method: "get",
   children: [
     {
       path: '/register',
-      controller: UserController.__invoke('register'),
+      controller: controller(UserController, 'register'),
       method: "post",
     },
     {
       path: '/login',
-      controller: UserController.__invoke('login'),
+      controller: controller(UserController, 'login'),
       method: "post",
     }
   ]
 }
+```
 
-/** Output routes:
+``` [output]
  * GET /users -> BaseController.home | Middleware: Web
  * POST /users/register -> UserController.register | Middleware: Web
  * POST /users/login -> UserController.login | Middleware: Web
- */
 ```
 
-Vậy nên bạn có thể định nghĩa các route con (children routes) bên trong một route cha (parent route) để tổ chức cấu trúc route rõ ràng hơn. Bạn cũng có thể áp dụng tương tự với [Middleware Policy](/vi/getting-started/essentials/security/authorization.html#via-middleware).
+:::
+
+> [!TIP]
+> Bạn có thể định nghĩa các route con (children routes) bên trong một route cha (parent route) để tổ chức cấu trúc route rõ ràng hơn. Bạn cũng có thể áp dụng tương tự với [Middleware Policy](/vi/getting-started/essentials/security/authorization.html#via-middleware).
+
 
 ### Route Model Binding
 
@@ -73,23 +82,23 @@ Khác với Laravel, các tham số route trong Laratype được định nghĩa
 
 #### Implicit Binding
 
-Laratype hỗ trợ implicit binding, nghĩa là nó sẽ tự động tìm kiếm model dựa trên tên tham số route và kiểu của tham số trong controller. Ví dụ, nếu bạn có một route như sau:
+Laratype hỗ trợ implicit binding, nghĩa là nó sẽ tự động tìm kiếm model dựa trên tên tham số route và kiểu của tham số trong controller.
 
-```ts {3}
-// api.ts
+Ví dụ, khi một yêu cầu (request) đến `/users/1`, Laratype sẽ tự động tìm kiếm User có `id` là `1` và truyền nó vào phương thức `show` của `UserController`:
+
+::: code-group
+
+```ts [api.ts] {2}
 {
   path: "/users/:id",
-  controller: UserController.__invoke('show'),
+  controller: controller(UserController, 'show'),
   method: "get",
 }
 ```
 
-Khi một yêu cầu (request) đến `/users/1`, Laratype sẽ tự động tìm kiếm User có `id` là `1` và truyền nó vào phương thức `show` của `UserController`:
-
-```ts
-// UserController.ts
+```ts [UserController.ts]
 import { Request } from "@laratype/http";
-import { User } from "../models/User";
+import { User } from "../../models/User";
 
 export default class UserController {
   async show(request: Request, model: { user: User }) {
@@ -99,14 +108,18 @@ export default class UserController {
 }
 ```
 
-Laratype tự động chuyển hóa tham số route từ camelCase sang PascalCase, từ đó tìm đến [Model](../database/model.md) tương ứng để thực hiện truy vấn. Laratype cũng sử dụng khóa chính (primary key) của model để tìm kiếm dữ liệu theo `findOneBy`.
+:::
+
+> [!INFO]
+>  Laratype tự động chuyển hóa tham số route từ camelCase sang PascalCase, từ đó tìm đến [Model](../database/model.md) tương ứng để thực hiện truy vấn. Laratype cũng sử dụng khóa chính (primary key) của model để tìm kiếm dữ liệu theo `findOneBy`.
 
 #### Explicit Binding
 
 Không phải lúc nào implicit binding cũng đáp ứng được yêu cầu của bạn. Trong những trường hợp phức tạp hơn, bạn có thể sử dụng explicit binding để tùy chỉnh cách thức tìm kiếm model. Ví dụ bạn muốn quy định rõ ràng tham số route `:userId` sẽ tương ứng với model `User`, bạn có thể làm như sau:
 
-```ts {3}
-//api.ts
+::: code-group
+
+```ts [api.ts]{2}
 {
   path: "/users/:userId",
   controller: UserController.__invoke('show'),
@@ -115,9 +128,7 @@ Không phải lúc nào implicit binding cũng đáp ứng được yêu cầu c
 
 ```
 
-```ts {10}
-//src/providers/RouteBindingsServiceProvider.ts
-
+```ts [src/providers/RouteBindingsServiceProvider.ts]{8}
 import { Route } from "@laratype/http";
 import { AppServiceProvider } from "@laratype/support";
 import { User } from "../models/User";
@@ -130,13 +141,15 @@ export default class RouteBindingsServiceProvider extends AppServiceProvider {
 }
 ```
 
+:::
+
 Lúc này, khi một yêu cầu đến `/users/1`, Laratype sẽ sử dụng model `User` để tìm kiếm bản ghi có khóa chính là `1` và truyền nó vào controller, tương tự như implicit binding.
 
 Tuy nhiên, đôi khi bạn muốn tùy chỉnh cách tìm kiếm hơn nữa, ví dụ chỉ tim kiếm những user có trạng thái `active`. Bạn có thể truyền vào một hàm callback để định nghĩa cách tìm kiếm:
 
-```ts {6-9}
-// src/providers/RouteBindingsServiceProvider.ts
+::: code-group
 
+```ts [src/providers/RouteBindingsServiceProvider.ts]{4-7}
 export default class RouteBindingsServiceProvider extends AppServiceProvider {
 
   public boot(): void {
@@ -149,6 +162,8 @@ export default class RouteBindingsServiceProvider extends AppServiceProvider {
 
 ```
 
+:::
+
 ## Commands
 
 Laratype cung cấp một số lệnh `sauf` để giúp bạn quản lý routes dễ dàng hơn:
@@ -156,6 +171,8 @@ Laratype cung cấp một số lệnh `sauf` để giúp bạn quản lý routes
 ### Route List
 
 Liệt kê tất cả routes đã đăng ký trong ứng dụng:
+
+::: details Development {open}
 
 ::: code-group
 
@@ -169,6 +186,24 @@ $ pnpx sauf route:list
 
 ```sh [bunx]
 $ bunx sauf route:list
+```
+
+:::
+
+::: details Production
+
+::: code-group
+
+```sh [npm]
+$ npm run saufx route:list
+```
+
+```sh [pnpm]
+$ pnpm saufx route:list
+```
+
+```sh [bun]
+$ bun run saufx route:list
 ```
 
 :::

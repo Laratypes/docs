@@ -4,13 +4,59 @@ Laratype provides a number of utility commands to help you manage and develop yo
 
 However, you can create your own custom commands to serve the specific needs of your application. Below is a basic guide on how to create and use commands in Laratype.
 
+> [!INFO]
+> Commands are organized in the `console/commands` directory.
+
+> [!INFO]
+> Laratype uses the [commander](https://github.com/tj/commander.js) library to manage CLI commands.
+
 ## Creating a New Command
 
-Laratype uses the [commander](https://github.com/tj/commander.js) library to manage CLI commands. To create a new command, you need to create a TypeScript file in the `src/console/commands` directory. For example, to create a command named `SendMail`, you can do the following:
+### Generate Command
 
-```typescript
-// src/console/commands/SendMail.ts
+::: code-group
 
+```sh [npx]
+$ npx sauf make:command SendMail
+```
+
+```sh [pnpx]
+$ pnpx sauf make:command SendMail
+```
+
+```sh [bunx]
+$ bunx sauf make:command SendMail
+```
+
+:::
+
+Laratype will create a new command file in the `src/console/commands/` directory with the name `SendMail.ts`.
+
+> [!TIP]
+> You can create multiple commands at once by passing multiple names.
+
+::: details See more
+
+::: code-group
+
+```sh [npx]
+$ npx sauf make:command SendMail AnotherCommand
+```
+
+```sh [pnpx]
+$ pnpx sauf make:command SendMail AnotherCommand
+```
+
+```sh [bunx]
+$ bunx sauf make:command SendMail AnotherCommand
+```
+:::
+
+### Writing Command
+
+::: code-group
+
+```ts [SendMail.ts]
 import { Command } from "@laratype/console";
 
 export default class SendMail extends Command {
@@ -26,18 +72,89 @@ export default class SendMail extends Command {
 }
 
 ```
+:::
 
-## Running Commands
+Each command inherits from the `Command` class available in the `@laratype/console` package. You need to define the `signature` and `description` properties to describe the command, and the `handle()` method to contain the command's execution logic.
 
-After creating a command, you can run it from the command line using the `sauf` command (Laratype CLI). For example, to run the `SendMail` command, you would use:
+### Options
+
+You can define options for your command using `static options` in the command class.
 
 ::: code-group
 
-```sh [npm]
+```ts [SendMail.ts]
+import { Command } from "@laratype/console";
+
+export default class SendMail extends Command {
+
+  static signature = "send:mail";
+
+  static description = "Send a test email";
+
+  static options = [
+    ['-d, --date <date>', 'Date to send the email', '2025-11-29'],
+    ['-l, --logs <logs>', 'Logs to display', 'info'],
+  ]
+
+  public async handle() {
+    const options = this.opts();
+    console.log(`Sending email on date: ${options.date}`);
+    console.log(`Logging level: ${options.logs}`);
+    console.log("Sending a test email...");
+  }
+
+}
+
+```
+:::
+
+### Arguments
+
+You can define arguments for your command using `static arguments` in the command class.
+
+::: code-group
+
+```ts [SendMail.ts]
+import { Command } from "@laratype/console";
+
+export default class SendMail extends Command {
+
+  static signature = "send:mail";
+
+  static description = "Send a test email";
+
+  static arguments = [
+    {
+      name: "<ids...>",
+      description: "The IDs of users to send email to",
+    }
+  ]
+
+  public async handle(userIds: string[]) {
+
+    for (const id of userIds) {
+      console.log(`Sending email to user ID: ${id}`);
+    }
+  }
+
+}
+
+```
+:::
+
+## Running Commands
+
+After creating a command, you can run it from the command line using the `sauf` or `saufx` (for production environment) command. For example, to run the `SendMail` command, you would use:
+
+::: details Development {open}
+
+::: code-group
+
+```sh [npx]
 $ npx sauf send:mail
 ```
 
-```sh [pnpm]
+```sh [pnpx]
 $ pnpx sauf send:mail
 ```
 
@@ -45,13 +162,37 @@ $ pnpx sauf send:mail
 $ yarn sauf send:mail
 ```
 
+```sh [bunx]
+$ bunx sauf send:mail
+```
+
+:::
+
+::: details Production
+
+::: code-group
+
+```sh [npm]
+$ npm saufx send:mail
+```
+
+```sh [pnpm]
+$ pnpm saufx send:mail
+```
+
+```sh [yarn]
+$ yarn saufx send:mail
+```
+
 ```sh [bun]
-$ bun sauf send:mail
+$ bun saufx send:mail
 ```
 
 :::
 
 You can get a list of all available commands by running:
+
+::: details Development {open}
 
 ::: code-group
 
@@ -69,6 +210,28 @@ $ yarn sauf -h
 
 ```sh [bun]
 $ bun sauf -h
+```
+
+:::
+
+::: details Production
+
+::: code-group
+
+```sh [npm]
+$ npm saufx -h
+```
+
+```sh [pnpm]
+$ pnpm saufx -h
+```
+
+```sh [yarn]
+$ yarn saufx -h
+```
+
+```sh [bun]
+$ bun saufx -h
 ```
 
 :::

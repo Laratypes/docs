@@ -1,37 +1,18 @@
-import { defineConfig, UserConfig } from 'vitepress'
-import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
+import { defineAdditionalConfig } from "vitepress";
 
-// https://vitepress.dev/reference/site-config
-
-
-export default defineConfig({
-  title: "Laratype",
-  description: "A Laratype document site",
-  rewrites: {
-    'en/:rest*': ':rest*'
-  },
-  head: [
-    [
-      'link',
-      {
-        rel: 'icon',
-        type: 'image/png',
-        href: '/assets/logo.png'
-      }
-    ]
-  ],
+export default defineAdditionalConfig({
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    editLink: {
-      pattern: 'https://github.com/Laratypes/docs/edit/main/:path',
-      text: 'Edit this page on GitHub'
-    },
-    logo: '/assets/logo.png',
+    nav: [
+      { text: 'Home', link: '/' },
+      { text: 'Getting Started', link: '/vi/getting-started/introduction/quick-start' },
+      { text: 'API', link: '/vi/api/introduction' },
+      { text: 'v0.5.3', link: 'https://github.com/Laratypes/Laratype' },
+    ],
     sidebar: {
-      '/getting-started/': [
+      '/vi/getting-started/': [
         {
           text: 'Introduction',
-          base: '/getting-started/introduction/',
+          base: '/vi/getting-started/introduction/',
           items: [
             { text: 'Quicks Start', link: 'quick-start' },
             { text: 'Project Structure', link: 'project-structure' }
@@ -39,11 +20,10 @@ export default defineConfig({
         },
         {
           text: 'Essentials',
-          base: '/essentials/',
           items: [
             {
               text: 'Http',
-              base: '/getting-started/essentials/http/',
+              base: '/vi/getting-started/essentials/http/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -55,7 +35,7 @@ export default defineConfig({
             },
             {
               text: 'Security',
-              base: '/getting-started/essentials/security/',
+              base: '/vi/getting-started/essentials/security/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -65,7 +45,7 @@ export default defineConfig({
             },
             {
               text: 'Database',
-              base: '/getting-started/essentials/database/',
+              base: '/vi/getting-started/essentials/database/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -76,7 +56,7 @@ export default defineConfig({
             },
             {
               text: 'Console',
-              base: '/getting-started/essentials/console/',
+              base: '/vi/getting-started/essentials/console/',
               collapsed: true,
               items: [
                 { text: 'Commands', link: 'commands' },
@@ -84,7 +64,7 @@ export default defineConfig({
             },
             {
               text: 'Other',
-              base: '/getting-started/essentials/other/',
+              base: '/vi/getting-started/essentials/other/',
               collapsed: true,
               items: [
                 { text: 'Service Providers', link: 'providers' },
@@ -94,7 +74,7 @@ export default defineConfig({
         },
         {
           text: 'Sauf',
-          base: '/getting-started/sauf/',
+          base: '/vi/getting-started/sauf/',
           items: [
             { text: 'Introduction', link: 'introduction' },
             { text: 'Core Commands', link: 'core' },
@@ -103,7 +83,7 @@ export default defineConfig({
         },
         {
           text: 'Deployment',
-          base: '/getting-started/deployment/',
+          base: '/vi/getting-started/deployment/',
           items: [
             { text: 'Building the application', link: 'build' },
             { text: 'Using Docker', link: 'docker' },
@@ -111,18 +91,18 @@ export default defineConfig({
           ]
         }
       ],
-      '/api/': [
+      '/vi/api/': [
         {
           text: 'Overview',
-          link: '/api/introduction',
+          link: '/vi/api/introduction',
         },
         {
           text: 'API Reference',
-          base: '/api/api-reference',
+          base: '/vi/api/api-reference',
           items: [
             {
               text: '@laratype/auth (coming soon)',
-              base: '/auth/',
+              base: '/vi/api/api-reference/auth/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -136,7 +116,7 @@ export default defineConfig({
             },
             {
               text: '@laratype/console (coming soon)',
-              base: '/console/',
+              base: '/vi/api/api-reference/console/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -145,7 +125,7 @@ export default defineConfig({
             },
             {
               text: '@laratype/database (coming soon)',
-              base: '/database/',
+              base: '/vi/api/api-reference/database/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -159,7 +139,7 @@ export default defineConfig({
             },
             {
               text: '@laratype/http',
-              base: '/api/api-reference/http/',
+              base: '/vi/api/api-reference/http/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -172,7 +152,7 @@ export default defineConfig({
             },
             {
               text: '@laratype/log (coming soon)',
-              base: '/log/',
+              base: '/vi/api/api-reference/log/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -183,7 +163,7 @@ export default defineConfig({
             },
             {
               text: '@laratype/support (coming soon)',
-              base: '/support/',
+              base: '/vi/api/api-reference/support/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -194,51 +174,5 @@ export default defineConfig({
         },
       ],
     },
-
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/Laratypes/Laratype' }
-    ],
-    search: {
-      provider: 'algolia',
-      options: {
-        appId: process.env.ALGOLIA_APP_ID || '',
-        apiKey: process.env.ALGOLIA_API_KEY || '',
-        indexName: 'Laratype Documentation',
-      },
-    },
-    nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Getting Started', link: '/getting-started/introduction/quick-start' },
-      { text: 'API', link: '/api/introduction' },
-      { text: 'v0.5.3', link: 'https://github.com/Laratypes/Laratype' },
-    ]
-  },
-  locales: {
-    root: {
-      lang: 'en-US',
-      label: 'English',
-      link: '/',
-    },
-    vi: {
-      lang: 'vi-VN',
-      label: 'Tiếng Việt',
-      link: '/vi',
-    },
-  },
-  markdown: {
-    config(md) {
-      md.use(groupIconMdPlugin)
-    }
-  },
-  vite: {
-    plugins: [
-      groupIconVitePlugin({
-        customIcon: {
-          'bunx': 'vscode-icons:file-type-bun',
-          'pnpx': 'vscode-icons:file-type-pnpm',
-          'npx': 'vscode-icons:file-type-npm',
-        }
-      })
-    ]
   }
-})
+});
