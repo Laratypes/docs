@@ -210,7 +210,7 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Getting Started', link: '/getting-started/introduction/quick-start' },
       { text: 'API', link: '/api/introduction' },
-      { text: 'v0.5.3', link: 'https://github.com/Laratypes/Laratype' },
+      { text: 'v0.5.4', link: 'https://github.com/Laratypes/Laratype' },
     ]
   },
   locales: {
