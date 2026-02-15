@@ -12,10 +12,10 @@ hero:
   actions:
     - theme: brand
       text: Quickstart
-      link: /getting-started/introduction/quick-start
+      link: /vi/getting-started/introduction/quick-start
     - theme: alt
       text: API References
-      link: /api/introduction
+      link: /vi/api/introduction
 
 features:
   - title: Familiarity Laravel
