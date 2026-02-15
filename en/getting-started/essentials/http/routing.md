@@ -71,7 +71,7 @@ export const baseRouteApi: RouteOptions = {
 :::
 
 > [!TIP]
-> You can define child routes inside a parent route to organize the routing structure more clearly. You can apply the same pattern with [Middleware Policy](/en/getting-started/essentials/security/authorization.html#via-middleware).
+> You can define child routes inside a parent route to organize the routing structure more clearly. You can apply the same pattern with [Middleware Policy](/getting-started/essentials/security/authorization.html#via-middleware).
 
 
 ### Route Model Binding
