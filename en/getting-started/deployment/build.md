@@ -10,49 +10,41 @@ Additionally, you can remove `sauf` from `dependencies` in `package.json` to fur
 
 ## Performing Build
 
-::: code-group
+Run the project's `build` script. It compiles TypeScript with `tsc`, then runs `sauf build`, which copies the `cli.js` and `index.js` entry files into `dist/` and rewrites tsconfig path aliases. Running `sauf build` on its own does not compile TypeScript.
 
-```sh [npx]
-$ npx sauf build
+```json [package.json]
+"scripts": {
+  "build": "tsc -b ./tsconfig.build.json && sauf build"
+}
 ```
 
-```sh [pnpx]
-$ pnpx sauf build
+::: code-group
+
+```sh [npm]
+$ npm run build
+```
+
+```sh [pnpm]
+$ pnpm build
 ```
 
 ```sh [yarn]
-$ yarn sauf build
+$ yarn build
 ```
 
-```sh [bunx]
-$ bunx sauf build
+```sh [bun]
+$ bun run build
 ```
 
 :::
 
 ## Starting the Application
 
-After the build is complete, you can start the application from the `dist` directory using Node.js, or use the `saufx` command.
+After the build is complete, start the application from the `dist` directory with Node.js. The `saufx` command only runs the CLI (see below); it does not start the application.
 
-::: code-group
-
-```sh [npm]
-$ npm run saufx build
+```sh
+$ node dist/index.js
 ```
-
-```sh [pnpm]
-$ pnpm saufx build
-```
-
-```sh [yarn]
-$ yarn saufx build
-```
-
-```sh [bun]
-$ bun saufx build
-```
-
-:::
 
 ## Using CLI
 

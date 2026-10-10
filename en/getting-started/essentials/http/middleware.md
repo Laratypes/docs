@@ -59,12 +59,12 @@ $ bunx sauf make:middleware OnlySecure LogRequests
 ::: code-group
 
 ```ts [OnlySecure.ts]
-import { Middleware, MiddlewareHandler } from "@laratype/http";
+import { Middleware, MiddlewareHandler, response } from "@laratype/http";
 
 export class OnlySecure extends Middleware {
   handle: MiddlewareHandler = async (request, res, next) => {
 
-    if (request.protocol() !== 'https://') {
+    if (request.protocol() !== 'https:') {
       return response({
         message: 'Only secure connections are allowed.'
       }, 403)
@@ -79,11 +79,12 @@ export class OnlySecure extends Middleware {
 
 ```
 
-```ts [api.ts]{9}
+```ts [api.ts]{10}
 import { RouteOptions, controller } from "@laratype/http";
 import { BaseController } from "../src/http/controllers/BaseController";
-import { OnlySecure } from "../src/http/middleware/Middleware";
+import { OnlySecure } from "../src/http/middleware/OnlySecure";
 import RegisterController from "../src/http/controllers/RegisterController";
+import CreateUserRequest from "../src/http/requests/CreateUserRequest";
 
 export const baseRouteApi: RouteOptions = {
   path: "",

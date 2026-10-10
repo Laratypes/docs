@@ -4,18 +4,18 @@ outline: deep
 
 # Request
 
-`Request` là một phần quan trọng trong việc xử lý các yêu cầu HTTP trong ứng dụng. Nó cung cấp các phương thức và thuộc tính để truy cập dữ liệu từ yêu cầu, như params, headers, và body.
+`Request` đại diện cho một yêu cầu HTTP. Lớp này có các phương thức và thuộc tính để đọc dữ liệu của yêu cầu: params, headers và body.
 
-Trong Laratype, các lớp Request thường được sử dụng để xác thực và lọc dữ liệu đầu vào từ người dùng trước khi nó được xử lý bởi [controller](./controller.md). Điều này giúp đảm bảo rằng dữ liệu nhận được là hợp lệ và an toàn.
+Trong Laratype, lớp Request thường dùng để kiểm tra và lọc dữ liệu người dùng gửi lên trước khi [controller](./controller.md) xử lý, để controller chỉ nhận dữ liệu hợp lệ.
 
 > [!INFO]
-> Các lớp Request thường được đặt trong thư mục `src/http/requests`. Bạn có thể tạo các lớp Request tùy chỉnh để xử lý các yêu cầu cụ thể, ví dụ như `CreateUserRequest` hoặc `UpdateProfileRequest`.
+> Các lớp Request thường nằm trong thư mục `src/http/requests`. Mỗi loại yêu cầu có thể có lớp riêng, ví dụ `CreateUserRequest` hoặc `UpdateProfileRequest`.
 
 ## Tạo Request
 
 ### Generate Request
 
-Bạn có thể sử dụng lệnh Sauf để tạo một request mới:
+Tạo request mới bằng lệnh Sauf:
 
 ::: code-group
 
@@ -33,10 +33,10 @@ $ bunx sauf make:request CreateUserRequest
 
 :::
 
-Laratype sẽ tạo một file request mới trong thư mục `src/http/requests/` với tên `CreateUserRequest.ts`.
+Lệnh này tạo file `CreateUserRequest.ts` trong thư mục `src/http/requests/`.
 
 > [!TIP]
-> Bạn có thể tạo nhiều request cùng lúc bằng cách truyền vào nhiều tên.
+> Truyền nhiều tên để tạo nhiều request cùng lúc.
 
 ::: details Xem thêm
 
@@ -58,7 +58,7 @@ $ bunx sauf make:request CreateUserRequest UpdateProfileRequest
 
 ### Writing Request
 
-Laratype sử dụng [Zod](https://zod.dev/) để định nghĩa các quy tắc xác thực trong lớp Request. Bạn có thể ghi đè phương thức `rules` để trả về một schema Zod mô tả các quy tắc xác thực cho yêu cầu.
+Quy tắc kiểm tra dữ liệu trong lớp Request được viết bằng [Zod](https://zod.dev/). Bạn ghi đè phương thức `rules` và trả về một schema Zod mô tả dữ liệu hợp lệ.
 
 ::: code-group
 
@@ -82,11 +82,11 @@ export default class CreateUserRequest extends Request {
 
 :::
 
-Tham khảo thêm về Request API [tại đây](../../../api/api-reference/http/request.md)
+Chi tiết về Request API xem [tại đây](../../../api/api-reference/http/request.md).
 
 ## Commands
 
-Bạn có thể kiểm tra danh sách route đã đăng ký và các request liên quan bằng cách sử dụng lệnh Sauf:
+Lệnh Sauf sau liệt kê các route đã đăng ký cùng request của từng route:
 
 ::: code-group
 

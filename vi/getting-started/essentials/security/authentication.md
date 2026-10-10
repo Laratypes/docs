@@ -4,17 +4,17 @@ outline: deep
 
 # Xác thực
 
-Xác thực (Authentication) là quá trình xác minh danh tính của người dùng hoặc hệ thống trước khi cho phép truy cập vào các tài nguyên được bảo vệ. Laratype cung cấp một hệ thống xác thực linh hoạt và mạnh mẽ.
+Xác thực (authentication) là bước kiểm tra danh tính của người dùng hoặc hệ thống trước khi cho truy cập tài nguyên được bảo vệ.
 
 ## Bắt đầu nhanh
 
-Mặc định laratype sẽ tự xác thực người dùng dựa trên `Bearer Token` của `Request Header`. Để bảo vệ route và yêu cầu xác thực, bạn có thể sử dụng middleware `AuthGuard`.
+Mặc định, Laratype xác thực người dùng bằng `Bearer Token` trong `Request Header`. Route nào cần đăng nhập thì gắn middleware `AuthGuard`.
 
-Laratype cung cấp các phương thức xác thực tiện lợi thông qua các `middleware` và helper `Auth`.
+Các công cụ xác thực chính là `middleware` và helper `Auth`.
 
 ### Xác thực tự động (Automatic Authentication)
 
-Bằng cách thêm `middleware`, laratype sẽ tự động xác thực người dùng dựa trên `Bearer Token` trong `Request Header`. Bạn sẽ không cần phải làm gì thêm để kích hoạt tính năng này.
+Chỉ cần gắn `middleware`, Laratype sẽ tự xác thực người dùng bằng `Bearer Token` trong `Request Header`, không cần cấu hình gì thêm.
 
 ::: code-group
 
@@ -33,9 +33,9 @@ export default class LocalAuthMiddleware extends Middleware {
 :::
 
 > [!INFO]
-> `Passport.authenticate('web')` sử dụng guard `web` được định nghĩa trong `config/auth.ts`, bạn có thể tùy chỉnh các tùy chọn xác thực tại đây.
+> `Passport.authenticate('web')` dùng guard `web` khai báo trong `config/auth.ts`. Các tùy chọn xác thực cũng được chỉnh trong file đó.
 
-Thêm `LocalAuthMiddleware.ts` vào route hoặc nhóm route bạn muốn xác thực:
+Gắn `LocalAuthMiddleware.ts` vào route hoặc nhóm route cần xác thực:
 
 ::: code-group
 
@@ -62,7 +62,7 @@ export default {
 
 ### Lấy người dùng đã xác thực (Retrieving the Authenticated User)
 
-Trong controller hoặc bất kỳ nơi nào có access tới request/ctx, bạn có thể lấy người dùng hiện tại như sau:
+Ở controller, hoặc ở bất kỳ đâu truy cập được request/ctx, lấy người dùng hiện tại như sau:
 
 ::: code-group
 
@@ -86,7 +86,7 @@ export default class ProfileController {
 
 ### Sinh token (Generating Tokens)
 
-Laratype hỗ trợ sinh token JWT để xác thực người dùng. Bạn có thể sử dụng phương thức `AuthVerification.sign` để tạo token cho người dùng đã xác thực.
+Laratype sinh được token JWT cho người dùng đã xác thực: gọi `generateToken()` trên đối tượng mà `Auth.user()` hoặc `Auth.guard(...).attempt(...)` trả về.
 
 ::: code-group
 
@@ -118,10 +118,10 @@ export default class LoginController extends Controller {
 
 ### Xác thực token
 
-Laratype hỗ trợ xác thực token JWT thông qua middleware `AuthGuard`. Middleware này sẽ tự động kiểm tra token trong `Authorization` header của request.
+Middleware `AuthGuard` kiểm tra token JWT trong header `Authorization` của request.
 
 > [!TIP]
-> Bạn có thể xác thực thủ công bằng cách không dùng [Protecting Routes middleware](#bảo-vệ-route-protecting-routes), sau đó tùy chỉnh logic xác thực trong controller hoặc service của bạn.
+> Muốn tự xác thực thì bỏ [Protecting Routes middleware](#bảo-vệ-route-protecting-routes) và tự viết logic xác thực trong controller hoặc service.
 
 ```ts
 import { AuthVerification } from "@laratype/auth";
@@ -141,7 +141,7 @@ return {
 
 ### Bảo vệ route (Protecting Routes)
 
-Sử dụng middleware `AuthGuard` để bảo vệ route trong router:
+Gắn middleware `AuthGuard` vào route cần bảo vệ:
 
 ::: code-group
 
@@ -166,15 +166,15 @@ const authGuardedRoutes: RouteOptions = {
 :::
 
 > [!INFO]
-> Middleware `AuthGuard` sẽ trả về lỗi 401 nếu request chưa được xác thực.
+> Request chưa xác thực sẽ nhận lỗi 401 từ `AuthGuard`.
 
 ### Giới hạn số lần thử đăng nhập (Login Throttling) <Badge type="warning" text="coming soon" />
 
-Tính năng giới hạn số lần thử đăng nhập (login throttle) sẽ được bổ sung sớm. Mục tiêu: chống brute-force bằng cách giới hạn số lần đăng nhập thất bại theo IP hoặc theo account trong khoảng thời gian.
+Giới hạn số lần thử đăng nhập (login throttle) sẽ có trong bản sau. Tính năng này chống brute-force bằng cách giới hạn số lần đăng nhập sai theo IP hoặc theo tài khoản trong một khoảng thời gian.
 
 ## Xác thực thủ công (Manually Authenticating Users)
 
-Trong một số trường hợp, bạn có thể muốn xác thực người dùng một cách thủ công mà không sử dụng middleware.
+Bạn cũng có thể tự xác thực người dùng mà không qua middleware:
 
 ::: code-group
 
@@ -187,7 +187,7 @@ import { User } from "../../models/User";
 export default class LoginController extends Controller {
   // [!code focus:23]
   async manualLogin(request: Request) {
-    const data = req.validated();
+    const data = request.validated();
 
     const attempt = await Auth.guard<User>('web').attempt(data)
 
@@ -216,19 +216,19 @@ export default class LoginController extends Controller {
 ### Tùy chọn xác thực (Specifying Additional Conditions) <Badge type="warning" text="coming soon" />
 
 > [!NOTE]
-> Hỗ trợ thêm tùy chọn điều kiện khi xác thực (ví dụ: chỉ cho phép người dùng có `is_active = true`) sẽ được giới thiệu trong bản cập nhật tới.
+> Bản cập nhật tới sẽ cho thêm điều kiện khi xác thực, ví dụ chỉ chấp nhận người dùng có `is_active = true`.
 
 ### Truy cập các instance Guard cụ thể <Badge type="warning" text="coming soon" />
 
 > [!NOTE]
-> Hướng dẫn truy cập các instance Guard cụ thể sẽ được bổ sung trong các bản cập nhật tiếp theo.
+> Hướng dẫn truy cập từng instance Guard sẽ có trong bản cập nhật sau.
 
 ### Ghi nhớ đăng nhập (Remembering Users) <Badge type="warning" text="coming soon" />
 
 > [!NOTE]
-> Hệ thống "remember me" (Token TTL) sẽ được thêm cùng với hướng dẫn cấu hình tại `config/auth.ts`.
+> Tính năng "remember me" (Token TTL) sẽ có sau, kèm hướng dẫn cấu hình trong `config/auth.ts`.
 
 ## Đăng xuất (Logout), Hủy Token (Deactivating Tokens) <Badge type="warning" text="coming soon" />
 
 > [!NOTE]
-> Hướng dẫn đăng xuất (logout) và hủy token sẽ được bổ sung trong các bản cập nhật tiếp theo.
+> Hướng dẫn đăng xuất (logout) và hủy token sẽ có trong bản cập nhật sau.

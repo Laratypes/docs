@@ -6,7 +6,7 @@ Request API provides methods to access and manipulate incoming HTTP requests in 
 
 Example request
 ```sh
-curl --location 'http://localhost:3000/api/register?rol=admin' \
+curl --location 'http://localhost:3000/api/register?role=admin' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "firstName": "Nguyen",
@@ -89,11 +89,12 @@ const nonExistentHeader = request.header('Non-Existent', 'default-value');
 
 8. `param(key: string)`
 
-Gets the value of a specific parameter from the `query string`.
+Gets the value of a route path parameter. To read the `query string`, use `query()`.
 
 ```typescript
-const role = request.param('rol');
-// role = 'admin' 
+// route: /users/:id, URL: /users/1
+const id = request.param('id');
+// id = '1'
 ```
 
 9. `has(key: string | string[])`
@@ -131,7 +132,7 @@ Gets the protocol of the request (HTTP or HTTPS).
 
 ```typescript
 const protocol = request.protocol();
-// protocol = 'http://'
+// protocol = 'http:'
 ```   
 
 12. `hasHeader(key: string)`

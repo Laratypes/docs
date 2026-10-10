@@ -4,16 +4,16 @@ outline: deep
 
 # Controller
 
-Controller chịu trách nhiệm xử lý các yêu cầu HTTP, tương tác với Model và trả về phản hồi thích hợp. Trong Laratype, các Controller thường được sử dụng để tổ chức logic xử lý yêu cầu và phản hồi, giúp mã nguồn trở nên rõ ràng và dễ bảo trì hơn.
+Controller nhận yêu cầu HTTP, làm việc với Model và trả về response. Gom phần xử lý request vào controller giúp code dễ đọc và dễ bảo trì hơn.
 
 > [!INFO]
-> Controller được tổ chức trong thư mục `src/http/controllers`.
+> Controller nằm trong thư mục `src/http/controllers`.
 
 ## Tạo Controller
 
 ### Generate Controller
 
-Bạn có thể sử dụng lệnh Sauf để tạo một controller mới:
+Tạo controller mới bằng lệnh Sauf:
 
 ::: code-group
 
@@ -31,10 +31,10 @@ $ bunx sauf make:controller RegisterController
 
 :::
 
-Laratype sẽ tạo một file controller mới trong thư mục `src/http/controllers/` với tên `RegisterController.ts`.
+Lệnh này tạo file `RegisterController.ts` trong thư mục `src/http/controllers/`.
 
 > [!TIP]
-> Bạn có thể tạo nhiều controller cùng lúc bằng cách truyền vào nhiều tên.
+> Truyền nhiều tên để tạo nhiều controller cùng lúc.
 
 ::: details Xem thêm
 
@@ -56,7 +56,7 @@ $ bunx sauf make:controller RegisterController UserController
 
 ### Writing Controller
 
-Controller trong Laratype kế thừa từ lớp `Controller` có sẵn trong gói `@laratype/http`. Bạn có thể định nghĩa các phương thức trong controller để xử lý các hành động cụ thể, như tạo, đọc, cập nhật hoặc xóa tài nguyên.
+Controller kế thừa lớp `Controller` của gói `@laratype/http`. Mỗi phương thức trong controller xử lý một hành động, ví dụ tạo, đọc, cập nhật hoặc xóa tài nguyên.
 
 ::: code-group
 
@@ -76,11 +76,11 @@ export default class RegisterController extends Controller {
 
 :::
 
-`Controller` luôn đảm bảo tính độc lập giữa các `request context`, nghĩa là mỗi lần một `request` được gửi đến `controller`, một instance mới của `controller` sẽ được tạo ra để xử lý yêu cầu đó. Điều này giúp tránh các vấn đề liên quan đến trạng thái chia sẻ giữa các `request` khác nhau.
+Mỗi `request` gửi tới được xử lý bởi một instance `controller` mới. Các `request context` vì thế tách biệt nhau, và không `request` nào thấy trạng thái còn sót lại từ `request` khác.
 
 ### Guessing HTTP Status Code
 
-Laratype có khả năng tự động đoán mã trạng thái HTTP phù hợp dựa trên hành động được thực hiện trong controller. Ví dụ, khi tạo một tài nguyên mới, Laratype sẽ trả về mã trạng thái `201 Created`. Khi xóa một tài nguyên, mã trạng thái `204 No Content` sẽ được sử dụng.
+Laratype tự chọn mã trạng thái HTTP theo hành động trong controller. Ví dụ, tạo tài nguyên mới trả về `201 Created`, còn xóa tài nguyên trả về `204 No Content`.
 
 
 | Controller method name        |      HTTP Status Code      |  Description     |
@@ -91,18 +91,18 @@ Laratype có khả năng tự động đoán mã trạng thái HTTP phù hợp d
 | update                        | 200                        | Update resource  |
 | destroy                       | 204                        | Delete resource  |
 
-Có 2 cách để tùy chỉnh HTTP Status Code trong controller:
+Có hai cách đặt mã trạng thái khác:
 
-- [response()](#response): Sử dụng response() helper để trả về phản hồi với mã trạng thái tùy chỉnh.
+- [response()](#response): trả response kèm mã trạng thái bằng helper `response()`.
 
-- [UseStatusCode()](#usestatuscode): Sử dụng decorator `UseStatusCode()` để chỉ định mã trạng thái cho một phương thức cụ thể trong controller.
+- [UseStatusCode()](#usestatuscode): gắn decorator `UseStatusCode()` lên một phương thức của controller.
 
 > [!IMPORTANT]
 > Thứ tự ưu tiên: `response()` > `UseStatusCode()` > Guessing HTTP Status Code.
 
 #### response()
 
-- Sử dụng response() helper để trả về phản hồi với mã trạng thái tùy chỉnh.
+Helper `response()` nhận dữ liệu và mã trạng thái:
 
 ::: code-group
 
@@ -124,7 +124,7 @@ export default class RegisterController extends Controller {
 
 #### UseStatusCode()
 
-- Sử dụng decorator `UseStatusCode()` để chỉ định mã trạng thái cho một phương thức cụ thể trong controller.
+Decorator `UseStatusCode()` đặt mã trạng thái cho một phương thức:
 
 ::: code-group
 
@@ -146,7 +146,7 @@ export default class RegisterController extends Controller {
 :::
 
 #### redirect()
-Bạn có thể sử dụng phương thức `redirect()` trong controller để chuyển hướng người dùng đến một URL khác.
+Gọi `redirect()` trong controller để chuyển người dùng sang URL khác:
 
 ::: code-group
 
@@ -168,7 +168,7 @@ export default class RegisterController extends Controller {
 
 ## Commands
 
-Bạn có thể kiểm tra danh sách route đã đăng ký và các controller liên quan bằng cách sử dụng lệnh Sauf:
+Lệnh Sauf sau liệt kê các route đã đăng ký cùng controller của từng route:
 
 ::: code-group
 

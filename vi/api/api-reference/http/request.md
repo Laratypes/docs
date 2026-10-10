@@ -1,12 +1,12 @@
 # Request
 
-Request API cung cấp các phương thức để truy cập và thao tác với các yêu cầu HTTP đến trong ứng dụng của bạn. Bạn có thể sử dụng API này để lấy thông tin về yêu cầu, như `header`, `params`, và `data` gửi kèm.
+Request API gồm các phương thức đọc thông tin của yêu cầu HTTP gửi tới ứng dụng: `header`, `params` và `data` gửi kèm.
 
 ## API
 
-Example request
+Yêu cầu dùng cho các ví dụ bên dưới:
 ```sh
-curl --location 'http://localhost:3000/api/register?rol=admin' \
+curl --location 'http://localhost:3000/api/register?role=admin' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "firstName": "Nguyen",
@@ -18,7 +18,7 @@ curl --location 'http://localhost:3000/api/register?rol=admin' \
 
 1. `all()`
 
-Trả về tất cả dữ liệu yêu cầu (bao gồm cả `query string` và `body`).
+Trả về toàn bộ dữ liệu của yêu cầu, gồm cả `query string` và `body`.
 
 ```typescript
 const requestData = request.all();
@@ -27,7 +27,7 @@ const requestData = request.all();
 
 2. `query()`
 
-Lấy tất cả các tham số trong `query string` của yêu cầu.
+Trả về mọi tham số trong `query string`.
 
 ```typescript
 const queryParams = request.query();
@@ -36,7 +36,7 @@ const queryParams = request.query();
 
 3. `input(key: string | string[])`
 
-Lấy giá trị của một trường cụ thể từ dữ liệu yêu cầu.
+Lấy giá trị của một hoặc nhiều trường trong dữ liệu yêu cầu.
 
 ```typescript
 const firstName = request.input('firstName');
@@ -49,7 +49,7 @@ const selectedData = request.input(['firstName', 'age']);
 
 4. `only(keys: string[])`
 
-Trả về một phần dữ liệu yêu cầu dựa trên các trường được chỉ định.
+Chỉ trả về các trường được liệt kê.
 
 ```typescript
 const requestData = request.only(['firstName', 'lastName']);
@@ -59,7 +59,7 @@ const requestData = request.only(['firstName', 'lastName']);
 
 5. `except(keys: string[])`
 
-Trả về tất cả dữ liệu của request ngoại trừ các trường được chỉ định.
+Trả về toàn bộ dữ liệu, trừ các trường được liệt kê.
 
 ```typescript
 const requestData = request.except(['age']);
@@ -68,7 +68,7 @@ const requestData = request.except(['age']);
 
 6. headers()
 
-Trả về tất cả các header của request.
+Trả về mọi header của request.
 
 ```typescript
 const headers = request.headers();
@@ -77,7 +77,7 @@ const headers = request.headers();
 
 7. `header(key: string, defaultValue?: string)`
 
-Lấy giá trị của một header cụ thể từ yêu cầu.
+Lấy giá trị của một header. Nếu header không có, trả về `defaultValue`.
 
 ```typescript
 const contentType = request.header('Content-Type');
@@ -89,16 +89,17 @@ const nonExistentHeader = request.header('Non-Existent', 'default-value');
 
 8. `param(key: string)`
 
-Lấy giá trị của một tham số cụ thể từ `query string`.
+Lấy giá trị của một tham số trên đường dẫn route (path param). Muốn đọc `query string` thì dùng `query()`.
 
 ```typescript
-const role = request.param('rol');
-// role = 'admin' 
+// route: /users/:id, URL: /users/1
+const id = request.param('id');
+// id = '1'
 ```
 
 9. `has(key: string | string[])`
 
-Kiểm tra xem một hoặc nhiều trường có tồn tại trong dữ liệu yêu cầu hay không.
+Kiểm tra một hoặc nhiều trường có trong dữ liệu yêu cầu không. Với nhiều trường, kết quả chỉ là `true` khi có đủ tất cả.
 
 ```typescript
 const hasRole = request.has('role');
@@ -117,7 +118,7 @@ const hasSomeFields = request.has(['firstName', 'nonExistentField']);
 
 10. `hasAny(key: string | string[])`
 
-Kiểm tra xem ít nhất một trong các trường có tồn tại trong dữ liệu yêu cầu hay không.
+Trả về `true` nếu có ít nhất một trong các trường.
 
 ```typescript
 const hasAnyRole = request.hasAny(['role', 'nonExistentField']);
@@ -127,16 +128,16 @@ const hasAnyNonExistent = request.hasAny(['nonExistentField1', 'nonExistentField
 ```
 11. `protocol()`
 
-Lấy giao thức của request (HTTP hoặc HTTPS).
+Trả về giao thức của request (HTTP hoặc HTTPS).
 
 ```typescript
 const protocol = request.protocol();
-// protocol = 'http://'
+// protocol = 'http:'
 ```   
 
 12. `hasHeader(key: string)`
 
-Kiểm tra xem một header cụ thể có tồn tại trong yêu cầu hay không.
+Kiểm tra request có một header hay không.
 
 ```typescript
 const hasContentType = request.hasHeader('Content-Type');
@@ -148,7 +149,7 @@ const hasNonExistentHeader = request.hasHeader('Non-Existent-Header');
 
 13. `isMethod(method: string)`
 
-Kiểm tra xem phương thức của yêu cầu có khớp với phương thức đã cho hay không.
+Kiểm tra phương thức HTTP của request có khớp với giá trị truyền vào không.
 
 ```typescript
 const isPost = request.isMethod('POST');
@@ -160,7 +161,7 @@ const isGet = request.isMethod('GET');
 
 14. `path()`
 
-Lấy đường dẫn của request.
+Trả về đường dẫn (path) của request.
 
 ```typescript
 const path = request.path();
@@ -169,7 +170,7 @@ const path = request.path();
 
 15. `url()`
 
-Lấy URL đầy đủ của request.
+Trả về URL đầy đủ của request.
 
 ```typescript
 const fullUrl = request.url();
@@ -178,7 +179,7 @@ const fullUrl = request.url();
 
 16. `method()`
 
-Lấy phương thức HTTP của request.
+Trả về phương thức HTTP của request.
 
 ```typescript
 const method = request.method();
@@ -187,7 +188,7 @@ const method = request.method();
 
 17. `validated()`
 
-Lấy dữ liệu đã được xác thực từ yêu cầu.
+Trả về dữ liệu đã qua kiểm tra (validation).
 
 ```typescript
 const validatedData = request.validated();

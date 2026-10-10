@@ -4,16 +4,16 @@ outline: deep
 
 # Middleware
 
-Middleware cung cấp một cách thuận tiện để lọc các yêu cầu HTTP vào ứng dụng của bạn. Bao gồm middleware xác thực, có thể được sử dụng để giới hạn truy cập vào các phần nhất định của ứng dụng chỉ dành cho người dùng đã đăng nhập. Ngoài ra, bạn có thể tạo middleware tùy chỉnh để thực hiện các tác vụ khác nhau.
+Middleware lọc các yêu cầu HTTP trước khi chúng vào ứng dụng. Middleware xác thực là một ví dụ: nó chỉ cho người dùng đã đăng nhập truy cập một số phần của ứng dụng. Bạn cũng có thể viết middleware riêng cho các việc khác.
 
 > [!INFO]
-> Middleware thường được đặt trong thư mục `src/http/middleware`.
+> Middleware thường nằm trong thư mục `src/http/middleware`.
 
 ## Tạo Middleware
 
 ### Generate Middleware
 
-Bạn có thể sử dụng lệnh Sauf để tạo một middleware mới:
+Tạo middleware mới bằng lệnh Sauf:
 
 ::: code-group
 
@@ -31,10 +31,10 @@ $ bunx sauf make:middleware OnlySecure
 
 :::
 
-Laratype sẽ tạo một file middleware mới trong thư mục `src/http/middleware/` với tên `OnlySecure.ts`.
+Lệnh này tạo file `OnlySecure.ts` trong thư mục `src/http/middleware/`.
 
 > [!TIP]
-> Bạn có thể tạo nhiều middleware cùng lúc bằng cách truyền vào nhiều tên.
+> Truyền nhiều tên để tạo nhiều middleware cùng lúc.
 
 ::: details Xem thêm
 
@@ -59,12 +59,12 @@ $ bunx sauf make:middleware OnlySecure LogRequests
 ::: code-group
 
 ```ts [OnlySecure.ts]
-import { Middleware, MiddlewareHandler } from "@laratype/http";
+import { Middleware, MiddlewareHandler, response } from "@laratype/http";
 
 export class OnlySecure extends Middleware {
   handle: MiddlewareHandler = async (request, res, next) => {
 
-    if (request.protocol() !== 'https://') {
+    if (request.protocol() !== 'https:') {
       return response({
         message: 'Only secure connections are allowed.'
       }, 403)
@@ -79,11 +79,12 @@ export class OnlySecure extends Middleware {
 
 ```
 
-```ts [api.ts]{9}
+```ts [api.ts]{10}
 import { RouteOptions, controller } from "@laratype/http";
 import { BaseController } from "../src/http/controllers/BaseController";
-import { OnlySecure } from "../src/http/middleware/Middleware";
+import { OnlySecure } from "../src/http/middleware/OnlySecure";
 import RegisterController from "../src/http/controllers/RegisterController";
+import CreateUserRequest from "../src/http/requests/CreateUserRequest";
 
 export const baseRouteApi: RouteOptions = {
   path: "",
@@ -106,14 +107,14 @@ export const baseRouteApi: RouteOptions = {
 
 :::
 
-Các middleware được khai báo trong mảng `middleware` sẽ được thực thi theo thứ tự từ trên xuống dưới trước khi yêu cầu được chuyển đến controller. Nếu middleware trả về phản hồi, quá trình xử lý sẽ dừng lại và phản hồi sẽ được gửi về cho client ngay lập tức. Nếu middleware gọi hàm `next()`, yêu cầu sẽ tiếp tục được xử lý bởi các middleware tiếp theo hoặc controller.
+Middleware trong mảng `middleware` chạy lần lượt từ trên xuống trước khi yêu cầu tới controller. Middleware nào trả về response thì quá trình dừng lại và response đó được gửi ngay cho client. Middleware nào gọi `next()` thì yêu cầu đi tiếp tới middleware sau, hoặc tới controller.
 
 > [!TIP]
-> Bạn có thể áp dụng middleware cho nhóm bằng cách sử dụng `children` trong định nghĩa route.
+> Để áp dụng middleware cho cả một nhóm route, khai báo các route con trong `children`.
 
 ## Commands
 
-Bạn có thể kiểm tra danh sách route đã đăng ký và các middleware liên quan bằng cách sử dụng lệnh Sauf:
+Lệnh Sauf sau liệt kê các route đã đăng ký cùng middleware của từng route:
 
 ::: code-group
 

@@ -11,7 +11,7 @@ In Laratype, most services are provided by service providers. They are responsib
 Laratype supports many different types of service providers, including:
 
 - `ServiceProvider`: The base class for all service providers.
-- `RouteServiceProvider`: Specialized for registering routes.
+- `RouteAppServiceProvider`: Specialized for registering routes.
 - `AppServiceProvider`: Used to register general application services.
 
 The common feature of service providers is that they all inherit from the `ServiceProvider` class and can override methods like `register` and `boot` to perform specific actions when the application starts.

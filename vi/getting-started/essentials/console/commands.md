@@ -1,14 +1,12 @@
 # Commands
 
-Laratype cung cấp một số lệnh tiện ích để giúp bạn quản lý và phát triển ứng dụng của mình. Các lệnh này có thể được chạy từ dòng lệnh (CLI) và thường được sử dụng để tạo các thành phần mới, chạy máy chủ phát triển, và thực hiện các tác vụ khác. Bạn có thể tham khảo thêm [tại đây](/vi/getting-started/sauf/introduction.md).
-
-Tuy nhiên, bạn có thể tự tạo các lệnh tùy chỉnh của riêng mình để phục vụ các nhu cầu cụ thể của ứng dụng. Dưới đây là hướng dẫn cơ bản về cách tạo và sử dụng lệnh trong Laratype.
+Laratype có sẵn các lệnh dòng lệnh (CLI) để tạo thành phần mới, chạy server phát triển và làm các việc khác (xem [tại đây](/vi/getting-started/sauf/introduction.md)). Trang này hướng dẫn tự viết lệnh riêng cho ứng dụng.
 
 > [!INFO]
-> Các lệnh được tổ chức trong thư mục `console/commands`.
+> Các lệnh nằm trong thư mục `src/console/commands`.
 
 > [!INFO]
-> Laratype sử dụng thư viện [commander](https://github.com/tj/commander.js) để quản lý các lệnh CLI.
+> Lệnh CLI của Laratype chạy trên thư viện [commander](https://github.com/tj/commander.js).
 
 ## Tạo lệnh mới
 
@@ -30,10 +28,10 @@ $ bunx sauf make:command SendMail
 
 :::
 
-Laratype sẽ tạo một file command mới trong thư mục `src/console/commands/` với tên `SendMail.ts`.
+Lệnh này tạo file `SendMail.ts` trong thư mục `src/console/commands/`.
 
 > [!TIP]
-> Bạn có thể tạo nhiều command cùng lúc bằng cách truyền vào nhiều tên.
+> Truyền nhiều tên để tạo nhiều command cùng lúc.
 
 ::: details Xem thêm
 
@@ -74,11 +72,11 @@ export default class SendMail extends Command {
 ```
 :::
 
-Mỗi command sẽ kế thừa từ lớp `Command` có sẵn trong gói `@laratype/console`. Bạn cần định nghĩa các thuộc tính `signature` và `description` để mô tả lệnh, và phương thức `handle()` để chứa logic thực thi của lệnh.
+Mỗi command kế thừa lớp `Command` của gói `@laratype/console`. `signature` là tên lệnh, `description` là mô tả, còn code chạy khi gọi lệnh nằm trong phương thức `handle()`.
 
 ### Options
 
-Bạn có thể định nghĩa các tùy chọn (options) cho lệnh của mình bằng cách sử dụng `static options` trong class command.
+Khai báo tùy chọn (options) của lệnh trong `static options`:
 
 ::: code-group
 
@@ -110,7 +108,7 @@ export default class SendMail extends Command {
 
 ### Arguments
 
-Bạn có thể định nghĩa các đối số (arguments) cho lệnh của mình bằng cách sử dụng `static arguments` trong class command.
+Khai báo đối số (arguments) của lệnh trong `static arguments`:
 
 ::: code-group
 
@@ -144,7 +142,7 @@ export default class SendMail extends Command {
 
 ## Chạy command
 
-Sau khi tạo command, bạn có thể chạy nó từ dòng lệnh bằng cách sử dụng lệnh `sauf` hoặc `saufx` (đối với môi trường production). Ví dụ, để chạy lệnh `SendMail`, bạn sẽ sử dụng:
+Chạy command bằng `sauf`, hoặc bằng `saufx` trên production. Ví dụ với lệnh `SendMail`:
 
 ::: details Development {open}
 
@@ -190,7 +188,7 @@ $ bun saufx send:mail
 
 :::
 
-Bạn có thể lấy danh sách tất cả các lệnh có sẵn bằng cách chạy:
+Xem danh sách mọi lệnh hiện có:
 
 ::: details Development {open}
 

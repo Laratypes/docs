@@ -4,15 +4,15 @@ outline: deep
 
 # Routing
 
-Routing là một phần quan trọng trong bất kỳ framework web nào, và Laratype cũng không ngoại lệ. Hệ thống routing của Laratype rất linh hoạt và mạnh mẽ, cho phép bạn dễ dàng định nghĩa các tuyến đường (routes) cho ứng dụng của mình.
+Routing quyết định URL nào được xử lý bởi controller nào. Trang này hướng dẫn cách khai báo route (tuyến đường) trong Laratype.
 
 ## Bắt đầu nhanh
 
 ### Định nghĩa Routes
 
-Routes được đăng ký trong Service Provider, mặc định `create-laratype` đã tạo sẵn `src/providers/RouteServiceProvider.ts` cho bạn. `RouteServiceProvider.ts` sẽ import file định nghĩa routes từ `/app/routes/api.ts`, tuy nhiên bạn có thể thay đổi theo ý muốn.
+Route được đăng ký trong một Service Provider. Dự án tạo bằng `create-laratype` có sẵn `src/providers/RouteServiceProvider.ts`, và file này import route từ `/app/routes/api.ts`. Bạn có thể đổi sang file khác nếu muốn.
 
-Laratype tổ chức routers theo nhóm (groups) để dễ quản lý. Mặc định, `api.ts` đã có sẵn một nhóm route cho API:
+Route được tổ chức theo nhóm (group). File `api.ts` mặc định có sẵn một nhóm route cho API:
 
 ::: code-group
 
@@ -33,7 +33,7 @@ export const baseRouteApi: RouteOptions = {
 
 :::
 
-Giống Laravel, các route có tính nhóm (grouped routes) giúp bạn dễ dàng áp dụng middleware, tiền tố (prefix) cho nhiều route cùng lúc.
+Như trong Laravel, nhóm route (grouped routes) cho phép gắn middleware và tiền tố (prefix) cho nhiều route cùng lúc.
 
 ::: code-group
 
@@ -71,20 +71,20 @@ export const baseRouteApi: RouteOptions = {
 :::
 
 > [!TIP]
-> Bạn có thể định nghĩa các route con (children routes) bên trong một route cha (parent route) để tổ chức cấu trúc route rõ ràng hơn. Bạn cũng có thể áp dụng tương tự với [Middleware Policy](/vi/getting-started/essentials/security/authorization.html#via-middleware).
+> Khai báo route con (children routes) bên trong route cha (parent route) để cấu trúc route dễ theo dõi hơn. Cách này cũng dùng được với [Middleware Policy](/vi/getting-started/essentials/security/authorization.html#via-middleware).
 
 
 ### Route Model Binding
 
-Laratype hỗ trợ tự động binding model từ tham số route, giúp bạn tiết kiệm thời gian và công sức khi làm việc với các tham số trong URL.
+Laratype tự tìm model theo tham số trên route rồi truyền model đó vào controller, nên bạn không phải tự truy vấn từ giá trị trong URL.
 
-Khác với Laravel, các tham số route trong Laratype được định nghĩa với dấu `:` thay vì `{}`, các tham số truyền vào controller sẽ được gom vào một đối tượng `model` với tên thuộc tính tương ứng với tên tham số route.
+Tham số route trong Laratype viết bằng dấu `:`, còn Laravel dùng `{}`. Các model đã tìm được gom vào một đối tượng `model` truyền cho controller, mỗi thuộc tính mang tên của tham số route tương ứng.
 
 #### Implicit Binding
 
-Laratype hỗ trợ implicit binding, nghĩa là nó sẽ tự động tìm kiếm model dựa trên tên tham số route và kiểu của tham số trong controller.
+Với implicit binding, Laratype tự tìm model dựa trên tên tham số route và kiểu tham số trong controller.
 
-Ví dụ, khi một yêu cầu (request) đến `/users/1`, Laratype sẽ tự động tìm kiếm User có `id` là `1` và truyền nó vào phương thức `show` của `UserController`:
+Ví dụ, khi có yêu cầu tới `/users/1`, Laratype tìm User có `id` là `1` rồi truyền vào phương thức `show` của `UserController`:
 
 ::: code-group
 
@@ -111,11 +111,11 @@ export default class UserController {
 :::
 
 > [!INFO]
->  Laratype tự động chuyển hóa tham số route từ camelCase sang PascalCase, từ đó tìm đến [Model](../database/model.md) tương ứng để thực hiện truy vấn. Laratype cũng sử dụng khóa chính (primary key) của model để tìm kiếm dữ liệu theo `findOneBy`.
+>  Laratype đổi tên tham số route từ camelCase sang PascalCase để tìm [Model](../database/model.md) tương ứng, rồi truy vấn bằng `findOneBy` theo khóa chính (primary key) của model.
 
 #### Explicit Binding
 
-Không phải lúc nào implicit binding cũng đáp ứng được yêu cầu của bạn. Trong những trường hợp phức tạp hơn, bạn có thể sử dụng explicit binding để tùy chỉnh cách thức tìm kiếm model. Ví dụ bạn muốn quy định rõ ràng tham số route `:userId` sẽ tương ứng với model `User`, bạn có thể làm như sau:
+Khi implicit binding không đủ, explicit binding cho bạn tự quy định cách tìm model. Ví dụ, để tham số route `:userId` ứng với model `User`:
 
 ::: code-group
 
@@ -143,9 +143,9 @@ export default class RouteBindingsServiceProvider extends AppServiceProvider {
 
 :::
 
-Lúc này, khi một yêu cầu đến `/users/1`, Laratype sẽ sử dụng model `User` để tìm kiếm bản ghi có khóa chính là `1` và truyền nó vào controller, tương tự như implicit binding.
+Khi có yêu cầu tới `/users/1`, Laratype dùng model `User` để tìm bản ghi có khóa chính `1` rồi truyền vào controller, giống implicit binding.
 
-Tuy nhiên, đôi khi bạn muốn tùy chỉnh cách tìm kiếm hơn nữa, ví dụ chỉ tim kiếm những user có trạng thái `active`. Bạn có thể truyền vào một hàm callback để định nghĩa cách tìm kiếm:
+Để tự viết cách tìm, ví dụ chỉ lấy user đang `active`, truyền một hàm callback:
 
 ::: code-group
 
@@ -166,7 +166,7 @@ export default class RouteBindingsServiceProvider extends AppServiceProvider {
 
 ## Commands
 
-Laratype cung cấp một số lệnh `sauf` để giúp bạn quản lý routes dễ dàng hơn:
+Các lệnh `sauf` liên quan đến route:
 
 ### Route List
 
