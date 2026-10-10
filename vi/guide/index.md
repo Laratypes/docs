@@ -1,6 +1,6 @@
 # Laratype v1
 
-Laratype v1 là bản thiết kế lại của framework. Mỗi endpoint được khai báo một lần dưới dạng contract, và chính object đó dùng cho validation, type của handler, client có type phía frontend và OpenAPI. Class nhận dependency qua constructor injection, decorator là tuỳ chọn. File route, FormRequest, Resource, Policy, facade và `sauf make:*` vẫn giữ như bản 0.5.
+Laratype v1 là bản thiết kế lại của framework. Mỗi endpoint được khai báo một lần dưới dạng contract, và chính object đó dùng cho validation, type của handler, client có type phía frontend và OpenAPI. Class nhận dependency qua constructor injection, decorator là tuỳ chọn. v1 giữ cách viết quen thuộc của Laravel: file route, FormRequest, Resource, Policy, facade và `sauf make:*`.
 
 v1 chưa có trên npm. Để xây dựng ứng dụng lúc này, hãy dùng [tài liệu 0.5.4](/vi/v0.5/).
 
