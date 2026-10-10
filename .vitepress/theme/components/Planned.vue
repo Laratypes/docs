@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // Callout for a v1 feature that is not merged yet: <Planned issue="105" />.
-// Never shows signatures; the spec in Laratypes/Laratype docs/v1 is the source of truth (#210, #211).
+// Pages may still describe its planned design from the spec (Laratypes/Laratype docs/v1), with examples
+// marked illustrative (#211). For a per-section badge use <Status issue="N" />.
 import { computed } from 'vue'
 import { useData } from 'vitepress'
 

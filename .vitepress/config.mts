@@ -11,8 +11,8 @@ export default defineConfig({
   rewrites: {
     'en/:rest*': ':rest*'
   },
-  // Repo docs and synced code snippets are not pages
-  srcExclude: ['AGENTS.md', 'snippets/**'],
+  // Repo docs are not pages
+  srcExclude: ['AGENTS.md'],
   head: [
     [
       'link',
@@ -33,7 +33,25 @@ export default defineConfig({
     sidebar: {
       // v1 guide (#210). DOC6 (#211) adds groups as pages land.
       '/guide/': [
-        { text: 'Overview', link: '/guide/' },
+        {
+          text: 'Getting Started',
+          base: '/guide/',
+          items: [
+            { text: 'Overview', link: '' },
+            { text: 'Introduction', link: 'introduction' },
+            { text: 'Your First Endpoint', link: 'first-endpoint' },
+          ]
+        },
+        {
+          text: 'Core Concepts',
+          base: '/guide/',
+          items: [
+            { text: 'Contracts', link: 'contracts' },
+            { text: 'Dependency Injection', link: 'dependency-injection' },
+            { text: 'Service Providers', link: 'service-providers' },
+            { text: 'Configuration', link: 'configuration' },
+          ]
+        },
       ],
       '/v0.5/getting-started/': [
         {

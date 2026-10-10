@@ -15,10 +15,9 @@ Guidance for AI agents and contributors working on laratype.dev, the VitePress d
 - `.vitepress/config.mts`: site config, EN sidebar and nav, search (Algolia), rewrites, `srcExclude`.
 - `vi/config.ts`: VI nav and sidebar (`defineAdditionalConfig`).
 - `.vitepress/versions.ts`: the version dropdown and `isV05Path()`.
-- `.vitepress/theme/`: `Layout.vue` (language cookie, version banner slot) and `components/` (`VersionBanner.vue`, `Planned.vue`).
+- `.vitepress/theme/`: `Layout.vue` (language cookie, version banner slot) and `components/` (`VersionBanner.vue`, `Status.vue`, `Planned.vue`).
 - `en/` and `vi/`: page content. The two trees mirror each other; add, rename or remove pages in both.
 - `public/assets/`: static files, referenced as `/assets/...` in Markdown, never as `public/assets/...`.
-- `snippets/`: code included into pages with `<<< @/snippets/...`. It is excluded from routing. v1 snippets are synced from the Laratype repo and are never edited by hand.
 
 ## Locales and URLs
 
@@ -30,7 +29,8 @@ Guidance for AI agents and contributors working on laratype.dev, the VitePress d
 
 - **v1 is the default.** It lives at the root: `en/index.md`, `en/guide/**` (`/`, `/guide/`) and `vi/index.md`, `vi/guide/**` (`/vi/`, `/vi/guide/`). v1 is in development and not on npm yet.
   - The source of truth is the Laratype spec (`docs/v1/<area>.md` in `Laratypes/Laratype`). A page never adds API the spec doesn't have; ask PM about gaps.
-  - Pages cover the whole planned v1. Each page or section is marked **Available** (code on `master`, examples synced from the type-checked `docs/v1/examples`) or **Planned · #N** (design from the spec, examples marked illustrative). Database/ORM gets a placeholder until S5 (Laratypes/Laratype#88).
+  - Pages cover the whole planned v1. Each section heading ends with a badge: `<Status available />` (code on Laratype `master` only) or `<Status issue="N" pr="M" />` (planned; `pr` names an open code PR). Examples are written inline as `ts` code blocks with reader code only: no test-only lines (`expectTypeOf`, `vitest`, `__types`) and no status comments. Code in an available section matches `docs/v1/examples` on Laratype `master`. Planned code uses only names from the spec and sits under a `::: info Illustrative example` box. Database/ORM gets a placeholder until S5 (Laratypes/Laratype#88).
+  - When a code PR merges: change that section's badge to `<Status available />`, update its code block to match `docs/v1/examples` on Laratype `master`, and drop the illustrative box.
 - **0.5.4 is an archive** at `en/v0.5/**` (`/v0.5/`) and `vi/v0.5/**` (`/vi/v0.5/`). It documents the current npm release. Its internal links use `/v0.5/` and `/vi/v0.5/` paths.
 - A route-based banner on every page (`VersionBanner.vue`) points v1 readers to the archive and archive readers back to v1. The version dropdown has two entries: v1 (in development) → `/` and v0.5.4 → `/v0.5/`.
 - Both versions are indexed by search.
