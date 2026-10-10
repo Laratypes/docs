@@ -64,7 +64,7 @@ import { Middleware, MiddlewareHandler, response } from "@laratype/http";
 export class OnlySecure extends Middleware {
   handle: MiddlewareHandler = async (request, res, next) => {
 
-    if (request.protocol() !== 'https://') {
+    if (request.protocol() !== 'https:') {
       return response({
         message: 'Only secure connections are allowed.'
       }, 403)

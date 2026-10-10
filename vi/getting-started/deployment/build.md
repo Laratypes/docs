@@ -8,22 +8,30 @@ Bạn cũng có thể xóa `sauf` khỏi `dependencies` trong `package.json` đ�
 
 ## Thực hiện Build
 
-::: code-group
+Chạy script `build` của dự án. Script này biên dịch TypeScript bằng `tsc`, rồi chạy `sauf build` để chép file `cli.js` và `index.js` vào `dist/` và sửa lại alias đường dẫn theo tsconfig. Chạy riêng `sauf build` thì không biên dịch TypeScript.
 
-```sh [npx]
-$ npx sauf build
+```json [package.json]
+"scripts": {
+  "build": "tsc -b ./tsconfig.build.json && sauf build"
+}
 ```
 
-```sh [pnpx]
-$ pnpx sauf build
+::: code-group
+
+```sh [npm]
+$ npm run build
+```
+
+```sh [pnpm]
+$ pnpm build
 ```
 
 ```sh [yarn]
-$ yarn sauf build
+$ yarn build
 ```
 
-```sh [bunx]
-$ bunx sauf build
+```sh [bun]
+$ bun run build
 ```
 
 :::

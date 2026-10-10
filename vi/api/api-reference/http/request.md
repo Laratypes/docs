@@ -132,7 +132,7 @@ Trả về giao thức của request (HTTP hoặc HTTPS).
 
 ```typescript
 const protocol = request.protocol();
-// protocol = 'http://'
+// protocol = 'http:'
 ```   
 
 12. `hasHeader(key: string)`

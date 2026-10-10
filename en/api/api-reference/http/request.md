@@ -132,7 +132,7 @@ Gets the protocol of the request (HTTP or HTTPS).
 
 ```typescript
 const protocol = request.protocol();
-// protocol = 'http://'
+// protocol = 'http:'
 ```   
 
 12. `hasHeader(key: string)`

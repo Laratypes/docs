@@ -10,22 +10,30 @@ Additionally, you can remove `sauf` from `dependencies` in `package.json` to fur
 
 ## Performing Build
 
-::: code-group
+Run the project's `build` script. It compiles TypeScript with `tsc`, then runs `sauf build`, which copies the `cli.js` and `index.js` entry files into `dist/` and rewrites tsconfig path aliases. Running `sauf build` on its own does not compile TypeScript.
 
-```sh [npx]
-$ npx sauf build
+```json [package.json]
+"scripts": {
+  "build": "tsc -b ./tsconfig.build.json && sauf build"
+}
 ```
 
-```sh [pnpx]
-$ pnpx sauf build
+::: code-group
+
+```sh [npm]
+$ npm run build
+```
+
+```sh [pnpm]
+$ pnpm build
 ```
 
 ```sh [yarn]
-$ yarn sauf build
+$ yarn build
 ```
 
-```sh [bunx]
-$ bunx sauf build
+```sh [bun]
+$ bun run build
 ```
 
 :::
