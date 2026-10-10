@@ -26,7 +26,7 @@ Handler là một method của class. Tham số đầu tiên là context của r
 
 ```ts
 // app/http/controllers/UserController.ts
-import { type Ctx, type ControllerOf } from '@laratype/http'
+import { type Ctx, type ControllerOf } from '@laratype/http' // package per #105, not final
 import { users } from '../../contracts/users'
 
 export class UserController implements ControllerOf<typeof users> {
@@ -77,7 +77,7 @@ Status lấy từ contract: `store` trả `201` vì response của nó được 
 Để trả lỗi, handler trả về `fail(errorDef, body)`:
 
 ```ts
-import { type Ctx, fail } from '@laratype/http'
+import { type Ctx, fail } from '@laratype/http' // package per #105, not final
 import { errors } from '@laratype/contract'
 
 // inside UserController
