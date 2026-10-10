@@ -71,7 +71,7 @@ export const baseRouteApi: RouteOptions = {
 :::
 
 > [!TIP]
-> Bạn có thể định nghĩa các route con (children routes) bên trong một route cha (parent route) để tổ chức cấu trúc route rõ ràng hơn. Bạn cũng có thể áp dụng tương tự với [Middleware Policy](/vi/getting-started/essentials/security/authorization.html#via-middleware).
+> Bạn có thể định nghĩa các route con (children routes) bên trong một route cha (parent route) để tổ chức cấu trúc route rõ ràng hơn. Bạn cũng có thể áp dụng tương tự với [Middleware Policy](/vi/v0.5/getting-started/essentials/security/authorization.html#via-middleware).
 
 
 ### Route Model Binding
