@@ -11,7 +11,25 @@ export default defineAdditionalConfig({
     sidebar: {
       // v1 guide (#210). DOC6 (#211) adds groups as pages land.
       '/vi/guide/': [
-        { text: 'Tổng quan', link: '/vi/guide/' },
+        {
+          text: 'Bắt đầu',
+          base: '/vi/guide/',
+          items: [
+            { text: 'Tổng quan', link: '' },
+            { text: 'Giới thiệu', link: 'introduction' },
+            { text: 'Endpoint đầu tiên', link: 'first-endpoint' },
+          ]
+        },
+        {
+          text: 'Khái niệm cốt lõi',
+          base: '/vi/guide/',
+          items: [
+            { text: 'Contract', link: 'contracts' },
+            { text: 'Dependency Injection', link: 'dependency-injection' },
+            { text: 'Service Provider', link: 'service-providers' },
+            { text: 'Cấu hình', link: 'configuration' },
+          ]
+        },
       ],
       '/vi/v0.5/getting-started/': [
         {

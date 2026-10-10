@@ -10,10 +10,10 @@ The guide pages for each area are being written ([Laratypes/Laratype#211](https:
 
 | Area | Package | Status |
 |---|---|---|
-| Contract | `@laratype/contract` | Endpoint builder, path params and error catalog are on `master`. `defineContract`, `defineApi` and the validation adapter are in review. |
-| Dependency injection and providers | `@laratype/core`, `@laratype/support` | In review |
+| [Contract](./contracts) | `@laratype/contract` | Endpoint builder, path params and error catalog are on `master`. `defineContract`, `defineApi` and the validation adapter are planned, with code in review. |
+| [Dependency injection](./dependency-injection) and [providers](./service-providers) | `@laratype/core`, `@laratype/support` | Planned, code in review |
 | Routing, controllers and middleware | `@laratype/http` | Planned |
-| Validation | `@laratype/validation` | In review (Standard Schema adapter); pipeline validation planned |
+| Validation | `@laratype/validation` | Planned (the Standard Schema adapter is in review) |
 | Responses and exceptions | `@laratype/http` | Planned |
 | Authentication and authorization | `@laratype/auth` | Planned |
 | Frontend client | `@laratype/client` | Planned |
