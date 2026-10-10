@@ -117,7 +117,7 @@ Registry đi ngược lên cây kế thừa. Class có mục riêng thì dùng m
 Bạn không tự gọi `__laratype_deps`. Ví dụ dưới đây có lời gọi mà transform sinh ra cho `UserService`, để bạn thấy nó ghi lại những gì.
 
 ::: info Ví dụ minh hoạ
-Container, token và registry đang được review trong PR [#196](https://github.com/Laratypes/Laratype/pull/196) và [#201](https://github.com/Laratypes/Laratype/pull/201). Ví dụ được kiểm tra type theo các pull request đó.
+Container, token và registry đang được review trong PR [#196](https://github.com/Laratypes/Laratype/pull/196) và [#201](https://github.com/Laratypes/Laratype/pull/201).
 :::
 
 ```ts
@@ -139,7 +139,7 @@ export class UserService {
   constructor(readonly users: UserRepository, readonly mailer: Mailer) {}
 }
 // The DI transform emits this call after the class. You don't write it.
-// Mailer is an interface, so the transform records MAILER only from `@Inject(MAILER)` on `mailer` (see @Inject below).
+// Mailer is an interface, so in app code `mailer` needs `@Inject(MAILER)` (see @Inject below); with it, the transform records `() => MAILER`.
 __laratype_deps(UserService, [() => UserRepository, () => MAILER], { params: ['users', 'mailer'] })
 
 // The container reads the emitted metadata through `depsRegistry`.
