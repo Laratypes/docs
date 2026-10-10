@@ -52,7 +52,33 @@ Trong lúc phần này còn đang review, có hai giới hạn:
 ServiceProvider v2 đang được review trong PR [#202](https://github.com/Laratypes/Laratype/pull/202). Ví dụ được kiểm tra type theo pull request đó.
 :::
 
-<<< @/snippets/v1/di/proposed/provider.ts
+```ts
+import { Container, token } from '@laratype/core'
+import { bootProviders, ServiceProvider } from '@laratype/support'
+
+export interface Clock { now(): Date }
+export const CLOCK = token<Clock>('clock')
+
+export class ClockServiceProvider extends ServiceProvider {
+  // register(): bindings only. Every provider registers before any provider boots.
+  register() {
+    this.app.singleton(CLOCK, () => ({ now: () => new Date() }))
+  }
+
+  // boot(): every binding from every provider is available here.
+  boot() {
+    this.app.make(CLOCK).now()
+  }
+}
+
+export async function main() {
+  const app = new Container()
+  // Instantiates each provider with the container, runs all register(), then all boot(), in order.
+  const downs = await bootProviders(app, [ClockServiceProvider])
+  // Cleanups come back in reverse boot order.
+  for (const down of downs) await down()
+}
+```
 
 ## Module <Status issue="153" />
 

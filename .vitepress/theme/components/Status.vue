@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Per-section status badge for v1 pages (#211). One line per section, so a code merge flips it in one edit:
-//   <Status available />                  code on Laratype master; examples come from snippets/v1/<area>/
+//   <Status available />                  code on Laratype master
 //   <Status issue="93" pr="204" />         planned; `pr` names the open code PR, when there is one
 import { computed } from 'vue'
 import { useData } from 'vitepress'
