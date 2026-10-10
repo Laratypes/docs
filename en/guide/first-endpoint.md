@@ -8,7 +8,7 @@ This page follows one endpoint from its contract to its controller and route. Co
 
 ## Project structure <Status issue="125" />
 
-A v1 application keeps its code under `app/` instead of the `src/` used by 0.5. The planned layout:
+A 0.5 application keeps its classes in `app/src/`. v1 drops the `src/` level, so controllers, models and providers sit directly under `app/`. The planned layout:
 
 ```
 app/
@@ -44,7 +44,7 @@ import { defineContract, endpoint, errors } from '@laratype/contract'
 const UserDto = z.object({ id: z.number(), name: z.string(), email: z.string().email() })
 
 export const users = defineContract('users', {
-  index: endpoint.get('/users').query(z.object({ page: z.coerce.number().default(1) })).response(z.array(UserDto)),
+  index: endpoint.get('/users').query(z.object({ page: z.coerce.number<number>().default(1) })).response(z.array(UserDto)),
   show: endpoint.get('/users/:user').response(UserDto).errors(errors.notFound),
 })
 ```
