@@ -30,6 +30,17 @@ export default defineAdditionalConfig({
             { text: 'Cấu hình', link: 'configuration' },
           ]
         },
+        {
+          text: 'HTTP',
+          base: '/vi/guide/',
+          items: [
+            { text: 'Routing', link: 'routing' },
+            { text: 'Controller', link: 'controllers' },
+            { text: 'Model binding', link: 'model-binding' },
+            { text: 'Middleware', link: 'middleware' },
+            { text: 'Validation', link: 'validation' },
+          ]
+        },
       ],
       '/vi/v0.5/getting-started/': [
         {

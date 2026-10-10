@@ -12,8 +12,8 @@ Trang hướng dẫn cho từng phần đang được viết ([Laratypes/Laratyp
 |---|---|---|
 | [Contract](./contracts) | `@laratype/contract` | Endpoint builder, path param và error catalog đã có trên `master`. `defineContract`, `defineApi` và validation adapter đang lên kế hoạch, code đang review. |
 | [Dependency injection](./dependency-injection) và [provider](./service-providers) | `@laratype/core`, `@laratype/support` | Lên kế hoạch, code đang review |
-| Routing, controller và middleware | `@laratype/http` | Lên kế hoạch |
-| Validation | `@laratype/validation` | Lên kế hoạch (Standard Schema adapter đang review) |
+| [Routing](./routing), [controller](./controllers), [model binding](./model-binding) và [middleware](./middleware) | `@laratype/http` | Lên kế hoạch |
+| [Validation](./validation) | `@laratype/validation` | Lên kế hoạch (Standard Schema adapter đang review) |
 | Response và exception | `@laratype/http` | Lên kế hoạch |
 | Xác thực và phân quyền | `@laratype/auth` | Lên kế hoạch |
 | Client frontend | `@laratype/client` | Lên kế hoạch |
