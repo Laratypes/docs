@@ -95,4 +95,4 @@ Route.prefix('/api').group((r) => [
 
 ## 4. Gọi từ frontend <Status issue="109" />
 
-Frontend tạo client từ `appApi` bằng `createClient(appApi)` và gọi endpoint theo tên, như `users.show`. Type của request và response lấy từ chính contract đó. API của client đang lên kế hoạch ở [#109](https://github.com/Laratypes/Laratype/issues/109).
+Frontend tạo client từ `appApi` bằng `createClient(appApi)` và gọi endpoint theo tên, như `users.show`. Type của request và response lấy từ chính contract đó. API của client đang lên kế hoạch ở [#109](https://github.com/Laratypes/Laratype/issues/109) và được mô tả trong [Client frontend](./client).

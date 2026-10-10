@@ -38,7 +38,7 @@ Những gì đứng trước `.contract()` áp dụng cho mọi endpoint của c
 |---|---|
 | `.middleware(...m)` | Middleware, cùng các key context mà chúng thêm vào (xem [Middleware](./middleware#middleware-co-type)) |
 | `.bind({ key: Model })` | Model binding cho một path param (xem [Model binding](./model-binding)) |
-| `.can({ endpoint: [ability, param] })` | Kiểm tra policy cho từng endpoint, lên kế hoạch ở [#122](https://github.com/Laratypes/Laratype/issues/122) và sẽ có trong phần hướng dẫn về phân quyền |
+| `.can({ endpoint: [ability, param] })` | Kiểm tra policy cho từng endpoint, lên kế hoạch ở [#122](https://github.com/Laratypes/Laratype/issues/122) (xem [Phân quyền › Policy trên route](./authorization#policy-tren-route)) |
 
 Sau đó `.contract()` kiểm tra controller với mọi thứ chuỗi lời gọi cung cấp, lúc compile. Handler đòi `user` trên route không có `auth()` sẽ không compile được. Các bước kiểm tra và thông báo lỗi có trong [Controller › Kiểm chứng ở route](./controllers#kiem-chung-o-route).
 

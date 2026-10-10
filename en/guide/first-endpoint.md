@@ -95,4 +95,4 @@ Route.prefix('/api').group((r) => [
 
 ## 4. Call it from the frontend <Status issue="109" />
 
-The frontend creates a client from `appApi` with `createClient(appApi)` and calls endpoints by name, such as `users.show`. The request and response types come from the same contract. The client API is planned in [#109](https://github.com/Laratypes/Laratype/issues/109).
+The frontend creates a client from `appApi` with `createClient(appApi)` and calls endpoints by name, such as `users.show`. The request and response types come from the same contract. The client API is planned in [#109](https://github.com/Laratypes/Laratype/issues/109) and described in [Frontend client](./client).

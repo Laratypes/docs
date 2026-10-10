@@ -64,6 +64,6 @@ export default class StoreUserRequest extends FormRequest<typeof users.store> {
 }
 ```
 
-`authorize()` runs after route guards and policies and before validation. Messages will be translatable through `@laratype/i18n` ([#167](https://github.com/Laratypes/Laratype/issues/167)).
+`authorize()` runs after route guards and policies and before validation. Policy checks are covered in [Authorization](./authorization). Messages will be translatable through `@laratype/i18n` ([#167](https://github.com/Laratypes/Laratype/issues/167)).
 
 In v0.5.4, request classes (`sauf make:request`) return a zod schema from `rules()` and have no `authorize()` or `messages()`. FormRequest v2 takes its rules from the contract instead.

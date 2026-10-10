@@ -23,7 +23,7 @@ The steps always run in this order:
 9. serialization, with a Resource or the response schema
 10. the exception filter
 
-Steps 1 to 5 can stop a request before the handler runs. For example, `auth()` answers 401, a policy denial answers 403 and failed validation answers 422. The exception filter turns whatever is thrown into the error response the contract declares ([#108](https://github.com/Laratypes/Laratype/issues/108)). [Validation](./validation) covers steps 4 and 5. Policies, Resources and exceptions are covered in their own guides.
+Steps 1 to 5 can stop a request before the handler runs. For example, `auth()` answers 401, a policy denial answers 403 and failed validation answers 422. The exception filter turns whatever is thrown into the error response the contract declares ([#108](https://github.com/Laratypes/Laratype/issues/108)). [Validation](./validation) covers steps 4 and 5. Policies, Resources and exceptions are covered in [Authorization](./authorization), [Responses and resources](./responses) and [Exceptions](./exceptions).
 
 ## Typed middleware <Status issue="117" />
 
@@ -48,7 +48,7 @@ async index({ query, requestId }: Ctx<typeof users.index, { requestId: string }>
 
 If the route has no middleware that adds `requestId`, `r.contract()` fails with `` users.index: handler requires `requestId`, route does not provide it (add middleware / .bind()) ``. See [Controllers › Route proof](./controllers#route-proof).
 
-`auth()` from `@laratype/auth` is built the same way. It adds `{ user }`, typed from the selected guard, and answers 401 when nobody is signed in ([#120](https://github.com/Laratypes/Laratype/issues/120)).
+`auth()` from `@laratype/auth` is built the same way. It adds `{ user }`, typed from the selected guard, and answers 401 when nobody is signed in ([#120](https://github.com/Laratypes/Laratype/issues/120), see [Authentication › The `auth()` middleware](./authentication#the-auth-middleware)).
 
 `withoutMiddleware` opts a route out of a middleware it would otherwise get.
 

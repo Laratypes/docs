@@ -39,6 +39,24 @@ export default defineAdditionalConfig({
             { text: 'Model binding', link: 'model-binding' },
             { text: 'Middleware', link: 'middleware' },
             { text: 'Validation', link: 'validation' },
+            { text: 'Response', link: 'responses' },
+            { text: 'Exception', link: 'exceptions' },
+          ]
+        },
+        {
+          text: 'Bảo mật',
+          base: '/vi/guide/',
+          items: [
+            { text: 'Xác thực', link: 'authentication' },
+            { text: 'Phân quyền', link: 'authorization' },
+            { text: 'OAuth2 server', link: 'oauth2' },
+          ]
+        },
+        {
+          text: 'Frontend',
+          base: '/vi/guide/',
+          items: [
+            { text: 'Client', link: 'client' },
           ]
         },
       ],

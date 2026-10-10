@@ -23,7 +23,7 @@ Các bước luôn chạy theo thứ tự này:
 9. serialize, bằng Resource hoặc schema response
 10. exception filter
 
-Các bước 1 đến 5 có thể dừng request trước khi handler chạy. Ví dụ `auth()` trả 401, policy từ chối trả 403 và validation thất bại trả 422. Exception filter biến mọi thứ được ném ra thành response lỗi mà contract khai báo ([#108](https://github.com/Laratypes/Laratype/issues/108)). [Validation](./validation) nói về bước 4 và 5. Policy, Resource và exception có hướng dẫn riêng.
+Các bước 1 đến 5 có thể dừng request trước khi handler chạy. Ví dụ `auth()` trả 401, policy từ chối trả 403 và validation thất bại trả 422. Exception filter biến mọi thứ được ném ra thành response lỗi mà contract khai báo ([#108](https://github.com/Laratypes/Laratype/issues/108)). [Validation](./validation) nói về bước 4 và 5. Policy, Resource và exception được mô tả trong [Phân quyền](./authorization), [Response và resource](./responses) và [Exception](./exceptions).
 
 ## Middleware có type <Status issue="117" />
 
@@ -48,7 +48,7 @@ async index({ query, requestId }: Ctx<typeof users.index, { requestId: string }>
 
 Nếu route không có middleware nào thêm `requestId`, `r.contract()` báo lỗi `` users.index: handler requires `requestId`, route does not provide it (add middleware / .bind()) ``. Xem [Controller › Kiểm chứng ở route](./controllers#kiem-chung-o-route).
 
-`auth()` từ `@laratype/auth` được viết theo cùng cách. Nó thêm `{ user }`, có type theo guard được chọn, và trả 401 khi chưa có ai đăng nhập ([#120](https://github.com/Laratypes/Laratype/issues/120)).
+`auth()` từ `@laratype/auth` được viết theo cùng cách. Nó thêm `{ user }`, có type theo guard được chọn, và trả 401 khi chưa có ai đăng nhập ([#120](https://github.com/Laratypes/Laratype/issues/120), xem [Xác thực › Middleware `auth()`](./authentication#middleware-auth)).
 
 `withoutMiddleware` cho một route bỏ qua một middleware mà lẽ ra nó sẽ nhận.
 

@@ -14,9 +14,9 @@ The guide pages for each area are being written ([Laratypes/Laratype#211](https:
 | [Dependency injection](./dependency-injection) and [providers](./service-providers) | `@laratype/core`, `@laratype/support` | Planned, code in review |
 | [Routing](./routing), [controllers](./controllers), [model binding](./model-binding) and [middleware](./middleware) | `@laratype/http` | Planned |
 | [Validation](./validation) | `@laratype/validation` | Planned (the Standard Schema adapter is in review) |
-| Responses and exceptions | `@laratype/http` | Planned |
-| Authentication and authorization | `@laratype/auth` | Planned |
-| Frontend client | `@laratype/client` | Planned |
+| [Responses](./responses) and [exceptions](./exceptions) | `@laratype/http` | Planned |
+| [Authentication](./authentication), [authorization](./authorization) and the [OAuth2 server](./oauth2) | `@laratype/auth` | Planned |
+| [Frontend client](./client) | `@laratype/client` | Planned |
 | Build and CLI | `sauf` | Planned |
 | Type generation | `sauf` | Planned |
 | Database | `@laratype/database` | Design not decided yet ([#88](https://github.com/Laratypes/Laratype/issues/88)) |
