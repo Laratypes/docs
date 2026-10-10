@@ -96,8 +96,9 @@ What the transform records for each parameter type:
 | A generic class, such as `Repo<User>` | `Repo`. Type arguments are erased, so `Repo<User>` and `Repo<Post>` share one key; use tokens to keep them apart. |
 | `Foo \| undefined`, `Foo \| null` | `Foo`, marked optional |
 | An `import type` name, an interface, a type alias, a primitive, a union, an array, a function type or no annotation | nothing it can resolve, so the container throws unless the parameter is optional |
+| A global with no binding, such as `Date`, `Map` or `Promise`, or an enum declared in the file | nothing it can resolve, same as the row above. They are not injected. |
 
-A parameter is optional when it has `?`, a default value or a nullable union. If the container can't resolve an optional parameter, it passes `undefined` and the JavaScript default applies. A class type that can be resolved is still injected, so its default is ignored.
+A parameter is optional when it has `?`, a default value or a nullable union. If the transform could not record a runtime type for an optional parameter, or the type is `undefined` at runtime, the container passes `undefined` and the JavaScript default applies. A token or class that fails to resolve still throws, for example an `@Inject(TOKEN)` with no binding. A class type that can be resolved is still injected, so its default is ignored.
 
 A class without its own constructor gets no entry and inherits its parent's. The transform never throws on your code; problems show up as `DiError`s when the class is resolved.
 

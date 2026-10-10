@@ -61,7 +61,7 @@ The 422 body has the shape `{ message, errors: { "address.zip": ["Required"] } }
 
 `InferIn<S>` and `InferOut<S>` read a schema's input and output types. Request parts (query, body and headers) are typed with the schema's **input**, because that is what the client sends. The response is typed with the schema's **output**, because that is what the server serializes.
 
-With `z.coerce.number().default(1)`, for example, the client may send `{ page?: number }` and the handler receives `{ page: number }`.
+With `z.coerce.number<number>().default(1)`, for example, the client may send `{ page?: number }` and the handler receives `{ page: number }`.
 
 ## Validating a value <Status issue="91" pr="205" />
 
@@ -74,7 +74,7 @@ Invalid input never makes `validate()` reject; it resolves to `{ ok: false }`. P
 
 `validateSync()` does the same for synchronous schemas. Given an async schema, it throws `TypeError: validateSync: the zod schema is async, use validate() instead`.
 
-The router calls `validate()` on the query, body and headers for you. You only call it yourself outside a request.
+The router will call `validate()` on the query, body and headers for you ([#106](https://github.com/Laratypes/Laratype/issues/106)). You only call it yourself outside a request.
 
 ::: info Illustrative example
 This API is in review in PR [#205](https://github.com/Laratypes/Laratype/pull/205). The example is type-checked against that pull request, not against `master`.

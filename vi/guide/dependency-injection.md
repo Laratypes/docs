@@ -96,8 +96,9 @@ Transform ghi lại gì cho từng kiểu tham số:
 | Class generic như `Repo<User>` | `Repo`. Tham số type bị xoá, nên `Repo<User>` và `Repo<Post>` dùng chung một key; hãy dùng token để tách chúng. |
 | `Foo \| undefined`, `Foo \| null` | `Foo`, đánh dấu tuỳ chọn |
 | Tên import bằng `import type`, interface, type alias, kiểu nguyên thuỷ, union, mảng, kiểu hàm hoặc không ghi type | không resolve được, nên container ném lỗi trừ khi tham số là tuỳ chọn |
+| Global không có binding như `Date`, `Map` hay `Promise`, hoặc enum khai báo trong file | không resolve được, giống dòng trên. Chúng không được inject. |
 
-Tham số là tuỳ chọn khi có `?`, có giá trị mặc định hoặc là union có null. Nếu container không resolve được một tham số tuỳ chọn, nó truyền `undefined` và giá trị mặc định của JavaScript được dùng. Một class type resolve được thì vẫn được inject, nên giá trị mặc định của nó bị bỏ qua.
+Tham số là tuỳ chọn khi có `?`, có giá trị mặc định hoặc là union có null. Nếu transform không ghi được type lúc chạy cho một tham số tuỳ chọn, hoặc type đó là `undefined` lúc chạy, container truyền `undefined` và giá trị mặc định của JavaScript được dùng. Token hay class không resolve được thì vẫn ném lỗi, ví dụ `@Inject(TOKEN)` chưa có binding. Một class type resolve được thì vẫn được inject, nên giá trị mặc định của nó bị bỏ qua.
 
 Class không có constructor riêng thì không có mục nào và dùng mục của class cha. Transform không bao giờ ném lỗi vì code của bạn; vấn đề sẽ hiện ra dưới dạng `DiError` khi class được resolve.
 

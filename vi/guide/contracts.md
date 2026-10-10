@@ -61,7 +61,7 @@ Body của lỗi 422 có dạng `{ message, errors: { "address.zip": ["Required"
 
 `InferIn<S>` và `InferOut<S>` đọc input type và output type của schema. Các phần của request (query, body và header) dùng **input** type của schema, vì đó là thứ client gửi lên. Response dùng **output** type, vì đó là thứ server serialize.
 
-Ví dụ với `z.coerce.number().default(1)`, client được gửi `{ page?: number }` còn handler nhận `{ page: number }`.
+Ví dụ với `z.coerce.number<number>().default(1)`, client được gửi `{ page?: number }` còn handler nhận `{ page: number }`.
 
 ## Validate một giá trị <Status issue="91" pr="205" />
 
@@ -74,7 +74,7 @@ Input sai không bao giờ làm `validate()` reject; nó resolve thành `{ ok: f
 
 `validateSync()` làm điều tương tự cho schema đồng bộ. Nếu nhận schema async, nó ném `TypeError: validateSync: the zod schema is async, use validate() instead`.
 
-Router tự gọi `validate()` cho query, body và header. Bạn chỉ tự gọi khi cần validate bên ngoài một request.
+Router sẽ tự gọi `validate()` cho query, body và header ([#106](https://github.com/Laratypes/Laratype/issues/106)). Bạn chỉ tự gọi khi cần validate bên ngoài một request.
 
 ::: info Ví dụ minh hoạ
 API này đang được review trong PR [#205](https://github.com/Laratypes/Laratype/pull/205). Ví dụ được kiểm tra type theo pull request đó, chưa phải theo `master`.

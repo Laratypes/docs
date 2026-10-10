@@ -8,7 +8,7 @@ Trang này đi theo một endpoint từ contract tới controller và route. Con
 
 ## Cấu trúc project <Status issue="125" />
 
-Ứng dụng v1 đặt code trong `app/` thay cho `src/` của bản 0.5. Cấu trúc dự kiến:
+Ứng dụng 0.5 đặt các class trong `app/src/`. v1 bỏ cấp `src/`, nên controller, model và provider nằm thẳng trong `app/`. Cấu trúc dự kiến:
 
 ```
 app/
@@ -44,7 +44,7 @@ import { defineContract, endpoint, errors } from '@laratype/contract'
 const UserDto = z.object({ id: z.number(), name: z.string(), email: z.string().email() })
 
 export const users = defineContract('users', {
-  index: endpoint.get('/users').query(z.object({ page: z.coerce.number().default(1) })).response(z.array(UserDto)),
+  index: endpoint.get('/users').query(z.object({ page: z.coerce.number<number>().default(1) })).response(z.array(UserDto)),
   show: endpoint.get('/users/:user').response(UserDto).errors(errors.notFound),
 })
 ```
