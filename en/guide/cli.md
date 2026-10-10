@@ -1,6 +1,6 @@
 # The sauf CLI
 
-`sauf` is Laratype's command-line tool. It runs the dev server, builds the application, generates types for the frontend and creates new files from templates. The package also holds the DI transform.
+`sauf` is Laratype's command-line tool. It runs the dev server, builds the application, generates types for the frontend and creates new files from templates. The DI transform will live in this package too ([#194](https://github.com/Laratypes/Laratype/pull/194), in review).
 
 This page covers the commands that v1 changes: `sauf dev`, `sauf build`, `sauf types:generate` and the `make:*` generators. The full v1 command list is not specified yet. It will come with the CLI spec ([#219](https://github.com/Laratypes/Laratype/issues/219)). Console commands of your own, queues, the scheduler and the other services are covered there too. Some commands belong to one area and are described on its page, such as `sauf route:list` in [Routing › Route registry](./routing#route-registry).
 

@@ -1,6 +1,6 @@
 # CLI sauf
 
-`sauf` là công cụ dòng lệnh của Laratype. Nó chạy dev server, build ứng dụng, sinh type cho frontend và tạo file mới từ template. Package này cũng chứa DI transform.
+`sauf` là công cụ dòng lệnh của Laratype. Nó chạy dev server, build ứng dụng, sinh type cho frontend và tạo file mới từ template. DI transform cũng sẽ nằm trong package này ([#194](https://github.com/Laratypes/Laratype/pull/194), đang review).
 
 Trang này nói về các lệnh mà v1 thay đổi: `sauf dev`, `sauf build`, `sauf types:generate` và các generator `make:*`. Danh sách lệnh đầy đủ của v1 chưa được đặc tả, nó sẽ có cùng spec CLI ([#219](https://github.com/Laratypes/Laratype/issues/219)). Command do bạn tự viết, queue, scheduler và các service khác cũng được mô tả ở đó. Một số lệnh thuộc về một mảng riêng và được mô tả ở trang của mảng đó, như `sauf route:list` ở [Routing › Route registry](./routing#route-registry).
 
