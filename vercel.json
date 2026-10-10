@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    { "source": "/getting-started/:path*", "destination": "/v0.5/getting-started/:path*", "permanent": true },
+    { "source": "/api/:path*", "destination": "/v0.5/api/:path*", "permanent": true },
+    { "source": "/vi/getting-started/:path*", "destination": "/vi/v0.5/getting-started/:path*", "permanent": true },
+    { "source": "/vi/api/:path*", "destination": "/vi/v0.5/api/:path*", "permanent": true },
+    { "source": "/en/:path*", "destination": "/v0.5/:path*", "permanent": true }
+  ]
+}
