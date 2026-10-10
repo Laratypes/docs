@@ -32,27 +32,11 @@ $ bunx sauf build
 
 ## Starting the Application
 
-After the build is complete, you can start the application from the `dist` directory using Node.js, or use the `saufx` command.
+After the build is complete, start the application from the `dist` directory with Node.js. The `saufx` command only runs the CLI (see below); it does not start the application.
 
-::: code-group
-
-```sh [npm]
-$ npm run saufx build
+```sh
+$ node dist/index.js
 ```
-
-```sh [pnpm]
-$ pnpm saufx build
-```
-
-```sh [yarn]
-$ yarn saufx build
-```
-
-```sh [bun]
-$ bun saufx build
-```
-
-:::
 
 ## Using CLI
 

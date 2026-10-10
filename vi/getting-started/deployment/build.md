@@ -30,27 +30,11 @@ $ bunx sauf build
 
 ## Khởi chạy Application
 
-Build xong, bạn khởi động ứng dụng từ thư mục `dist` bằng Node.js hoặc bằng lệnh `saufx`:
+Build xong, bạn khởi động ứng dụng từ thư mục `dist` bằng Node.js. Lệnh `saufx` chỉ dùng để chạy CLI (xem phần dưới), không dùng để khởi động ứng dụng.
 
-::: code-group
-
-```sh [npm]
-$ npm run saufx build
+```sh
+$ node dist/index.js
 ```
-
-```sh [pnpm]
-$ pnpm saufx build
-```
-
-```sh [yarn]
-$ yarn saufx build
-```
-
-```sh [bun]
-$ bun saufx build
-```
-
-:::
 
 ## Sử dụng CLI
 

@@ -7,7 +7,7 @@ Phần lớn dịch vụ trong Laratype đến từ service provider. Provider �
 Các loại service provider trong Laratype gồm:
 
 - `ServiceProvider`: lớp cơ sở của mọi service provider.
-- `RouteServiceProvider`: đăng ký route.
+- `RouteAppServiceProvider`: đăng ký route.
 - `AppServiceProvider`: đăng ký các dịch vụ chung của ứng dụng.
 
 Mọi service provider đều kế thừa `ServiceProvider`. Bạn ghi đè các phương thức như `register` và `boot` để chạy code của mình lúc ứng dụng khởi động.

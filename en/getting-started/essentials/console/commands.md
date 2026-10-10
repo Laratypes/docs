@@ -5,7 +5,7 @@ Laratype provides a number of utility commands to help you manage and develop yo
 However, you can create your own custom commands to serve the specific needs of your application. Below is a basic guide on how to create and use commands in Laratype.
 
 > [!INFO]
-> Commands are organized in the `console/commands` directory.
+> Commands are organized in the `src/console/commands` directory.
 
 > [!INFO]
 > Laratype uses the [commander](https://github.com/tj/commander.js) library to manage CLI commands.

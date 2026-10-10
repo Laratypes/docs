@@ -86,7 +86,7 @@ export default class ProfileController {
 
 ### Generating Tokens
 
-Laratype supports generating JWT tokens for user authentication. You can use `AuthVerification.sign` to create a token for an authenticated user.
+Laratype supports generating JWT tokens for user authentication. Call `generateToken()` on the object returned by `Auth.user()` or `Auth.guard(...).attempt(...)` to create a token for the authenticated user.
 
 ::: code-group
 
@@ -187,7 +187,7 @@ import { User } from "../../models/User";
 export default class LoginController extends Controller {
   // [!code focus:23]
   async manualLogin(request: Request) {
-    const data = req.validated();
+    const data = request.validated();
 
     const attempt = await Auth.guard<User>('web').attempt(data)
 

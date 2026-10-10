@@ -121,7 +121,7 @@ User.save({
 
 #### Password Hashing
 
-By default, Laratype will automatically hash passwords when you use the `findOneBy`, `save`, or `create` methods, and automatically remove the password field when you use the `findOne` method.
+By default, Laratype hashes the `password` field when you call `save`, `update` or `updateFor`, and also hashes a `password` value used in a `findOneBy` condition. `create` does not hash. The password field is left out of query results because the model declares it with `@Column({ select: false })`, as in the example above.
 
 #### Casting <Badge type="warning" text="coming soon" />
 

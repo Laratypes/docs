@@ -3,7 +3,7 @@
 Laratype có sẵn các lệnh dòng lệnh (CLI) để tạo thành phần mới, chạy server phát triển và làm các việc khác (xem [tại đây](/vi/getting-started/sauf/introduction.md)). Trang này hướng dẫn tự viết lệnh riêng cho ứng dụng.
 
 > [!INFO]
-> Các lệnh nằm trong thư mục `console/commands`.
+> Các lệnh nằm trong thư mục `src/console/commands`.
 
 > [!INFO]
 > Lệnh CLI của Laratype chạy trên thư viện [commander](https://github.com/tj/commander.js).

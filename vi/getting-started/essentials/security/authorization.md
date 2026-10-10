@@ -244,7 +244,7 @@ export default class UserPolicy extends Policy {
 
 Model đã gắn policy có phương thức `can` để kiểm tra quyền.
 
-Ví dụ, khi `PostPolicy` đã được đăng ký cho model `Post`:
+Ví dụ, khi `UserPolicy` đã được đăng ký cho model `User`:
 
 ::: code-group
 
@@ -277,7 +277,7 @@ export default class UserController extends Controller {
 ```
 :::
 
-Controller kiểm tra quyền của người dùng bằng phương thức `can` trước khi xóa. Người dùng không có quyền sẽ nhận `UnauthorizedException`.
+Controller kiểm tra quyền của người dùng bằng phương thức `cannot` (ngược với `can`) trước khi xóa. Người dùng không có quyền sẽ nhận `UnauthorizedException`.
 
 ##### Actions That Don't Require Models
 

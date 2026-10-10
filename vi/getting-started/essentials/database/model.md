@@ -121,7 +121,7 @@ User.save({
 
 #### Password Hashing
 
-Mặc định, Laratype tự hash password khi bạn gọi `findOneBy`, `save` hoặc `create`, và tự bỏ trường password khỏi kết quả của `findOne`.
+Mặc định, Laratype tự hash trường `password` khi bạn gọi `save`, `update` hoặc `updateFor`, và hash luôn giá trị `password` trong điều kiện của `findOneBy`. Phương thức `create` không hash. Trường password không có trong kết quả truy vấn là nhờ khai báo `@Column({ select: false })` trong model, như ví dụ ở trên.
 
 #### Casting <Badge type="warning" text="coming soon" />
 

@@ -6,7 +6,7 @@ Request API gồm các phương thức đọc thông tin của yêu cầu HTTP g
 
 Yêu cầu dùng cho các ví dụ bên dưới:
 ```sh
-curl --location 'http://localhost:3000/api/register?rol=admin' \
+curl --location 'http://localhost:3000/api/register?role=admin' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "firstName": "Nguyen",
@@ -89,11 +89,12 @@ const nonExistentHeader = request.header('Non-Existent', 'default-value');
 
 8. `param(key: string)`
 
-Lấy giá trị của một tham số trong `query string`.
+Lấy giá trị của một tham số trên đường dẫn route (path param). Muốn đọc `query string` thì dùng `query()`.
 
 ```typescript
-const role = request.param('rol');
-// role = 'admin' 
+// route: /users/:id, URL: /users/1
+const id = request.param('id');
+// id = '1'
 ```
 
 9. `has(key: string | string[])`

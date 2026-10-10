@@ -86,7 +86,7 @@ export default class ProfileController {
 
 ### Sinh token (Generating Tokens)
 
-Laratype sinh được token JWT cho người dùng đã xác thực, bằng phương thức `AuthVerification.sign`.
+Laratype sinh được token JWT cho người dùng đã xác thực: gọi `generateToken()` trên đối tượng mà `Auth.user()` hoặc `Auth.guard(...).attempt(...)` trả về.
 
 ::: code-group
 
@@ -187,7 +187,7 @@ import { User } from "../../models/User";
 export default class LoginController extends Controller {
   // [!code focus:23]
   async manualLogin(request: Request) {
-    const data = req.validated();
+    const data = request.validated();
 
     const attempt = await Auth.guard<User>('web').attempt(data)
 

@@ -246,7 +246,7 @@ Policies make model-based authorization straightforward.
 
 A model with a registered policy receives a `can` method to check abilities easily.
 
-Assuming you registered `PostPolicy` for the `Post` model, you can check permissions like this:
+Assuming you registered `UserPolicy` for the `User` model, you can check permissions like this:
 
 ::: code-group
 
