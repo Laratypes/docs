@@ -104,7 +104,7 @@ Invalid input never makes `validate()` reject; it resolves to `{ ok: false }`. P
 The router will call `validate()` on the query, body and headers for you ([#106](https://github.com/Laratypes/Laratype/issues/106)). You only call it yourself outside a request.
 
 ::: info Illustrative example
-This API is in review in PR [#205](https://github.com/Laratypes/Laratype/pull/205). The example is type-checked against that pull request, not against `master`.
+This API is in review in PR [#205](https://github.com/Laratypes/Laratype/pull/205).
 :::
 
 ```ts
@@ -170,7 +170,7 @@ Two helpers read the API object:
 - `apiEndpoint(appApi, 'users.show')` returns the endpoint behind a route name. An unknown name is a type error.
 
 ::: info Illustrative example
-`defineContract`, `defineApi` and the API types are in review in PR [#204](https://github.com/Laratypes/Laratype/pull/204). The example is type-checked against that pull request.
+`defineContract`, `defineApi` and the API types are in review in PR [#204](https://github.com/Laratypes/Laratype/pull/204).
 :::
 
 ```ts
