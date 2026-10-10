@@ -25,7 +25,7 @@ export const api = createClient(appApi, { baseUrl: '/api' })
 Mỗi endpoint trở thành một method dưới tên route của nó:
 
 ```ts
-const user = await api.users.show({ params: { user: 1 } })
+const user = await api.users.show({ params: { user: '1' } })
 const page = await api.users.index({ query: { page: 2 } })
 ```
 
@@ -84,7 +84,7 @@ Tên và signature chính xác của chúng chưa chốt ([#124](https://github.
 Kiểu gọi thứ hai dùng method và path:
 
 ```ts
-const user = await api.get('/users/:user', { params: { user: 1 } })
+const user = await api.get('/users/:user', { params: { user: '1' } })
 ```
 
 - Kiểu này chỉ có ở type. Nó không cần runtime của contract, và type của API lấy từ `import type` (`ApiTypes<AppApi>`) hoặc từ type được sinh ra.

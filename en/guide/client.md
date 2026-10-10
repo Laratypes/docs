@@ -25,7 +25,7 @@ export const api = createClient(appApi, { baseUrl: '/api' })
 Each endpoint becomes a method under its route name:
 
 ```ts
-const user = await api.users.show({ params: { user: 1 } })
+const user = await api.users.show({ params: { user: '1' } })
 const page = await api.users.index({ query: { page: 2 } })
 ```
 
@@ -84,7 +84,7 @@ Their exact names and signatures are not settled yet ([#124](https://github.com/
 A second call style uses the method and the path:
 
 ```ts
-const user = await api.get('/users/:user', { params: { user: 1 } })
+const user = await api.get('/users/:user', { params: { user: '1' } })
 ```
 
 - It is type-only. It needs no contract runtime, and the API type comes from `import type` (`ApiTypes<AppApi>`) or from generated types.
