@@ -17,6 +17,8 @@ Trang hướng dẫn cho từng phần đang được viết ([Laratypes/Laratyp
 | [Response](./responses) và [exception](./exceptions) | `@laratype/http` | Lên kế hoạch |
 | [Xác thực](./authentication), [phân quyền](./authorization) và [OAuth2 server](./oauth2) | `@laratype/auth` | Lên kế hoạch |
 | [Client frontend](./client) | `@laratype/client` | Lên kế hoạch |
+| [View](./views) | `sauf`, `@laratype/contract` | Lên kế hoạch |
+| [Service](./services): [console command](./console), [event](./events), [queue](./queues), [lập lịch tác vụ](./scheduling), [mail](./mail), [cache](./cache), [storage](./storage), [đa ngôn ngữ](./localization), [process](./processes) và [broadcasting](./broadcasting) | `@laratype/core`, `console`, `log`, `cache`, `storage`, `queue`, `mail`, `i18n`, `schedule`, `broadcast` | Lên kế hoạch |
 | [CLI](./cli), [build và triển khai](./build) và [kiểm thử](./testing) | `sauf`, `@laratype/testing` | Lên kế hoạch |
 | [Sinh type](./type-generation) | `sauf` | Lên kế hoạch |
 | [Database](./database) | `@laratype/database` | Chưa chốt thiết kế ([#88](https://github.com/Laratypes/Laratype/issues/88)) |

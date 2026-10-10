@@ -34,6 +34,8 @@ database/
 
 Lúc build, bước manifest quét `app/` và import tĩnh provider, config, route, command, model, migration và seeder ([#125](https://github.com/Laratypes/Laratype/issues/125)). Lúc chạy không có bước dò file nào. Xem [Build › Manifest lúc build](./build#manifest-luc-build).
 
+Ba đường dẫn do các tính năng đã lên kế hoạch nêu ra chưa được xếp vào cây này: `lang/` cho [đa ngôn ngữ](./localization), `routes/channels.ts` cho [broadcasting](./broadcasting) và `public/` cho [view](./views).
+
 ## 1. Khai báo contract <Status issue="93" pr="204" />
 
 ```ts

@@ -10,6 +10,8 @@ The calls on this page come from the design in [#152](https://github.com/Laratyp
 
 Config files live in `app/config/` and are written with `defineConfig(...)`, one file per area (for example `app/config/database.ts`). The build manifest collects them, so there is no list to maintain.
 
+The issues name these files so far: `cors.ts` for [CORS](./routing#cors), `cache.ts` for the [cache](./cache), `filesystems.ts` for [storage](./storage) and `mail.ts` for [mail](./mail). Services with drivers type their default driver and driver names from these config keys (see [Services › The driver manager](./services#the-driver-manager)).
+
 ## Reading config values <Status issue="152" />
 
 `config()` reads a value by its dot path, and the type is inferred from the path:
@@ -18,7 +20,7 @@ Config files live in `app/config/` and are written with `defineConfig(...)`, one
 config('database.default')
 ```
 
-The type comes from the config files themselves. How that type is registered (a generated declaration file or a `declare module` block) is not settled yet.
+The type comes from the config files themselves. How that type is registered is not specified yet.
 
 ## Validating the environment <Status issue="152" />
 

@@ -96,7 +96,7 @@ export const BillingModule = defineModule({
 - `routes` liệt kê các nhóm route, tức giá trị tạo bởi `Route.prefix(...).group(...)`.
 - `imports` liệt kê các module khác.
 
-Cách module đến tay kernel chưa chốt: build manifest có thể tự tìm trong `app/modules/`, hoặc bạn đăng ký tường minh.
+Module nằm trong thư mục tuỳ chọn `app/modules/` (xem [Endpoint đầu tiên › Cấu trúc project](./first-endpoint#cau-truc-project)). Cách đăng ký module với kernel chưa được đặc tả.
 
 ::: info Ví dụ minh hoạ
 `defineModule` lấy từ thiết kế ở [#153](https://github.com/Laratypes/Laratype/issues/153). Chữ ký chưa chốt.

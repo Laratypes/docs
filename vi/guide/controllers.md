@@ -153,3 +153,5 @@ Middleware riêng cho từng endpoint trong một contract (ví dụ `auth()` ch
 ## Chế độ strict contract <Status issue="157" />
 
 Một chế độ dành cho môi trường dev, `--strict-contract`, đang được lên kế hoạch để giữ contract trung thực lúc chạy. Nó cảnh báo hoặc báo lỗi khi một lỗi được ném ra mà chưa khai báo trong `.errors()` của endpoint, hoặc khi output của handler không khớp schema response. Nó phụ thuộc vào phần xử lý exception ở [#108](https://github.com/Laratypes/Laratype/issues/108).
+
+Đây là một flag của dev server, `sauf dev --strict-contract` (xem [CLI sauf › sauf dev](./cli#sauf-dev)). Khi nào nó cảnh báo và khi nào nó báo lỗi thì chưa được đặc tả.

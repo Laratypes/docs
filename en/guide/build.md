@@ -82,14 +82,14 @@ Heroku runs a plain Node process, so the app is built with `--platform node`. Th
 web: node dist/index.js
 ```
 
-The issue also plans a worker process for the queue ([#169](https://github.com/Laratypes/Laratype/issues/169)) and migrations in Heroku's release phase ([#148](https://github.com/Laratypes/Laratype/issues/148)). Neither has a spec yet.
+The `Procfile` stub also runs the [queue](./queues#failed-jobs-and-the-worker) worker as `worker: sauf queue:work` ([#169](https://github.com/Laratypes/Laratype/issues/169)). The issue plans migrations in Heroku's release phase too ([#148](https://github.com/Laratypes/Laratype/issues/148)), but the command that runs them is not specified yet.
 
 ## Vercel <Status issue="173" />
 
 `--platform vercel` writes Vercel's Build Output API layout (`.vercel/output`). The app runs as a Node function through Hono's `hono/vercel` adapter, and static assets are included.
 
-- Scheduled tasks run through Vercel Cron, which calls a `schedule:run` route protected by a secret. The scheduler is specified later ([#171](https://github.com/Laratypes/Laratype/issues/171)).
-- A function can't host a long-running queue worker.
+- Scheduled tasks run through Vercel Cron, which calls a `schedule:run` route protected by a secret (see [Task scheduling › Running the scheduler](./scheduling#running-the-scheduler)).
+- A function can't host a long-running [queue worker](./queues#failed-jobs-and-the-worker).
 - Database connections need pooling.
 
 ## Standalone builds <Status issue="155" />

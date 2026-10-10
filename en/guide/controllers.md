@@ -153,3 +153,5 @@ Per-endpoint middleware inside one contract (for example `auth()` on `destroy` o
 ## Strict contract mode <Status issue="157" />
 
 A planned development mode, `--strict-contract`, keeps contracts honest at runtime. It warns or fails when a thrown error is not declared in the endpoint's `.errors()`, or when a handler's output does not match the response schema. It depends on the exception handling in [#108](https://github.com/Laratypes/Laratype/issues/108).
+
+It is a flag of the dev server, `sauf dev --strict-contract` (see [The sauf CLI › sauf dev](./cli#sauf-dev)). When it warns and when it fails is not specified yet.

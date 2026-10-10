@@ -2,7 +2,26 @@
 
 `sauf` is Laratype's command-line tool. It runs the dev server, builds the application, generates types for the frontend and creates new files from templates. The DI transform will live in this package too ([#194](https://github.com/Laratypes/Laratype/pull/194), in review).
 
-This page covers the commands that v1 changes: `sauf dev`, `sauf build`, `sauf types:generate` and the `make:*` generators. The full v1 command list is not specified yet. It will come with the CLI spec ([#219](https://github.com/Laratypes/Laratype/issues/219)). Console commands of your own, queues, the scheduler and the other services are covered there too. Some commands belong to one area and are described on its page, such as `sauf route:list` in [Routing › Route registry](./routing#route-registry).
+This page covers the commands that v1 changes most: `sauf dev`, `sauf build`, `sauf types:generate` and the `make:*` generators. The [CLI spec](https://github.com/Laratypes/Laratype/blob/master/docs/v1/cli.md) lists every v1 command named so far. All of them are planned, and most are described on the page of their area:
+
+| Command | What it does | Issue | Page |
+|---|---|---|---|
+| `sauf dev` | Dev server | [#126](https://github.com/Laratypes/Laratype/issues/126) | [sauf dev](#sauf-dev) |
+| `sauf build` | Production build | [#128](https://github.com/Laratypes/Laratype/issues/128) | [sauf build](#sauf-build) |
+| `sauf types:generate` | Writes `api.ts` for a frontend in another repository | [#133](https://github.com/Laratypes/Laratype/issues/133) | [sauf types:generate](#sauf-types-generate) |
+| `sauf route:list` | Lists the route registry | [#104](https://github.com/Laratypes/Laratype/issues/104) | [Routing › Route registry](./routing#route-registry) |
+| `sauf make:*` | Creates files from templates | [#134](https://github.com/Laratypes/Laratype/issues/134) | [make:* generators](#make-generators) |
+| `sauf db:introspect` | Generates the `Database` interface from the schema | [#148](https://github.com/Laratypes/Laratype/issues/148) | [Database](./database) |
+| `sauf db:seed` | Runs the seeders | [#149](https://github.com/Laratypes/Laratype/issues/149) | [Database](./database) |
+| `sauf queue:work`, `queue:failed`, `queue:retry` | Queue worker and failed jobs | [#169](https://github.com/Laratypes/Laratype/issues/169) | [Queues](./queues#failed-jobs-and-the-worker) |
+| `sauf schedule:run`, `schedule:work`, `schedule:list` | Scheduler | [#171](https://github.com/Laratypes/Laratype/issues/171) | [Task scheduling](./scheduling#running-the-scheduler) |
+| `sauf storage:link` | Not described yet | [#168](https://github.com/Laratypes/Laratype/issues/168) | [Storage](./storage#testing-and-the-cli) |
+| `sauf oauth:keys` | Generates the OAuth2 JWT keys | [#179](https://github.com/Laratypes/Laratype/issues/179) | [OAuth2 server](./oauth2#grants-and-the-token-guard) |
+| `sauf oauth:client` | OAuth2 clients, including personal access clients | [#180](https://github.com/Laratypes/Laratype/issues/180) | [OAuth2 server](./oauth2#scopes-clients-and-consent) |
+
+What happens to the 0.5 command `db:init`, which has no v1 issue, is not specified yet. Neither are the command that runs migrations ([#148](https://github.com/Laratypes/Laratype/issues/148)) and the command that purges expired OAuth2 tokens ([#180](https://github.com/Laratypes/Laratype/issues/180)).
+
+Commands that you write yourself are covered in [Console commands](./console).
 
 On `master`, `sauf` is still the 0.5 CLI. Everything on this page is planned.
 
@@ -15,8 +34,9 @@ In v1 the dev server uses the same plugin chain as `sauf build` and the test pre
 - The DI transform runs before SWC, so constructor injection works in dev the same way as in a build ([#102](https://github.com/Laratypes/Laratype/issues/102)).
 - The app boots from the build manifest instead of scanning the file system at runtime ([#125](https://github.com/Laratypes/Laratype/issues/125)).
 - `sauf dev` will watch `app/contracts/**` and regenerate the frontend types without a restart ([#142](https://github.com/Laratypes/Laratype/issues/142), see [Type generation › Watch mode](./type-generation#watch-mode)).
+- `--strict-contract` turns on [strict contract mode](./controllers#strict-contract-mode) ([#157](https://github.com/Laratypes/Laratype/issues/157)).
 
-The v1 options of `sauf dev` are not specified yet.
+Which 0.5 options carry over to v1 is not specified yet: `--port`, `--host`, and `--hmr`, which is on `master` but not in v0.5.4.
 
 ## sauf build <Status issue="128" />
 
@@ -54,4 +74,4 @@ Templates that contain schemas follow two rules from the contract work ([#91](ht
 - They import zod as `import * as z from "zod"`. With zod 4, `import { z } from "zod/v4"` makes the frontend bundle about three times larger (about 47 KiB gzip instead of 16 KiB). For frontend bundles, `zod/v4-mini` is smaller still (about 8.3 KiB).
 - They write `z.coerce.number<number>()`. Plain `z.coerce.number()` has the input type `unknown` in zod 4, so the client's types become `unknown` too.
 
-What happens to the other generators in v1 is not specified yet. It is part of the CLI spec ([#219](https://github.com/Laratypes/Laratype/issues/219)).
+What happens in v1 to the other 0.5 generators is not specified yet ([#134](https://github.com/Laratypes/Laratype/issues/134)). Generators for the v1 services, such as jobs, events, listeners and mailables, are not specified either.

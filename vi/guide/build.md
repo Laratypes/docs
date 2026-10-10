@@ -82,14 +82,14 @@ Heroku chạy một process Node thông thường, nên app được build với
 web: node dist/index.js
 ```
 
-Issue này cũng dự kiến một process worker cho queue ([#169](https://github.com/Laratypes/Laratype/issues/169)) và chạy migration ở release phase của Heroku ([#148](https://github.com/Laratypes/Laratype/issues/148)). Cả hai chưa có spec.
+Stub `Procfile` cũng chạy worker của [queue](./queues#job-loi-va-worker) bằng `worker: sauf queue:work` ([#169](https://github.com/Laratypes/Laratype/issues/169)). Issue này còn dự kiến chạy migration ở release phase của Heroku ([#148](https://github.com/Laratypes/Laratype/issues/148)), nhưng lệnh chạy migration chưa được đặc tả.
 
 ## Vercel <Status issue="173" />
 
 `--platform vercel` ghi ra cấu trúc Build Output API của Vercel (`.vercel/output`). App chạy như một Node function qua adapter `hono/vercel` của Hono, kèm các static asset.
 
-- Tác vụ định kỳ chạy qua Vercel Cron, gọi một route `schedule:run` được bảo vệ bằng secret. Scheduler sẽ được đặc tả sau ([#171](https://github.com/Laratypes/Laratype/issues/171)).
-- Function không chạy được queue worker dài hạn.
+- Tác vụ định kỳ chạy qua Vercel Cron, gọi một route `schedule:run` được bảo vệ bằng secret (xem [Lập lịch tác vụ › Chạy scheduler](./scheduling#chay-scheduler)).
+- Function không chạy được [queue worker](./queues#job-loi-va-worker) dài hạn.
 - Kết nối database cần pooling.
 
 ## Build standalone <Status issue="155" />

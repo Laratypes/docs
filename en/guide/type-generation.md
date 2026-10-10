@@ -41,4 +41,4 @@ This is for consumers that don't use TypeScript, and for Detective.
 
 Detective is the devtools UI for a Laratype app. It will read `openapi.json` and the route registry, so it can show the controller, the middleware and the schemas of each route.
 
-The same issue fixes the route manifest, where the controller currently shows as `null`.
+The same issue reports that the route manifest shows the controller as `null`, and plans a fix. Neither that manifest code nor the Detective UI is in the Laratype repository on `master` or in v0.5.4. Where they live is not specified yet.

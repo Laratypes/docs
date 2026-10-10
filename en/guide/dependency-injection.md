@@ -188,4 +188,4 @@ The route registry, the model binding registry and the database connection will 
 
 ## Method injection <Status issue="158" />
 
-Handler methods will be able to take services after the context argument, as in `async store(ctx, mailer: Mailer)`, and so will job `handle()` methods. Constructor injection stays the main style.
+Handler methods will be able to take services after the context argument, as in `async store(ctx, mailer: Mailer)`, and so will the `handle()` methods of [jobs](./queues#jobs). Constructor injection stays the main style.
