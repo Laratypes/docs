@@ -5,19 +5,18 @@ export default defineAdditionalConfig({
   themeConfig: {
     nav: [
       { text: 'Home', link: '/vi/' },
-      { text: 'Getting Started', link: '/vi/getting-started/introduction/quick-start' },
-      { text: 'API', link: '/vi/api/introduction' },
+      { text: 'Hướng dẫn', link: '/vi/guide/' },
       versionNav('vi'),
     ],
     sidebar: {
-      // v1 "next" section (#210). DOC6 (#211) adds groups as pages land.
-      '/vi/next/': [
-        { text: 'Tổng quan', link: '/vi/next/' },
+      // v1 guide (#210). DOC6 (#211) adds groups as pages land.
+      '/vi/guide/': [
+        { text: 'Tổng quan', link: '/vi/guide/' },
       ],
-      '/vi/getting-started/': [
+      '/vi/v0.5/getting-started/': [
         {
           text: 'Introduction',
-          base: '/vi/getting-started/introduction/',
+          base: '/vi/v0.5/getting-started/introduction/',
           items: [
             { text: 'Quick Start', link: 'quick-start' },
             { text: 'Project Structure', link: 'project-structure' }
@@ -28,7 +27,7 @@ export default defineAdditionalConfig({
           items: [
             {
               text: 'Http',
-              base: '/vi/getting-started/essentials/http/',
+              base: '/vi/v0.5/getting-started/essentials/http/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -40,7 +39,7 @@ export default defineAdditionalConfig({
             },
             {
               text: 'Security',
-              base: '/vi/getting-started/essentials/security/',
+              base: '/vi/v0.5/getting-started/essentials/security/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -50,7 +49,7 @@ export default defineAdditionalConfig({
             },
             {
               text: 'Database',
-              base: '/vi/getting-started/essentials/database/',
+              base: '/vi/v0.5/getting-started/essentials/database/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -61,7 +60,7 @@ export default defineAdditionalConfig({
             },
             {
               text: 'Console',
-              base: '/vi/getting-started/essentials/console/',
+              base: '/vi/v0.5/getting-started/essentials/console/',
               collapsed: true,
               items: [
                 { text: 'Commands', link: 'commands' },
@@ -69,7 +68,7 @@ export default defineAdditionalConfig({
             },
             {
               text: 'Other',
-              base: '/vi/getting-started/essentials/other/',
+              base: '/vi/v0.5/getting-started/essentials/other/',
               collapsed: true,
               items: [
                 { text: 'Service Providers', link: 'providers' },
@@ -79,7 +78,7 @@ export default defineAdditionalConfig({
         },
         {
           text: 'Sauf',
-          base: '/vi/getting-started/sauf/',
+          base: '/vi/v0.5/getting-started/sauf/',
           items: [
             { text: 'Introduction', link: 'introduction' },
             { text: 'Core Commands', link: 'core' },
@@ -88,7 +87,7 @@ export default defineAdditionalConfig({
         },
         {
           text: 'Deployment',
-          base: '/vi/getting-started/deployment/',
+          base: '/vi/v0.5/getting-started/deployment/',
           items: [
             { text: 'Building the application', link: 'build' },
             { text: 'Using Docker', link: 'docker' },
@@ -96,18 +95,18 @@ export default defineAdditionalConfig({
           ]
         }
       ],
-      '/vi/api/': [
+      '/vi/v0.5/api/': [
         {
           text: 'Overview',
-          link: '/vi/api/introduction',
+          link: '/vi/v0.5/api/introduction',
         },
         {
           text: 'API Reference',
-          base: '/vi/api/api-reference',
+          base: '/vi/v0.5/api/api-reference',
           items: [
             {
               text: '@laratype/http',
-              base: '/vi/api/api-reference/http/',
+              base: '/vi/v0.5/api/api-reference/http/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },

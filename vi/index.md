@@ -4,23 +4,24 @@ layout: home
 
 hero:
   name: "Laratype"
-  text: "The Next-generation TypeSafe RESTFul API"
-  tagline: Fast and Reliable API Development
+  text: "REST API có type, bắt đầu từ contract"
+  tagline: Cách viết quen thuộc của Laravel, thêm DI container và type đi suốt từ route tới client frontend.
   image:
     src: /assets/logo.png
     alt: Laratype Logo
   actions:
     - theme: brand
-      text: Quickstart
-      link: /vi/getting-started/introduction/quick-start
+      text: Đọc hướng dẫn v1
+      link: /vi/guide/
     - theme: alt
-      text: API References
-      link: /vi/api/introduction
+      text: Tài liệu 0.5.4 (npm)
+      link: /vi/v0.5/
 
 features:
-  - title: Familiarity Laravel
-    details: Design ideal from Laravel Framework
-  - title: Type Safety
-    details: Leverage TypeScript for type-safe API development
-  - title: Faster
-    details: Enjoy improved performance with optimized code generation
+  - title: Mỗi endpoint một contract
+    details: Cùng một object dùng cho validation, type của handler, client có type phía frontend và OpenAPI.
+  - title: Inject qua constructor
+    details: Class nhận dependency qua constructor, không bắt buộc decorator.
+  - title: Quen thuộc như Laravel
+    details: File route, FormRequest, Resource, Policy, facade và các lệnh sauf make.
+---

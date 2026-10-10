@@ -1,31 +1,20 @@
-// Version switcher for the v1 "next" section (Laratypes/Laratype#210).
-// The /next/ and /vi/next/ routes always exist (noindex), but nothing links to them
-// until DOC6 (#211) ships the first real v1 page. DOC6 flips this flag to true.
-export const SHOW_V1_NEXT = false
-
-const GITHUB = 'https://github.com/Laratypes/Laratype'
-
-export const versionNav = (locale: 'en' | 'vi') => {
-  if (!SHOW_V1_NEXT) {
-    return { text: 'v0.5.4', link: GITHUB }
-  }
-  return locale === 'en'
+// Version dropdown (#210). v1 (in development) lives at / and /vi/; the 0.5.4 archive at /v0.5/ and /vi/v0.5/.
+export const versionNav = (locale: 'en' | 'vi') =>
+  locale === 'en'
     ? {
-        text: 'v0.5.4',
+        text: 'v1 (in development)',
         items: [
-          { text: 'v0.5.4 (current)', link: '/' },
-          { text: 'v1 (next, unreleased)', link: '/next/' },
+          { text: 'v1 (in development)', link: '/' },
+          { text: 'v0.5.4', link: '/v0.5/' },
         ],
       }
     : {
-        text: 'v0.5.4',
+        text: 'v1 (đang phát triển)',
         items: [
-          { text: 'v0.5.4 (hiện tại)', link: '/vi/' },
-          { text: 'v1 (next, chưa phát hành)', link: '/vi/next/' },
+          { text: 'v1 (đang phát triển)', link: '/vi/' },
+          { text: 'v0.5.4', link: '/vi/v0.5/' },
         ],
       }
-}
 
-/** Pages under the v1 "next" section (source paths, before rewrites). */
-export const isNextPage = (relativePath: string) =>
-  /^(en\/|vi\/)?next\//.test(relativePath.replace(/\\/g, '/'))
+/** Routes of the 0.5.4 archive (after rewrites): /v0.5/... and /vi/v0.5/... */
+export const isV05Path = (path: string) => /^\/(vi\/)?v0\.5(\/|$)/.test(path)
