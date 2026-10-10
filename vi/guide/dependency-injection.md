@@ -102,7 +102,7 @@ Tham số là tuỳ chọn khi có `?`, có giá trị mặc định hoặc là 
 
 Class không có constructor riêng thì không có mục nào và dùng mục của class cha. Transform không bao giờ ném lỗi vì code của bạn; vấn đề sẽ hiện ra dưới dạng `DiError` khi class được resolve.
 
-Transform chưa được gắn vào `sauf dev` và `sauf build`. Việc đó nằm ở [#102](https://github.com/Laratypes/Laratype/issues/102) cho dev server Vite và [#116](https://github.com/Laratypes/Laratype/issues/116) cho build bằng Bun.
+Transform chưa được gắn vào `sauf dev` và `sauf build`. Việc đó nằm ở [#102](https://github.com/Laratypes/Laratype/issues/102) cho dev server Vite và [#116](https://github.com/Laratypes/Laratype/issues/116) cho build bằng Bun. Xem [Build › Một chuỗi plugin](./build#mot-chuoi-plugin) và [Build › Plugin DI cho Bun](./build#plugin-di-cho-bun).
 
 ## Registry dependency <Status issue="97" pr="201" />
 

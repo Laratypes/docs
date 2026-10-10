@@ -17,8 +17,8 @@ Trang hướng dẫn cho từng phần đang được viết ([Laratypes/Laratyp
 | [Response](./responses) và [exception](./exceptions) | `@laratype/http` | Lên kế hoạch |
 | [Xác thực](./authentication), [phân quyền](./authorization) và [OAuth2 server](./oauth2) | `@laratype/auth` | Lên kế hoạch |
 | [Client frontend](./client) | `@laratype/client` | Lên kế hoạch |
-| Build và CLI | `sauf` | Lên kế hoạch |
-| Sinh type | `sauf` | Lên kế hoạch |
-| Database | `@laratype/database` | Chưa chốt thiết kế ([#88](https://github.com/Laratypes/Laratype/issues/88)) |
+| [CLI](./cli), [build và triển khai](./build) và [kiểm thử](./testing) | `sauf`, `@laratype/testing` | Lên kế hoạch |
+| [Sinh type](./type-generation) | `sauf` | Lên kế hoạch |
+| [Database](./database) | `@laratype/database` | Chưa chốt thiết kế ([#88](https://github.com/Laratypes/Laratype/issues/88)) |
 
 Tiến độ của toàn bộ bản thiết kế lại được theo dõi ở [Laratypes/Laratype#83](https://github.com/Laratypes/Laratype/issues/83).

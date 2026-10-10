@@ -18,6 +18,7 @@ export default defineAdditionalConfig({
             { text: 'Tổng quan', link: '' },
             { text: 'Giới thiệu', link: 'introduction' },
             { text: 'Endpoint đầu tiên', link: 'first-endpoint' },
+            { text: 'Nâng cấp từ 0.5', link: 'upgrade' },
           ]
         },
         {
@@ -57,6 +58,23 @@ export default defineAdditionalConfig({
           base: '/vi/guide/',
           items: [
             { text: 'Client', link: 'client' },
+          ]
+        },
+        {
+          text: 'Công cụ',
+          base: '/vi/guide/',
+          items: [
+            { text: 'CLI sauf', link: 'cli' },
+            { text: 'Build và triển khai', link: 'build' },
+            { text: 'Kiểm thử', link: 'testing' },
+            { text: 'Sinh type', link: 'type-generation' },
+          ]
+        },
+        {
+          text: 'Database',
+          base: '/vi/guide/',
+          items: [
+            { text: 'Database', link: 'database' },
           ]
         },
       ],

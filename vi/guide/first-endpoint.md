@@ -32,7 +32,7 @@ database/
   seeders/
 ```
 
-Lúc build, bước manifest quét `app/` và import tĩnh provider, config, route, command, model, migration và seeder ([#125](https://github.com/Laratypes/Laratype/issues/125)). Lúc chạy không có bước dò file nào.
+Lúc build, bước manifest quét `app/` và import tĩnh provider, config, route, command, model, migration và seeder ([#125](https://github.com/Laratypes/Laratype/issues/125)). Lúc chạy không có bước dò file nào. Xem [Build › Manifest lúc build](./build#manifest-luc-build).
 
 ## 1. Khai báo contract <Status issue="93" pr="204" />
 

@@ -40,6 +40,7 @@ export default defineConfig({
             { text: 'Overview', link: '' },
             { text: 'Introduction', link: 'introduction' },
             { text: 'Your First Endpoint', link: 'first-endpoint' },
+            { text: 'Upgrading from 0.5', link: 'upgrade' },
           ]
         },
         {
@@ -79,6 +80,23 @@ export default defineConfig({
           base: '/guide/',
           items: [
             { text: 'Client', link: 'client' },
+          ]
+        },
+        {
+          text: 'Tooling',
+          base: '/guide/',
+          items: [
+            { text: 'The sauf CLI', link: 'cli' },
+            { text: 'Build and Deployment', link: 'build' },
+            { text: 'Testing', link: 'testing' },
+            { text: 'Type Generation', link: 'type-generation' },
+          ]
+        },
+        {
+          text: 'Database',
+          base: '/guide/',
+          items: [
+            { text: 'Database', link: 'database' },
           ]
         },
       ],

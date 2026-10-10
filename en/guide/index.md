@@ -17,8 +17,8 @@ The guide pages for each area are being written ([Laratypes/Laratype#211](https:
 | [Responses](./responses) and [exceptions](./exceptions) | `@laratype/http` | Planned |
 | [Authentication](./authentication), [authorization](./authorization) and the [OAuth2 server](./oauth2) | `@laratype/auth` | Planned |
 | [Frontend client](./client) | `@laratype/client` | Planned |
-| Build and CLI | `sauf` | Planned |
-| Type generation | `sauf` | Planned |
-| Database | `@laratype/database` | Design not decided yet ([#88](https://github.com/Laratypes/Laratype/issues/88)) |
+| [CLI](./cli), [build and deployment](./build) and [testing](./testing) | `sauf`, `@laratype/testing` | Planned |
+| [Type generation](./type-generation) | `sauf` | Planned |
+| [Database](./database) | `@laratype/database` | Design not decided yet ([#88](https://github.com/Laratypes/Laratype/issues/88)) |
 
 Progress on the whole redesign is tracked in [Laratypes/Laratype#83](https://github.com/Laratypes/Laratype/issues/83).

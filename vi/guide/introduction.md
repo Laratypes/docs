@@ -2,7 +2,7 @@
 
 Laratype v1 giữ lại những gì làm cho việc viết API bằng Laravel dễ chịu: file route, FormRequest, Resource, Policy, facade và các lệnh sinh code `sauf make:*`. Bản này thêm một DI container và một request pipeline rõ ràng, đồng thời giữ type đi suốt từ contract tới client phía frontend.
 
-v1 không tương thích ngược với 0.5. Code viết cho 0.5.4 phải sửa mới chạy được trên v1. Hướng dẫn chuyển đổi được theo dõi ở [#154](https://github.com/Laratypes/Laratype/issues/154).
+v1 không tương thích ngược với 0.5. Code viết cho 0.5.4 phải sửa mới chạy được trên v1. Hướng dẫn chuyển đổi được theo dõi ở [#154](https://github.com/Laratypes/Laratype/issues/154). Trang [Nâng cấp từ 0.5](./upgrade) liệt kê những gì sẽ thay đổi.
 
 Mỗi mục trong hướng dẫn có một badge. <Status available /> nghĩa là code đã có trên nhánh `master` của Laratype và ví dụ được kiểm tra type trên đó. <Status issue="83" /> nghĩa là thiết kế đã chốt nhưng code chưa merge; badge dẫn tới issue, và tới pull request nếu đang có. Ví dụ trong các mục đang lên kế hoạch chỉ mang tính minh hoạ.
 
@@ -37,7 +37,7 @@ Router validate query, body và header theo contract trước khi handler chạy
 - **`verbatimModuleSyntax: true`.** Dùng `import type` cho mọi thứ chỉ import làm type. Một interface bị import như giá trị sẽ làm hỏng dependency injection, và lỗi hiện ra mỗi nơi một kiểu: trong Node, trong `vite build` và trong `sauf dev`. Chỉ lỗi TypeScript TS1484 bắt được nó như nhau ở mọi nơi.
 - **Một thư viện Standard Schema**, ví dụ zod 3.25 trở lên, valibot hoặc arktype. Với zod, hãy viết `import * as z from "zod"`. Cách import `import { z }` làm mất tree-shaking ở zod 4 và khiến bundle frontend lớn gấp khoảng ba lần.
 - **Coerce của zod 4 trong contract** cần tham số type: `z.coerce.number<number>()`. `z.coerce.number()` có input type là `unknown`, kéo theo type query của client cũng thành `unknown`.
-- **Môi trường chạy:** Node, Bun và Vercel. Các nền tảng edge khác sẽ có sau ([#156](https://github.com/Laratypes/Laratype/issues/156)).
+- **Môi trường chạy:** Node, Bun và Vercel. Các nền tảng edge khác sẽ có sau ([#156](https://github.com/Laratypes/Laratype/issues/156), xem [Build › Runtime edge](./build#runtime-edge)).
 
 ## Cài đặt <Status issue="190" />
 

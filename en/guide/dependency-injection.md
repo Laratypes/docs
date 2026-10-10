@@ -102,7 +102,7 @@ A parameter is optional when it has `?`, a default value or a nullable union. If
 
 A class without its own constructor gets no entry and inherits its parent's. The transform never throws on your code; problems show up as `DiError`s when the class is resolved.
 
-The transform is not wired into `sauf dev` and `sauf build` yet. That is [#102](https://github.com/Laratypes/Laratype/issues/102) for the Vite dev server and [#116](https://github.com/Laratypes/Laratype/issues/116) for Bun builds.
+The transform is not wired into `sauf dev` and `sauf build` yet. That is [#102](https://github.com/Laratypes/Laratype/issues/102) for the Vite dev server and [#116](https://github.com/Laratypes/Laratype/issues/116) for Bun builds. See [Build › One plugin chain](./build#one-plugin-chain) and [Build › Bun DI plugin](./build#bun-di-plugin).
 
 ## The dependency registry <Status issue="97" pr="201" />
 
