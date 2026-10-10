@@ -1,8 +1,8 @@
 # Giới thiệu
 
-Gói `@laratype/auth` cung cấp các tính năng xác thực (authentication) và ủy quyền (authorization) cho ứng dụng Laratype của bạn.
+Gói `@laratype/auth` lo phần xác thực (authentication) và phân quyền (authorization) trong ứng dụng Laratype.
 
-Để sử dụng các tính năng này, bạn cần cài đặt gói `@laratype/auth`:
+Cài đặt gói:
 
 ::: code-group
 
@@ -20,5 +20,5 @@ $ bun add @laratype/auth
 
 :::
 
-Mặc định khi bạn khởi tạo dự án Laratype bằng `create-laratype`, gói `@laratype/auth` đã được cài đặt sẵn. Bạn chỉ cần cấu hình các tùy chọn xác thực trong file `config/auth.ts`.
+Dự án tạo bằng `create-laratype` đã có sẵn `@laratype/auth`. Khi đó bạn chỉ cần cấu hình xác thực trong file `config/auth.ts`.
 

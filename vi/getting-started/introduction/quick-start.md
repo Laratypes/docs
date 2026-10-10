@@ -2,14 +2,12 @@
 
 ## Khởi tạo ứng dụng {#creating-laratype-app}
 
-::: info Điều kiện bắt buộc
-- Hỗ trợ commandline
-- [Node.js](https://nodejs.org/) version 20 hoặc cao hơn.
+::: info Yêu cầu
+- Một terminal (dòng lệnh)
+- [Node.js](https://nodejs.org/) 20 trở lên
 :::
 
-Laratype cung cấp một công cụ dòng lệnh để khởi tạo nhanh các ứng dụng mới, bạn có thể sử dụng `npx`, `pnpm`, `yarn` hoặc `bun` thông qua [create-laratype](https://www.npmjs.com/package/create-laratype) để tạo một ứng dụng Laratype mới.
-
-Bạn có thể bắt đầu ngay với câu lệnh sau:
+Ứng dụng Laratype mới được tạo bằng công cụ dòng lệnh [create-laratype](https://www.npmjs.com/package/create-laratype). Bạn chạy nó qua `npx`, `pnpm`, `yarn` hoặc `bun`:
 
 ::: code-group
 
@@ -31,7 +29,7 @@ $ bun create laratype@latest
 
 :::
 
-Dòng lệnh trên sẽ thực thi [create-laratype](https://www.npmjs.com/package/create-laratype), và tạo ra một ứng dụng Laratype mới trong thư mục hiện tại. Bạn có thể đặt tên dự án, lựa chọn các tùy chọn cấu hình và bắt đầu phát triển ứng dụng của mình ngay lập tức.
+Lệnh này chạy [create-laratype](https://www.npmjs.com/package/create-laratype) và tạo ứng dụng mới trong thư mục hiện tại. Công cụ sẽ hỏi tên package và có dùng ORM hay không:
 
 ```md
 √ Enter the name of your package: ... laratype-test
@@ -42,7 +40,7 @@ npm install
 
 ```
 
-Sau khi project đã được tạo, hãy cài đặt các dependencies và khởi chạy dev server
+Tạo xong, bạn cài dependencies rồi chạy dev server:
 
 ::: code-group
 

@@ -4,18 +4,18 @@ outline: deep
 
 # Ủy quyền
 
-Ủy quyền (Authorization) xác định xem một người dùng đã xác thực có được phép thực hiện một hành động hoặc truy cập một tài nguyên hay không. Laratype cung cấp hai khái niệm chính để quản lý ủy quyền: Gates và Policies.
+Ủy quyền (authorization) quyết định một người dùng đã xác thực có được làm một hành động hay truy cập một tài nguyên hay không. Laratype có hai công cụ cho việc này: Gates và Policies.
 
 ## Gates
 
-Gates là các định nghĩa quyền nhỏ, thường dùng cho các hành động ngắn gọn hoặc logic đơn giản không gắn chặt với một model cụ thể. Một Gate là một callback/closure nhận vào người dùng (và tuỳ chọn thêm tham số) và trả về boolean.
+Gate là một quy tắc quyền nhỏ, dùng cho hành động có logic đơn giản và không gắn với một model cụ thể. Gate nhận người dùng (có thể kèm tham số khác) và trả về boolean.
 
 ### Generating Gates
 
 > [!INFO]
-> Gates được khai báo tại thư mục `src/gates/` trong dự án. Bạn có thể tạo file Gate một cách thủ công.
+> Gate nằm trong thư mục `src/gates/`. Bạn có thể tự tạo file Gate bằng tay.
 
-Ví dụ ở dưới đây là một Gate đơn giản cho phép người dùng cập nhật thông tin cá nhân nếu họ là chính họ hoặc là admin.
+Gate sau cho phép cập nhật thông tin của một user nếu người thực hiện chính là user đó hoặc là admin:
 
 ::: code-group
 
@@ -39,7 +39,7 @@ export default class UpdateUserGate extends Gate {
 ```
 :::
 
-Nếu bạn thích generator, có thể dùng lệnh CLI để tạo Gate:
+Hoặc tạo Gate bằng lệnh CLI:
 
 ::: code-group
 
@@ -58,7 +58,7 @@ $ bunx sauf make:gate UpdateUserGate
 :::
 
 > [!TIP]
-> Bạn có thể tạo nhiều Gates cùng lúc bằng cách truyền vào nhiều tên.
+> Truyền nhiều tên để tạo nhiều Gate cùng lúc.
 
 ::: details Xem thêm
 
@@ -80,7 +80,7 @@ $ bunx sauf make:gate UpdateUserGate CreateUserGate
 
 ### Authorizing Actions
 
-Sau khi định nghĩa Gate, bạn có thể sử dụng trong bất kỳ đâu trong dự án, ví dụ trong controller hoặc middleware.
+Gate dùng được ở bất kỳ đâu trong dự án, ví dụ trong controller hoặc middleware:
 
 ::: code-group
 
@@ -113,22 +113,22 @@ export default class UserController extends Controller {
 #### Authorizing or Throwing Exceptions <Badge type="warning" text="coming soon" />
 
 > [!NOTE]
-> Tính năng này sẽ cho phép gọi một helper/Facade để cố gắng ủy quyền và ném ra `AuthorizationError` nếu không được phép (tương tự `authorizeOrFail`). Mục này đang trong kế hoạch và sẽ được cập nhật sau khi API ổn định.
+> Tính năng này sẽ thêm một helper/Facade kiểm tra quyền và ném `AuthorizationError` khi không được phép (tương tự `authorizeOrFail`). Mục này sẽ được viết khi API ổn định.
 
 ## Policies
 
-Policies tập trung logic ủy quyền liên quan tới một model cụ thể. Dùng policies khi bạn có nhiều hành động (view, create, update, delete, ...) trên một resource/model.
+Policy gom logic ủy quyền của một model vào một chỗ. Dùng policy khi một resource/model có nhiều hành động cần kiểm tra quyền (view, create, update, delete...).
 
 > [!INFO]
-> Policies được khai báo tại thư mục `src/policies/` trong dự án. Bạn có thể tạo file Policy một cách thủ công.
+> Policy nằm trong thư mục `src/policies/`. Bạn có thể tự tạo file Policy bằng tay.
 
 ### Tạo policies
 
-Policy là một `class` chứa các method tương ứng với các hành động mà bạn muốn kiểm soát. Thông thường một policy đi kèm với một model.
+Policy là một `class`, mỗi method ứng với một hành động cần kiểm soát. Thường mỗi model có một policy.
 
 #### Generating Policies
 
-Bạn có thể tạo policy bằng tay hoặc dùng generator CLI:
+Ngoài cách tạo bằng tay, bạn có thể dùng lệnh CLI:
 
 ::: code-group
 
@@ -146,9 +146,9 @@ $ bunx sauf make:policy PostPolicy --model Post
 
 :::
 
-Lệnh trên sẽ tạo file `src/policies/PostPolicy.ts` với các method cơ bản (`view`, `viewAny`, `create`, `update`, `delete`, `forceDelete`, `restore`).
+Lệnh này tạo file `src/policies/PostPolicy.ts` với các method cơ bản (`view`, `viewAny`, `create`, `update`, `delete`, `forceDelete`, `restore`).
 
-Sau khi tạo, bạn cần đăng ký policy để framework biết cách map giữa Model và Policy bằng cách thêm `UsePolicy()` `decorator` vào model:
+Sau đó, gắn `decorator` `UsePolicy()` vào model để framework biết model nào dùng policy nào:
 
 ::: code-group
 
@@ -171,7 +171,7 @@ export interface User extends UsePolicy<UserPolicy> {}
 
 ### Writing policies
 
-Một policy thường nhận `User` (hiện tại) và model target (nếu có) hoặc các tham số bổ sung, giá trị trả về boolean hoặc null.
+Method của policy thường nhận `User` hiện tại, model cần kiểm tra (nếu có) hoặc tham số khác, và trả về boolean hoặc null.
 
 ::: code-group
 ```ts [UserPolicy.ts]
@@ -199,24 +199,24 @@ export default class UserPolicy extends Policy {
 ```
 :::
 
-Ở ví dụ trên, `viewAny` và `view` luôn trả về `true`, điều này "đại diện" cho việc bất kỳ ai cũng có thể xem thông tin của một user. Tuy nhiên, chỉ được phép `update` khi là chính họ.
+Trong policy trên, `viewAny` và `view` luôn trả về `true`, nên ai cũng xem được thông tin user. Còn `update` chỉ được phép khi người thực hiện chính là user đó.
 
 #### Policy Methods
 
-Common methods trong policy:
+Các method thường gặp trong policy:
 
-- `viewAny(user: User)` — có xem danh sách không
-- `view(user: User, post: Post)` — có xem được không
-- `create(user: User)` — có tạo mới không
-- `update(user: User, post: Post)` — có cập nhật không
-- `delete(user: User, post: Post)` — có xoá không
-- `restore(user: User, post: Post)` — có khôi phục không
-- `forceDelete(user: User, post: Post)` — có xoá vĩnh viễn không
-- `before(user: User, ability: string)` — chạy trước các method khác, trả về boolean/null
+- `viewAny(user: User)`: có được xem danh sách không
+- `view(user: User, post: Post)`: có được xem không
+- `create(user: User)`: có được tạo mới không
+- `update(user: User, post: Post)`: có được cập nhật không
+- `delete(user: User, post: Post)`: có được xoá không
+- `restore(user: User, post: Post)`: có được khôi phục không
+- `forceDelete(user: User, post: Post)`: có được xoá vĩnh viễn không
+- `before(user: User, ability: string)`: chạy trước các method khác, trả về boolean/null
 
 #### Policy Filters
 
-Phương thức `before` chạy trước các method khác trong policy. Nếu nó trả về true/false thì các method còn lại bị bỏ qua và giá trị đó là quyết định cuối cùng; nếu trả về null, kiểm tra sẽ tiếp tục bình thường.
+Phương thức `before` chạy trước các method khác trong policy. Nếu `before` trả về true hoặc false, các method còn lại bị bỏ qua và giá trị đó là kết quả cuối cùng. Nếu trả về null, việc kiểm tra tiếp tục như bình thường.
 
 ::: code-group
 
@@ -236,17 +236,15 @@ export default class UserPolicy extends Policy {
 ```
 :::
 
-Trong ví dụ trên, khi actor là `Admin`, `before` trả về true nên Admin được phép thực hiện mọi hành động.
+Ở đây, khi actor là `Admin`, `before` trả về true, nên Admin làm được mọi hành động.
 
 ### Authorizing Actions Using Policies
 
-Policies làm cho việc ủy quyền theo model trở nên trực quan hơn.
-
 #### Via the Model
 
-Mỗi model có được khai báo có policy sẽ có phương thức `can` để giúp bạn kiểm tra quyền một cách dễ dàng.
+Model đã gắn policy có phương thức `can` để kiểm tra quyền.
 
-Giả sử bạn đã đăng ký `PostPolicy` cho `Post` model, bạn có thể kiểm tra quyền bằng model như sau:
+Ví dụ, khi `PostPolicy` đã được đăng ký cho model `Post`:
 
 ::: code-group
 
@@ -279,11 +277,11 @@ export default class UserController extends Controller {
 ```
 :::
 
-Ở ví dụ trên, chúng ta đã sử dụng phương thức `can` để kiểm tra quyền của người dùng trước khi thực hiện hành động xóa. Nếu người dùng không có quyền, `UnauthorizedException` sẽ được ném ra.
+Controller kiểm tra quyền của người dùng bằng phương thức `can` trước khi xóa. Người dùng không có quyền sẽ nhận `UnauthorizedException`.
 
 ##### Actions That Don't Require Models
 
-Đối với hành động không cần model (ví dụ: `create`), tạo method trong policy tương ứng. Gọi bằng tên action mà không truyền model:
+Với hành động không cần model cụ thể (ví dụ `create`), viết method tương ứng trong policy rồi gọi bằng tên action, không truyền model:
 
 ```ts
 import { Post } from "../models/Post";
@@ -295,7 +293,7 @@ if(actor.can('create', Post)) {
 
 #### Via Middleware
 
-Bạn cũng có thể bảo vệ route bằng middleware `can` để kiểm tra quyền trước khi vào controller:
+Middleware `can` kiểm tra quyền ngay trên route, trước khi request vào controller:
 
 ::: code-group
 
@@ -349,10 +347,10 @@ const authGuardedRoutes: RouteOptions = {
 
 ##### With Route Model Binding
 
-Laratype hỗ trợ tự động binding model từ tham số route, hay tham khảo chi tiết [tại đây](../http/routing.md#route-model-binding). Bạn có thể sử dụng middleware `can` với tên tham số đã được binding:
+Laratype tự binding model từ tham số route (chi tiết [tại đây](../http/routing.md#route-model-binding)). Middleware `can` nhận tên tham số đã được binding:
 
 - `can("action", "routeParamName")`
 
-Đối với hành động không cần model (ví dụ: `create`):
+Với hành động không cần model cụ thể (ví dụ `create`):
 
 - `can("action", ModelName)`

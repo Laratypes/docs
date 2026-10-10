@@ -1,12 +1,12 @@
 # Core Commands
 
-Sauf cung cấp một loạt các lệnh cốt lõi để giúp bạn quản lý và vận hành ứng dụng dòng lệnh của mình một cách hiệu quả. Dưới đây là danh sách các lệnh cốt lõi mà Sauf hỗ trợ:
+Các lệnh cốt lõi của Sauf dùng để chạy, build và quản lý ứng dụng.
 
 ## Start Development Server
 
-- `dev`: Khởi động ứng dụng ở chế độ phát triển.
-  - `-p, --port <port>`: Chỉ định cổng mà ứng dụng sẽ lắng nghe (mặc định là 3000).
-  - `-h, --host <host>`: Chỉ định host mà ứng dụng sẽ lắng nghe (mặc định là localhost).
+- `dev`: chạy ứng dụng ở chế độ phát triển.
+  - `-p, --port <port>`: cổng ứng dụng lắng nghe, mặc định 3000.
+  - `-h, --host <host>`: host ứng dụng lắng nghe, mặc định localhost.
 
 ::: code-group
 
@@ -30,8 +30,8 @@ $ bunx sauf dev
 
 ## Build Application
 
-- `build`: Biên dịch ứng dụng cho môi trường production.
-  - `-p, --platform <platform>`: Chỉ định nền tảng build (ví dụ: node, deno).
+- `build`: build ứng dụng cho production.
+  - `-p, --platform <platform>`: nền tảng đích, ví dụ node hoặc deno.
 
 ::: code-group
 
@@ -55,7 +55,7 @@ $ bunx sauf build
 
 ## Sync Database
 
-- `db:init`: Khởi tạo cơ sở dữ liệu.
+- `db:init`: khởi tạo cơ sở dữ liệu.
 
 ::: code-group
 
@@ -79,7 +79,7 @@ $ bunx sauf db:init
 
 ## Seeding Database
 
-- `db:seed`: Thêm dữ liệu mẫu vào cơ sở dữ liệu.
+- `db:seed`: thêm dữ liệu mẫu vào cơ sở dữ liệu.
 
 ::: code-group
 
@@ -103,7 +103,7 @@ $ bunx sauf db:seed
 
 ## List Registered Routes
 
-- `route:list`: Hiển thị danh sách các route đã đăng ký trong ứng dụng của bạn.
+- `route:list`: liệt kê các route đã đăng ký trong ứng dụng.
 
 ::: code-group
 

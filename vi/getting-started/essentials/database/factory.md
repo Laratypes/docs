@@ -4,13 +4,13 @@ outline: deep
 
 # Factory
 
-Factories là các lớp được sử dụng để tạo dữ liệu mẫu cho các model của bạn một cách dễ dàng và nhanh chóng. Chúng rất hữu ích trong việc phát triển và kiểm thử ứng dụng, giúp bạn tạo ra các bản ghi giả lập mà không cần phải viết mã lặp đi lặp lại.
+Factory là lớp tạo dữ liệu mẫu cho model. Khi phát triển và kiểm thử, bạn dùng factory để sinh bản ghi giả thay vì viết đi viết lại cùng một đoạn code.
 
 > [!INFO]
-> Factory được tổ chức trong thư mục `database/factories`.
+> Factory nằm trong thư mục `database/factories`.
 
 > [!TIP]
-> Bạn có thể sử dụng [@faker-js/faker](https://www.npmjs.com/package/@faker-js/faker) để tạo dữ liệu ngẫu nhiên trong factories của mình.
+> Dùng [@faker-js/faker](https://www.npmjs.com/package/@faker-js/faker) nếu bạn cần dữ liệu ngẫu nhiên trong factory.
 
 ## Tạo Factory
 
@@ -58,14 +58,14 @@ export default class UserFactory extends Factory<User> {
 ```
 :::
 
-Trong ví dụ trên, chúng ta đã định nghĩa một factory cho model `User`, sử dụng thư viện `faker` để tạo dữ liệu ngẫu nhiên cho các trường của model.
+Factory trên dành cho model `User` và dùng `faker` để sinh giá trị ngẫu nhiên cho các trường.
 
 > [!WARNING]
-> Hãy đảm bảo bạn sử dụng `UseModel` decorator để liên kết factory với model tương ứng.
+> Factory cần decorator `UseModel` để biết nó thuộc model nào.
 
 ## Sử dụng Factory
 
-Bạn có thể sử dụng factory để tạo các bản ghi mẫu trong cơ sở dữ liệu
+Gọi factory để tạo bản ghi mẫu trong cơ sở dữ liệu:
 
 ::: code-group
 
@@ -81,11 +81,11 @@ const users = await UserFactory.make<User>().state((attributes) => {
 
 ## Factory Relationships
 
-Nếu model có các mối quan hệ với các model khác, bạn có thể định nghĩa các mối quan hệ này trong factory để tự động tạo các bản ghi liên quan khi tạo bản ghi chính.
+Khi model có quan hệ với model khác, factory có thể tạo luôn các bản ghi liên quan cùng lúc với bản ghi chính.
 
 ### Has Many Relationships
 
-Giả sử model `User` có mối quan hệ "has many" với model `Post`. Bạn có thể định nghĩa mối quan hệ này trong factory như sau:
+Ví dụ model `User` có quan hệ "has many" với model `Post`:
 
 ::: code-group
 
@@ -116,11 +116,10 @@ const users = await UserFactory.make<User>()
 
 :::
 
-Trong ví dụ trên, khi tạo 10 user, mỗi user sẽ tự động có 3 bài post liên quan được tạo ra.
+Đoạn code này tạo 10 user, và mỗi user có thêm 3 bài post.
 
 ::: warning
-Đảm bảo rằng bạn đã định nghĩa mối quan hệ trong model để factory có thể sử dụng đúng cách.
-Hãy đảm bảo bạn đã thêm `cascade: true` trong định nghĩa mối quan hệ của model `User`:
+Quan hệ phải được khai báo trong model thì factory mới dùng được. Trong model `User`, quan hệ cần có `cascade: true`:
 ```
 @OneToMany(() => Post, post => post.user, { cascade: true })
 posts: Relation<Post>[]

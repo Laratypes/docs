@@ -1,23 +1,23 @@
 # Service Providers
 
-Service provider là một lớp chịu trách nhiệm khởi tạo các thành phần khác nhau của ứng dụng.
+Service provider là lớp khởi tạo các thành phần của ứng dụng khi ứng dụng khởi động.
 
-Trong Laratype, hầu hết các dịch vụ được cung cấp bởi các service provider. Chúng chịu trách nhiệm đăng ký các binding trong service container, sự kiện, middleware, và nhiều hơn nữa.
+Phần lớn dịch vụ trong Laratype đến từ service provider. Provider đăng ký binding trong service container, sự kiện, middleware và các thành phần khác.
 
-Laratype hỗ trợ nhiều loại service provider khác nhau, bao gồm:
+Các loại service provider trong Laratype gồm:
 
-- `ServiceProvider`: Lớp cơ sở cho tất cả các service provider.
-- `RouteServiceProvider`: Chuyên dùng để đăng ký các route.
-- `AppServiceProvider`: Dùng để đăng ký các dịch vụ ứng dụng chung.
+- `ServiceProvider`: lớp cơ sở của mọi service provider.
+- `RouteServiceProvider`: đăng ký route.
+- `AppServiceProvider`: đăng ký các dịch vụ chung của ứng dụng.
 
-Đặc điểm chung của các service provider là chúng đều kế thừa từ lớp `ServiceProvider` và có thể ghi đè các phương thức như `register` và `boot` để thực hiện các hành động cụ thể khi ứng dụng khởi động.
+Mọi service provider đều kế thừa `ServiceProvider`. Bạn ghi đè các phương thức như `register` và `boot` để chạy code của mình lúc ứng dụng khởi động.
 
 > [!INFO]
 > Các service provider được tổ chức trong thư mục `src/providers`.
 
 ## Tạo Service Provider
 
-Để tạo một service provider mới, bạn cần tạo một tệp TypeScript trong thư mục `src/providers`.
+Mỗi service provider là một file TypeScript trong thư mục `src/providers`:
 
 ::: code-group
 
@@ -39,7 +39,7 @@ export default class RouteServiceProvider extends RouteAppServiceProvider {
 
 ## Đăng ký Service Provider
 
-Sau khi tạo service provider, bạn cần đăng ký nó trong tệp `config/providers.ts` để Laratype có thể sử dụng nó.
+Laratype chỉ chạy những provider được khai báo trong file `config/providers.ts`. Thêm provider mới vào danh sách này:
 
 ::: code-group
 

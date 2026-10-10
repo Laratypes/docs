@@ -1,8 +1,8 @@
 # Giới thiệu
 
-Laratype HTTP cung cấp một hệ thống routing mạnh mẽ, linh hoạt và dễ sử dụng, giúp bạn định nghĩa các endpoint cho ứng dụng của mình một cách nhanh chóng.
+Gói `@laratype/http` lo phần routing: bạn khai báo các endpoint của ứng dụng tại đây.
 
-Để sử dụng hệ thống routing, bạn cần install gói `@laratype/http`:
+Cài gói này trước khi dùng:
 
 ::: code-group
 

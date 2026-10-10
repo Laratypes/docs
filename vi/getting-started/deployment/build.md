@@ -1,12 +1,10 @@
 # Build Deployment
 
-Laratype tách biệt môi trường phát triển và môi trường production để đảm bảo hiệu suất và bảo mật tối ưu. Quá trình build sẽ biên dịch mã nguồn TypeScript sang JavaScript và tối ưu hóa các tài nguyên cần thiết cho việc triển khai.
+Laratype tách môi trường phát triển khỏi môi trường production. Bước build biên dịch mã TypeScript sang JavaScript và tối ưu các tài nguyên cần để triển khai, nên bạn phải build ứng dụng trước khi đưa lên production.
 
-Vậy nên, khi trển khai ứng dụng Laratype, bạn cần thực hiện quá trình build trước khi đưa ứng dụng lên môi trường production.
+Nhờ vậy, máy production không cần cài TypeScript hay các công cụ phát triển khác. Ứng dụng vì thế nhỏ hơn và an toàn hơn.
 
-Bạn sẽ không cần cài đặt TypeScript hay các công cụ phát triển khác trên môi trường production, giúp giảm thiểu kích thước ứng dụng và tăng cường bảo mật.
-
-Ngoài ra, bạn có thể xóa `sauf` khỏi `dependencies` trong `package.json` để giảm thiểu kích thước ứng dụng hơn nữa.
+Bạn cũng có thể xóa `sauf` khỏi `dependencies` trong `package.json` để ứng dụng nhỏ hơn nữa.
 
 ## Thực hiện Build
 
@@ -32,7 +30,7 @@ $ bunx sauf build
 
 ## Khởi chạy Application
 
-Sau khi build xong, bạn có thể khởi động ứng dụng từ thư mục `dist` bằng cách sử dụng Node.js, hoặc sử dụng lệnh `saufx`.
+Build xong, bạn khởi động ứng dụng từ thư mục `dist` bằng Node.js hoặc bằng lệnh `saufx`:
 
 ::: code-group
 
@@ -56,7 +54,7 @@ $ bun saufx build
 
 ## Sử dụng CLI
 
-Các cli không cần thiết như (`make:...`) sẽ không được bundle, giúp giảm kích thước ứng dụng, bạn có thể sử dụng qua lệnh `saufx`.
+Bản build không đóng gói các lệnh chỉ dùng khi phát triển, như `make:...`, nên ứng dụng nhỏ hơn. Các lệnh còn lại chạy qua `saufx`:
 
 ::: code-group
 

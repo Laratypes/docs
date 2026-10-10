@@ -4,12 +4,12 @@ outline: deep
 
 # Model
 
-Model đại diện cho các bảng trong cơ sở dữ liệu và chịu trách nhiệm tương tác với dữ liệu.
+Mỗi model ứng với một bảng trong cơ sở dữ liệu, và bạn đọc, ghi dữ liệu của bảng đó qua model.
 
 > [!INFO]
-> Model được tổ chức trong thư mục `src/models`.
+> Model nằm trong thư mục `src/models`.
 
-Laratype dựa trên ORM [TypeORM](https://typeorm.io/) để cung cấp các tính năng mạnh mẽ cho việc quản lý dữ liệu, bao gồm các phương thức để tạo, đọc, cập nhật và xóa (CRUD) dữ liệu.
+Model của Laratype xây dựng trên ORM [TypeORM](https://typeorm.io/) và có sẵn các phương thức tạo, đọc, cập nhật và xóa (CRUD) dữ liệu.
 
 ## Tạo Model
 
@@ -31,10 +31,10 @@ $ bunx sauf make:model User
 
 :::
 
-Laratype sẽ tạo một file model mới trong thư mục `src/models/` với tên `User.ts`.
+Lệnh này tạo file `User.ts` trong thư mục `src/models/`.
 
 > [!TIP]
-> Bạn có thể tạo nhiều model cùng lúc bằng cách truyền vào nhiều tên.
+> Truyền nhiều tên để tạo nhiều model cùng lúc.
 
 ::: details Xem thêm
 
@@ -93,12 +93,12 @@ export class User extends Model {
 :::
 
 > [!IMPORTANT]
-> Mỗi model phải kế thừa từ lớp `Model` của Laratype.
-> Sau khi định nghĩa model, laratype sẽ không tự động đồng bộ với cơ sở dữ liệu. Bạn cần chạy lệnh `sauf db:init` để áp dụng các thay đổi, xem thêm trong phần [Command](#command).
+> Mỗi model phải kế thừa lớp `Model` của Laratype.
+> Laratype không tự đồng bộ model với cơ sở dữ liệu. Sau khi định nghĩa hoặc sửa model, bạn chạy `sauf db:init` để áp dụng thay đổi (xem phần [Command](#command)).
 
 #### Mass Assignment
 
-Thuộc tính `fillable` xác định các trường có thể được gán hàng loạt (mass assignment). Điều này giúp bảo vệ chống lại các cuộc tấn công gán hàng loạt không mong muốn.
+Thuộc tính `fillable` liệt kê các trường được phép gán hàng loạt (mass assignment). Trường nào không có trong danh sách sẽ bị bỏ qua, nên người dùng không thể gửi kèm trường ngoài ý muốn để ghi vào cơ sở dữ liệu.
 
 ::: code-group
 
@@ -121,15 +121,15 @@ User.save({
 
 #### Password Hashing
 
-Mặc định Laratype sẽ tự hash password khi bạn sử dụng phương thức `findOneBy`, `save` hoặc `create`, và tự bỏ trường password khi bạn sử dụng phương thức `findOne`.
+Mặc định, Laratype tự hash password khi bạn gọi `findOneBy`, `save` hoặc `create`, và tự bỏ trường password khỏi kết quả của `findOne`.
 
 #### Casting <Badge type="warning" text="coming soon" />
 
-> [!NOTE] Casting sẽ được bổ sung trong các bản cập nhật tiếp theo.
+> [!NOTE] Casting sẽ có trong một bản cập nhật sau.
 
 ## Command
 
-Sau khi tạo model, bạn cần chạy lệnh sau để đồng bộ các thay đổi với cơ sở dữ liệu:
+Sau khi tạo model, chạy lệnh sau để đồng bộ thay đổi vào cơ sở dữ liệu:
 
 ::: details Development {open}
 

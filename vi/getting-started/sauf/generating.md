@@ -1,14 +1,14 @@
 # Generating commands
 
-Sauf cung cấp một cách đơn giản để tạo các lệnh tùy chỉnh cho ứng dụng dòng lệnh của bạn. Bạn có thể sử dụng lệnh `sauf make:...` để tạo một lệnh mới với cấu trúc cơ bản đã được thiết lập sẵn.
+Các lệnh `sauf make:...` tạo file mới cho từng loại thành phần (command, controller, model...) với khung code dựng sẵn.
 
 > [!WARNING]
-> `sauf make:...` chỉ có thể được sử dụng trong môi trường phát triển.
+> `sauf make:...` chỉ dùng được trong môi trường phát triển.
 
 ## Make Command
 
-- `make:command <names>`: Tạo một lệnh mới.
-  - `<names>`: Tên của lệnh bạn muốn tạo. Bạn có thể truyền vào nhiều tên để tạo nhiều lệnh cùng lúc.
+- `make:command <names>`: tạo lệnh mới.
+  - `<names>`: tên lệnh. Truyền nhiều tên để tạo nhiều lệnh cùng lúc.
 
 ::: details Usage
 ::: code-group
@@ -32,8 +32,8 @@ $ bunx sauf make:command
 :::
 
 ## Make Controller
-- `make:controller <names>`: Tạo một controller mới.
-  - `<names>`: Tên của controller bạn muốn tạo. Bạn có thể truyền vào nhiều tên để tạo nhiều controller cùng lúc.
+- `make:controller <names>`: tạo controller mới.
+  - `<names>`: tên controller. Truyền nhiều tên để tạo nhiều controller cùng lúc.
 
 ::: details Usage
 ::: code-group
@@ -57,8 +57,8 @@ $ bunx sauf make:controller
 :::
 
 ## Make Factory
-- `make:factory <model>`: Tạo một factory mới.
-  - `<model>`: Tên của model mà factory sẽ liên kết.
+- `make:factory <model>`: tạo factory mới.
+  - `<model>`: tên model mà factory sinh dữ liệu cho.
 
 ::: details Usage
 
@@ -83,8 +83,8 @@ $ bunx sauf make:factory
 :::
 
 ## Make Gate
-- `make:gate <names>`: Tạo một gate mới.
-  - `<names>`: Tên của gate bạn muốn tạo. Bạn có thể truyền vào nhiều tên để tạo nhiều gate cùng lúc.
+- `make:gate <names>`: tạo gate mới.
+  - `<names>`: tên gate. Truyền nhiều tên để tạo nhiều gate cùng lúc.
 
 ::: details Usage
 
@@ -109,8 +109,8 @@ $ bunx sauf make:gate
 :::
 
 ## Make Middleware
-- `make:middleware <names>`: Tạo một middleware mới.
-  - `<names>`: Tên của middleware bạn muốn tạo. Bạn có thể truyền vào nhiều tên để tạo nhiều middleware cùng lúc.
+- `make:middleware <names>`: tạo middleware mới.
+  - `<names>`: tên middleware. Truyền nhiều tên để tạo nhiều middleware cùng lúc.
 
 ::: details Usage
 
@@ -135,8 +135,8 @@ $ bunx sauf make:middleware
 :::
 
 ## Make Model
-- `make:model <names>`: Tạo một model mới.
-  - `<names>`: Tên của model bạn muốn tạo. Bạn có thể truyền vào nhiều tên để tạo nhiều model cùng lúc.
+- `make:model <names>`: tạo model mới.
+  - `<names>`: tên model. Truyền nhiều tên để tạo nhiều model cùng lúc.
 
 ::: details Usage
 
@@ -161,9 +161,9 @@ $ bunx sauf make:model
 :::
 
 ## Make Policy
-- `make:policy [option] <name>`: Tạo một policy mới.
-  - `<name>`: Tên của policy bạn muốn tạo.
-  - `-m, --model <model>`: Chỉ định model mà policy sẽ liên kết.
+- `make:policy [option] <name>`: tạo policy mới.
+  - `<name>`: tên policy.
+  - `-m, --model <model>`: model mà policy áp dụng.
 
 ::: details Usage
 
@@ -188,8 +188,8 @@ $ bunx sauf make:policy
 :::
 
 ## Make Request
-- `make:request <names>`: Tạo một request mới.
-  - `<names>`: Tên của request bạn muốn tạo. Bạn có thể truyền vào nhiều tên để tạo nhiều request cùng lúc.
+- `make:request <names>`: tạo request mới.
+  - `<names>`: tên request. Truyền nhiều tên để tạo nhiều request cùng lúc.
 
 ::: details Usage
 
@@ -214,9 +214,9 @@ $ bunx sauf make:request
 :::
 
 ## Make Resource
-- `make:resource [options] <names>`: Tạo một resource mới.
-  - `<names>`: Tên của resource bạn muốn tạo. Bạn có thể truyền vào nhiều tên để tạo nhiều resource cùng lúc.
-  - `-c, --collection`: Tạo resource dạng collection.
+- `make:resource [options] <names>`: tạo resource mới.
+  - `<names>`: tên resource. Truyền nhiều tên để tạo nhiều resource cùng lúc.
+  - `-c, --collection`: tạo resource dạng collection.
 
 ::: details Usage
 
@@ -241,8 +241,8 @@ $ bunx sauf make:resource
 :::
 
 ## Make Seeder
-- `make:seeder <model>`: Tạo một seeder mới.
-  - `<model>`: Tên của model mà seeder sẽ liên kết.
+- `make:seeder <model>`: tạo seeder mới.
+  - `<model>`: tên model mà seeder chèn dữ liệu cho.
 
 ::: details Usage
 

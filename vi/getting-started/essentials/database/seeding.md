@@ -4,13 +4,13 @@ outline: deep
 
 # Seeder
 
-Seeder được sử dụng để chèn dữ liệu mẫu vào cơ sở dữ liệu của bạn, rất hữu ích trong quá trình phát triển và kiểm thử ứng dụng.
+Seeder chèn dữ liệu mẫu vào cơ sở dữ liệu, thường dùng khi phát triển và kiểm thử.
 
 > [!INFO]
-> Seeder được tổ chức trong thư mục `database/seeders`.
+> Seeder nằm trong thư mục `database/seeders`.
 
 > [!INFO]
-> [Mass Assignment](../database/model.md#mass-assignment) sẽ tự động tắt khi bạn chạy seeder để đảm bảo rằng tất cả các trường đều có thể được gán giá trị.
+> Khi chạy seeder, [Mass Assignment](../database/model.md#mass-assignment) tự tắt, nên mọi trường đều gán được giá trị.
 
 
 ## Tạo Seeder
@@ -33,11 +33,11 @@ $ bunx sauf make:seeder UserSeeder
 
 :::
 
-Laratype sẽ tạo một file seeder mới trong thư mục `database/seeders/` với tên `UserSeeder.ts`.
+Lệnh này tạo file `UserSeeder.ts` trong thư mục `database/seeders/`.
 
 ### Writing Seeder
 
-Mỗi một seeder kế thừa từ lớp `Seeder` và phải triển khai phương thức `run`, nơi bạn định nghĩa logic để chèn dữ liệu vào cơ sở dữ liệu.
+Mỗi seeder kế thừa lớp `Seeder` và phải có phương thức `run`. Code chèn dữ liệu nằm trong `run`.
 
 ::: code-group
 
@@ -59,9 +59,9 @@ export default class UserSeeder extends Seeder {
 
 ### Sử dụng Factories
 
-Bạn cũng có thể sử dụng factories để tạo dữ liệu mẫu trong seeder của mình. Trước tiên, hãy xem phần [Factory](./factory.md) để biết cách tạo factories.
+Seeder có thể dùng factory để sinh dữ liệu. Cách viết factory xem ở phần [Factory](./factory.md).
 
-Giả sử bạn đã định nghĩa một factory cho model `User`, bạn có thể sử dụng nó trong seeder như sau để tạo ra 10 user ngẫu nhiên:
+Với một factory cho model `User`, seeder sau tạo 10 user ngẫu nhiên:
 
 ::: code-group
 
@@ -80,7 +80,7 @@ export default class UserSeeder extends Seeder {
 
 ### Gọi seeder khác
 
-Bạn có thể gọi một seeder khác từ trong seeder hiện tại bằng cách sử dụng phương thức `call`:
+Một seeder gọi các seeder khác bằng phương thức `call`:
 
 ::: code-group
 
@@ -100,7 +100,7 @@ export default class DatabaseSeeder extends Seeder {
 
 #### Chạy Seeder
 
-Sau khi định nghĩa seeder, bạn có thể chạy nó để chèn dữ liệu vào cơ sở dữ liệu của mình, xem thêm trong phần [Chạy Seeder cụ thể](#chạy-seeder-cụ-thể).
+Cách chạy một seeder để chèn dữ liệu xem ở phần [Chạy Seeder cụ thể](#chạy-seeder-cụ-thể).
 
 ## Command
 
