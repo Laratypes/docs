@@ -21,7 +21,34 @@ Builder là bất biến: mỗi lời gọi trả về một endpoint mới và 
 
 Status thành công khác `200` giữ nguyên literal type, nên `.response(UserDto, 201)` có type `201`. Middleware và auth không nằm trong endpoint mà thuộc về route.
 
-<<< @/snippets/v1/contract/endpoint.ts
+```ts
+import * as z from 'zod'
+import { endpoint, errors } from '@laratype/contract'
+
+const UserDto = z.object({ id: z.number(), name: z.string() })
+
+// One endpoint: method + Hono-style path, then optional slots in any order.
+export const showPost = endpoint
+  .get('/users/:user/posts/:post?')
+  .query(z.object({ page: z.coerce.number().default(1) }))
+  .response(UserDto)
+  .errors(errors.notFound, errors.forbidden)
+// params: { user: string; post?: string }
+// query: { page?: number } in, { page: number } out
+// response: { id: number; name: string }, status: 200
+// error statuses: 404 | 403
+
+// A non-default success status is a literal type.
+export const storeUser = endpoint
+  .post('/users')
+  .body(z.object({ name: z.string().min(1) }))
+  .response(UserDto, 201)
+  .errors(errors.validation)
+// status: 201
+
+// The runtime def is plain data for the router, the client and OpenAPI.
+export const def = storeUser.def // { method: 'post', path: '/users', status: 201, body, response, errors: [...] }
+```
 
 Thuộc tính `def` chứa mô tả lúc chạy (method, path, schema, status và lỗi) dưới dạng dữ liệu thuần đã bị freeze. Ghi vào nó sẽ ném `TypeError` ở strict mode.
 
@@ -80,7 +107,28 @@ Router sẽ tự gọi `validate()` cho query, body và header ([#106](https://g
 API này đang được review trong PR [#205](https://github.com/Laratypes/Laratype/pull/205). Ví dụ được kiểm tra type theo pull request đó, chưa phải theo `master`.
 :::
 
-<<< @/snippets/v1/contract/proposed/validate.ts
+```ts
+import * as z from 'zod'
+import { validate, validateSync } from '@laratype/contract'
+import type { ValidationErrorBody } from '@laratype/contract'
+
+const StoreBody = z.object({ name: z.string().min(1), address: z.object({ zip: z.string() }) })
+
+export async function check(input: unknown): Promise<ValidationErrorBody | { name: string }> {
+  // Works with any Standard Schema (zod 3.25+, valibot, arktype). The value type comes from the schema output.
+  const result = await validate(StoreBody, input)
+  if (result.ok) {
+    return result.value // { name: string; address: { zip: string } }
+  }
+  // errors: dot path -> messages, e.g. { "address.zip": ["Required"] }: the 422 body shape.
+  return { message: 'The given data was invalid.', errors: result.errors }
+}
+
+// Sync variant: throws a TypeError when the schema is async.
+const Page = z.object({ page: z.coerce.number().default(1) })
+export const page = validateSync(Page, { page: '2' })
+// page.value.page: number, once page.ok is true
+```
 
 ## Khai báo contract <Status issue="93" pr="204" />
 
@@ -125,7 +173,31 @@ Hai hàm đọc API object:
 `defineContract`, `defineApi` và các type của API đang được review trong PR [#204](https://github.com/Laratypes/Laratype/pull/204). Ví dụ được kiểm tra type theo pull request đó.
 :::
 
-<<< @/snippets/v1/contract/proposed/contracts.ts
+```ts
+import * as z from 'zod'
+import { apiEndpoint, apiRoutes, defineApi, defineContract, endpoint, errors } from '@laratype/contract'
+
+const UserDto = z.object({ id: z.number(), name: z.string(), email: z.string().email() })
+
+// app/contracts/users.ts: imports only @laratype/contract and the schema library.
+export const users = defineContract('users', {
+  index: endpoint.get('/users').query(z.object({ page: z.coerce.number().default(1) })).response(z.array(UserDto)),
+  show: endpoint.get('/users/:user').response(UserDto).errors(errors.notFound),
+  store: endpoint
+    .post('/users')
+    .body(z.object({ name: z.string().min(1), email: z.string().email() }))
+    .response(UserDto, 201)
+    .errors(errors.validation),
+})
+
+// app/contracts/index.ts: the only module a FE imports. Keys must equal the contract names.
+export const appApi = defineApi({ users })
+export type AppApi = typeof appApi
+
+// Route names are `<contract>.<endpoint>`.
+export const names = apiRoutes(appApi).map(([name]) => name) // ['users.index', 'users.show', 'users.store']
+export const show = apiEndpoint(appApi, 'users.show') // typeof users.show
+```
 
 ## Type của API <Status issue="93" pr="204" />
 
@@ -141,4 +213,4 @@ Một hàm tạo URL đang được lên kế hoạch. Nó sẽ tạo URL từ m
 
 ## Test type <Status issue="94" />
 
-`@laratype/contract` kiểm tra type của chính nó bằng test mức type (`expectTypeOf` và `@ts-expect-error`), hiện chạy cùng bộ test thường. Một job CI riêng, fail khi có type bị hỏng, đang lên kế hoạch ở [#94](https://github.com/Laratypes/Laratype/issues/94). Code ứng dụng không cần thay đổi gì.
+`@laratype/contract` kiểm tra type của chính nó bằng test mức type (assertion về type và `@ts-expect-error`), hiện chạy cùng bộ test thường. Một job CI riêng, fail khi có type bị hỏng, đang lên kế hoạch ở [#94](https://github.com/Laratypes/Laratype/issues/94). Code ứng dụng không cần thay đổi gì.

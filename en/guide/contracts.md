@@ -21,7 +21,34 @@ The builder is immutable: every call returns a new endpoint and leaves the old o
 
 A success status other than `200` keeps its literal type, so `.response(UserDto, 201)` is typed `201`. Middleware and auth are not part of an endpoint; they belong to the route.
 
-<<< @/snippets/v1/contract/endpoint.ts
+```ts
+import * as z from 'zod'
+import { endpoint, errors } from '@laratype/contract'
+
+const UserDto = z.object({ id: z.number(), name: z.string() })
+
+// One endpoint: method + Hono-style path, then optional slots in any order.
+export const showPost = endpoint
+  .get('/users/:user/posts/:post?')
+  .query(z.object({ page: z.coerce.number().default(1) }))
+  .response(UserDto)
+  .errors(errors.notFound, errors.forbidden)
+// params: { user: string; post?: string }
+// query: { page?: number } in, { page: number } out
+// response: { id: number; name: string }, status: 200
+// error statuses: 404 | 403
+
+// A non-default success status is a literal type.
+export const storeUser = endpoint
+  .post('/users')
+  .body(z.object({ name: z.string().min(1) }))
+  .response(UserDto, 201)
+  .errors(errors.validation)
+// status: 201
+
+// The runtime def is plain data for the router, the client and OpenAPI.
+export const def = storeUser.def // { method: 'post', path: '/users', status: 201, body, response, errors: [...] }
+```
 
 The `def` property holds the runtime description (method, path, schemas, status and errors) as frozen plain data. Writing to it throws a `TypeError` in strict mode.
 
@@ -80,7 +107,28 @@ The router will call `validate()` on the query, body and headers for you ([#106]
 This API is in review in PR [#205](https://github.com/Laratypes/Laratype/pull/205). The example is type-checked against that pull request, not against `master`.
 :::
 
-<<< @/snippets/v1/contract/proposed/validate.ts
+```ts
+import * as z from 'zod'
+import { validate, validateSync } from '@laratype/contract'
+import type { ValidationErrorBody } from '@laratype/contract'
+
+const StoreBody = z.object({ name: z.string().min(1), address: z.object({ zip: z.string() }) })
+
+export async function check(input: unknown): Promise<ValidationErrorBody | { name: string }> {
+  // Works with any Standard Schema (zod 3.25+, valibot, arktype). The value type comes from the schema output.
+  const result = await validate(StoreBody, input)
+  if (result.ok) {
+    return result.value // { name: string; address: { zip: string } }
+  }
+  // errors: dot path -> messages, e.g. { "address.zip": ["Required"] }: the 422 body shape.
+  return { message: 'The given data was invalid.', errors: result.errors }
+}
+
+// Sync variant: throws a TypeError when the schema is async.
+const Page = z.object({ page: z.coerce.number().default(1) })
+export const page = validateSync(Page, { page: '2' })
+// page.value.page: number, once page.ok is true
+```
 
 ## Defining a contract <Status issue="93" pr="204" />
 
@@ -125,7 +173,31 @@ Two helpers read the API object:
 `defineContract`, `defineApi` and the API types are in review in PR [#204](https://github.com/Laratypes/Laratype/pull/204). The example is type-checked against that pull request.
 :::
 
-<<< @/snippets/v1/contract/proposed/contracts.ts
+```ts
+import * as z from 'zod'
+import { apiEndpoint, apiRoutes, defineApi, defineContract, endpoint, errors } from '@laratype/contract'
+
+const UserDto = z.object({ id: z.number(), name: z.string(), email: z.string().email() })
+
+// app/contracts/users.ts: imports only @laratype/contract and the schema library.
+export const users = defineContract('users', {
+  index: endpoint.get('/users').query(z.object({ page: z.coerce.number().default(1) })).response(z.array(UserDto)),
+  show: endpoint.get('/users/:user').response(UserDto).errors(errors.notFound),
+  store: endpoint
+    .post('/users')
+    .body(z.object({ name: z.string().min(1), email: z.string().email() }))
+    .response(UserDto, 201)
+    .errors(errors.validation),
+})
+
+// app/contracts/index.ts: the only module a FE imports. Keys must equal the contract names.
+export const appApi = defineApi({ users })
+export type AppApi = typeof appApi
+
+// Route names are `<contract>.<endpoint>`.
+export const names = apiRoutes(appApi).map(([name]) => name) // ['users.index', 'users.show', 'users.store']
+export const show = apiEndpoint(appApi, 'users.show') // typeof users.show
+```
 
 ## API types <Status issue="93" pr="204" />
 
@@ -141,4 +213,4 @@ A URL builder is planned. It would build a URL from an endpoint, or from a route
 
 ## Type tests <Status issue="94" />
 
-`@laratype/contract` checks its types with type-level tests (`expectTypeOf` and `@ts-expect-error`), which run with its normal test suite today. A dedicated CI job that fails on a broken type is planned in [#94](https://github.com/Laratypes/Laratype/issues/94). Nothing changes for application code.
+`@laratype/contract` checks its types with type-level tests (type assertions and `@ts-expect-error`), which run with its normal test suite today. A dedicated CI job that fails on a broken type is planned in [#94](https://github.com/Laratypes/Laratype/issues/94). Nothing changes for application code.

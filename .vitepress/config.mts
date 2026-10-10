@@ -11,8 +11,8 @@ export default defineConfig({
   rewrites: {
     'en/:rest*': ':rest*'
   },
-  // Repo docs and synced code snippets are not pages
-  srcExclude: ['AGENTS.md', 'snippets/**'],
+  // Repo docs are not pages
+  srcExclude: ['AGENTS.md'],
   head: [
     [
       'link',
