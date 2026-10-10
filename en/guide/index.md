@@ -17,6 +17,8 @@ The guide pages for each area are being written ([Laratypes/Laratype#211](https:
 | [Responses](./responses) and [exceptions](./exceptions) | `@laratype/http` | Planned |
 | [Authentication](./authentication), [authorization](./authorization) and the [OAuth2 server](./oauth2) | `@laratype/auth` | Planned |
 | [Frontend client](./client) | `@laratype/client` | Planned |
+| [Views](./views) | `sauf`, `@laratype/contract` | Planned |
+| [Services](./services): [console commands](./console), [events](./events), [queues](./queues), [scheduling](./scheduling), [mail](./mail), [cache](./cache), [storage](./storage), [localization](./localization), [processes](./processes) and [broadcasting](./broadcasting) | `@laratype/core`, `console`, `log`, `cache`, `storage`, `queue`, `mail`, `i18n`, `schedule`, `broadcast` | Planned |
 | [CLI](./cli), [build and deployment](./build) and [testing](./testing) | `sauf`, `@laratype/testing` | Planned |
 | [Type generation](./type-generation) | `sauf` | Planned |
 | [Database](./database) | `@laratype/database` | Design not decided yet ([#88](https://github.com/Laratypes/Laratype/issues/88)) |

@@ -58,6 +58,24 @@ export default defineAdditionalConfig({
           base: '/vi/guide/',
           items: [
             { text: 'Client', link: 'client' },
+            { text: 'View', link: 'views' },
+          ]
+        },
+        {
+          text: 'Service',
+          base: '/vi/guide/',
+          items: [
+            { text: 'Tổng quan', link: 'services' },
+            { text: 'Console command', link: 'console' },
+            { text: 'Event', link: 'events' },
+            { text: 'Queue', link: 'queues' },
+            { text: 'Lập lịch tác vụ', link: 'scheduling' },
+            { text: 'Mail', link: 'mail' },
+            { text: 'Cache', link: 'cache' },
+            { text: 'Storage', link: 'storage' },
+            { text: 'Đa ngôn ngữ', link: 'localization' },
+            { text: 'Process', link: 'processes' },
+            { text: 'Broadcasting', link: 'broadcasting' },
           ]
         },
         {

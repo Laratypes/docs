@@ -80,6 +80,24 @@ export default defineConfig({
           base: '/guide/',
           items: [
             { text: 'Client', link: 'client' },
+            { text: 'Views', link: 'views' },
+          ]
+        },
+        {
+          text: 'Services',
+          base: '/guide/',
+          items: [
+            { text: 'Overview', link: 'services' },
+            { text: 'Console Commands', link: 'console' },
+            { text: 'Events', link: 'events' },
+            { text: 'Queues', link: 'queues' },
+            { text: 'Task Scheduling', link: 'scheduling' },
+            { text: 'Mail', link: 'mail' },
+            { text: 'Cache', link: 'cache' },
+            { text: 'Storage', link: 'storage' },
+            { text: 'Localization', link: 'localization' },
+            { text: 'Processes', link: 'processes' },
+            { text: 'Broadcasting', link: 'broadcasting' },
           ]
         },
         {

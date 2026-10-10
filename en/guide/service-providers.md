@@ -70,7 +70,7 @@ export const BillingModule = defineModule({
 - `routes` lists route groups, the values built with `Route.prefix(...).group(...)`.
 - `imports` lists other modules.
 
-How a module reaches the kernel is not settled yet: it may be discovered from `app/modules/` by the build manifest, or registered explicitly.
+Modules sit in the optional `app/modules/` folder (see [Your first endpoint › Project structure](./first-endpoint#project-structure)). How a module is registered with the kernel is not specified yet.
 
 ::: info Illustrative example
 `defineModule` comes from the design in [#153](https://github.com/Laratypes/Laratype/issues/153). Its signature is not settled yet.

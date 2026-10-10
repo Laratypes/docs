@@ -41,4 +41,4 @@ Phần này dành cho bên dùng API không viết bằng TypeScript, và cho De
 
 Detective là giao diện devtools cho một app Laratype. Nó sẽ đọc `openapi.json` và route registry, để hiển thị controller, middleware và schema của từng route.
 
-Cùng issue này sửa route manifest, nơi controller hiện đang hiển thị là `null`.
+Cùng issue này báo rằng route manifest hiển thị controller là `null`, và dự kiến sửa lỗi đó. Cả code của manifest đó lẫn giao diện Detective đều không có trong repository Laratype trên `master` hay ở v0.5.4. Chúng nằm ở đâu thì chưa được đặc tả.

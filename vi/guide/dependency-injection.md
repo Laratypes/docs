@@ -147,4 +147,4 @@ Registry route, registry model binding và kết nối database sẽ chuyển t�
 
 ## Inject vào method <Status issue="158" />
 
-Method handler sẽ nhận được service sau tham số context, như `async store(ctx, mailer: Mailer)`, và method `handle()` của job cũng vậy. Constructor injection vẫn là cách chính.
+Method handler sẽ nhận được service sau tham số context, như `async store(ctx, mailer: Mailer)`, và method `handle()` của [job](./queues#job) cũng vậy. Constructor injection vẫn là cách chính.

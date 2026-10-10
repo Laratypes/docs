@@ -34,6 +34,8 @@ database/
 
 At build time the manifest step scans `app/` and imports providers, config, routes, commands, models, migrations and seeders statically ([#125](https://github.com/Laratypes/Laratype/issues/125)). Nothing is discovered from the file system at runtime. See [Build › The build manifest](./build#the-build-manifest).
 
+Three paths named by planned features are not placed in this tree yet: `lang/` for [localization](./localization), `routes/channels.ts` for [broadcasting](./broadcasting) and `public/` for [views](./views).
+
 ## 1. Declare the contract <Status issue="93" pr="204" />
 
 ```ts

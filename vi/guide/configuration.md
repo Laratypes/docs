@@ -10,6 +10,8 @@ Các lời gọi trong trang này lấy từ thiết kế ở [#152](https://git
 
 File config nằm trong `app/config/` và được viết bằng `defineConfig(...)`, mỗi phần một file (ví dụ `app/config/database.ts`). Build manifest tự gom chúng lại, nên bạn không phải giữ danh sách nào.
 
+Các issue đã nêu tên những file sau: `cors.ts` cho [CORS](./routing#cors), `cache.ts` cho [cache](./cache), `filesystems.ts` cho [storage](./storage) và `mail.ts` cho [mail](./mail). Service có driver lấy type cho driver mặc định và tên các driver từ các key config này (xem [Service › Driver manager](./services#driver-manager)).
+
 ## Đọc giá trị config <Status issue="152" />
 
 `config()` đọc giá trị theo đường dẫn dạng chấm, và type được suy ra từ đường dẫn:
@@ -18,7 +20,7 @@ File config nằm trong `app/config/` và được viết bằng `defineConfig(.
 config('database.default')
 ```
 
-Type lấy từ chính các file config. Cách đăng ký type đó (file khai báo sinh tự động hay khối `declare module`) chưa chốt.
+Type lấy từ chính các file config. Cách đăng ký type đó chưa được đặc tả.
 
 ## Validate môi trường <Status issue="152" />
 
