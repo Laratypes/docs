@@ -38,7 +38,7 @@ What comes before `.contract()` applies to all of the contract's endpoints:
 |---|---|
 | `.middleware(...m)` | Middleware, and the context keys they add (see [Middleware](./middleware#typed-middleware)) |
 | `.bind({ key: Model })` | Model binding for a path param (see [Model binding](./model-binding)) |
-| `.can({ endpoint: [ability, param] })` | A policy check per endpoint, planned in [#122](https://github.com/Laratypes/Laratype/issues/122) and covered in the authorization guide |
+| `.can({ endpoint: [ability, param] })` | A policy check per endpoint, planned in [#122](https://github.com/Laratypes/Laratype/issues/122) (see [Authorization › Policies on routes](./authorization#policies-on-routes)) |
 
 `.contract()` then checks the controller against everything the chain provides, at compile time. A handler that asks for `user` on a route without `auth()` does not compile. The checks and their error messages are listed in [Controllers › Route proof](./controllers#route-proof).
 

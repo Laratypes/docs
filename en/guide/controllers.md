@@ -91,7 +91,7 @@ async destroy({ params, user }: Ctx<typeof users.destroy, { params: { user: User
 - The body is typed from the error definition, so `errors.forbidden` needs `{ message }`.
 - `fail` will sit next to `Ctx`, probably in `@laratype/http`. Its package is not settled yet.
 
-The [error catalog](./contracts#errors) lists the built-in errors. How thrown exceptions turn into responses is planned in [#108](https://github.com/Laratypes/Laratype/issues/108) and is covered in the responses guide.
+The [error catalog](./contracts#errors) lists the built-in errors. How thrown exceptions turn into responses is planned in [#108](https://github.com/Laratypes/Laratype/issues/108) and is covered in [Exceptions](./exceptions). The status and body of a successful response are covered in [Responses and resources](./responses).
 
 ## `ControllerOf` <Status issue="105" />
 

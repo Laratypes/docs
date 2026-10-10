@@ -61,6 +61,24 @@ export default defineConfig({
             { text: 'Model Binding', link: 'model-binding' },
             { text: 'Middleware', link: 'middleware' },
             { text: 'Validation', link: 'validation' },
+            { text: 'Responses', link: 'responses' },
+            { text: 'Exceptions', link: 'exceptions' },
+          ]
+        },
+        {
+          text: 'Security',
+          base: '/guide/',
+          items: [
+            { text: 'Authentication', link: 'authentication' },
+            { text: 'Authorization', link: 'authorization' },
+            { text: 'OAuth2 Server', link: 'oauth2' },
+          ]
+        },
+        {
+          text: 'Frontend',
+          base: '/guide/',
+          items: [
+            { text: 'Client', link: 'client' },
           ]
         },
       ],

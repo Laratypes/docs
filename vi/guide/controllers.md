@@ -91,7 +91,7 @@ async destroy({ params, user }: Ctx<typeof users.destroy, { params: { user: User
 - Body có type theo định nghĩa lỗi, nên `errors.forbidden` cần `{ message }`.
 - `fail` sẽ nằm cạnh `Ctx`, nhiều khả năng trong `@laratype/http`. Package của nó chưa chốt.
 
-[Danh mục lỗi](./contracts#loi) liệt kê các lỗi có sẵn. Cách exception được ném ra biến thành response đang lên kế hoạch ở [#108](https://github.com/Laratypes/Laratype/issues/108) và sẽ có trong phần hướng dẫn về response.
+[Danh mục lỗi](./contracts#loi) liệt kê các lỗi có sẵn. Cách exception được ném ra biến thành response đang lên kế hoạch ở [#108](https://github.com/Laratypes/Laratype/issues/108) và được mô tả trong [Exception](./exceptions). Status và body của response thành công được mô tả trong [Response và resource](./responses).
 
 ## `ControllerOf` <Status issue="105" />
 

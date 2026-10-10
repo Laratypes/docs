@@ -14,9 +14,9 @@ Trang hướng dẫn cho từng phần đang được viết ([Laratypes/Laratyp
 | [Dependency injection](./dependency-injection) và [provider](./service-providers) | `@laratype/core`, `@laratype/support` | Lên kế hoạch, code đang review |
 | [Routing](./routing), [controller](./controllers), [model binding](./model-binding) và [middleware](./middleware) | `@laratype/http` | Lên kế hoạch |
 | [Validation](./validation) | `@laratype/validation` | Lên kế hoạch (Standard Schema adapter đang review) |
-| Response và exception | `@laratype/http` | Lên kế hoạch |
-| Xác thực và phân quyền | `@laratype/auth` | Lên kế hoạch |
-| Client frontend | `@laratype/client` | Lên kế hoạch |
+| [Response](./responses) và [exception](./exceptions) | `@laratype/http` | Lên kế hoạch |
+| [Xác thực](./authentication), [phân quyền](./authorization) và [OAuth2 server](./oauth2) | `@laratype/auth` | Lên kế hoạch |
+| [Client frontend](./client) | `@laratype/client` | Lên kế hoạch |
 | Build và CLI | `sauf` | Lên kế hoạch |
 | Sinh type | `sauf` | Lên kế hoạch |
 | Database | `@laratype/database` | Chưa chốt thiết kế ([#88](https://github.com/Laratypes/Laratype/issues/88)) |

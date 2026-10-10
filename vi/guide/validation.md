@@ -64,6 +64,6 @@ export default class StoreUserRequest extends FormRequest<typeof users.store> {
 }
 ```
 
-`authorize()` chạy sau guard và policy của route, và trước validation. Message sẽ dịch được qua `@laratype/i18n` ([#167](https://github.com/Laratypes/Laratype/issues/167)).
+`authorize()` chạy sau guard và policy của route, và trước validation. Việc kiểm tra policy được mô tả trong [Phân quyền](./authorization). Message sẽ dịch được qua `@laratype/i18n` ([#167](https://github.com/Laratypes/Laratype/issues/167)).
 
 Ở v0.5.4, class request (`sauf make:request`) trả về schema zod từ `rules()` và không có `authorize()` hay `messages()`. FormRequest v2 lấy rule từ contract.
