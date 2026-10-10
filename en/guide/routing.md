@@ -26,7 +26,7 @@ export const api = Route.prefix('/api').group((r) => [
 ])
 ```
 
-The build manifest imports route files statically, so there is nothing to register by hand ([#125](https://github.com/Laratypes/Laratype/issues/125)).
+The build manifest imports route files statically, so there is nothing to register by hand ([#125](https://github.com/Laratypes/Laratype/issues/125), see [Build › The build manifest](./build#the-build-manifest)).
 
 ## Registering a contract <Status issue="104" />
 
@@ -48,8 +48,8 @@ The chain shown here follows the S1 spike. Its exact order is not settled yet ([
 
 Every registered route becomes an entry in the route registry, with its name (`users.show`), method, path, endpoint definition, controller and middleware.
 
-- `sauf route:list` prints the registry.
-- OpenAPI generation ([#143](https://github.com/Laratypes/Laratype/issues/143)) and Detective ([#144](https://github.com/Laratypes/Laratype/issues/144)) read it too.
+- `sauf route:list` prints the registry (see [The sauf CLI](./cli)).
+- [OpenAPI generation](./type-generation#openapi) ([#143](https://github.com/Laratypes/Laratype/issues/143)) and [Detective](./type-generation#detective) ([#144](https://github.com/Laratypes/Laratype/issues/144)) read it too.
 - The registry is a container service, `RouteRegistry` ([#114](https://github.com/Laratypes/Laratype/issues/114)), instead of the 0.5 global `__laratype_routes`.
 
 ## Ad-hoc routes <Status issue="139" />

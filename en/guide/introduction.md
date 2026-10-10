@@ -2,7 +2,7 @@
 
 Laratype v1 keeps the parts of Laravel that make an API pleasant to write: route files, FormRequest, Resources, Policies, facades and the `sauf make:*` generators. It adds a dependency injection container and an explicit request pipeline, and it carries types from the contract all the way to the frontend client.
 
-v1 is a clean break from 0.5. Code written for 0.5.4 needs changes to run on v1, and the migration guide is tracked in [#154](https://github.com/Laratypes/Laratype/issues/154).
+v1 is a clean break from 0.5. Code written for 0.5.4 needs changes to run on v1, and the migration guide is tracked in [#154](https://github.com/Laratypes/Laratype/issues/154). [Upgrading from 0.5](./upgrade) lists what will change.
 
 Each section in this guide carries a badge. <Status available /> means the code is on Laratype's `master` branch. <Status issue="83" /> means the design is decided but the code has not landed; the badge links to the issue, and to the pull request when one is open. Examples in planned sections are illustrative.
 
@@ -37,7 +37,7 @@ To see the pieces together, follow [Your first endpoint](./first-endpoint).
 - **`verbatimModuleSyntax: true`.** Use `import type` for anything imported only as a type. An interface imported as a value breaks dependency injection, and the error looks different in Node, `vite build` and `sauf dev`. The TypeScript error TS1484 is the only check that catches it the same way everywhere.
 - **A Standard Schema library**, such as zod 3.25 or later, valibot or arktype. With zod, write `import * as z from "zod"`. The named import `import { z }` defeats tree-shaking in zod 4 and makes the frontend bundle about three times larger.
 - **Zod 4 coercion in contracts** needs the type argument: `z.coerce.number<number>()`. Plain `z.coerce.number()` has the input type `unknown`, which makes the client's query types `unknown` too.
-- **Runtimes:** Node, Bun and Vercel. Other edge platforms come later ([#156](https://github.com/Laratypes/Laratype/issues/156)).
+- **Runtimes:** Node, Bun and Vercel. Other edge platforms come later ([#156](https://github.com/Laratypes/Laratype/issues/156), see [Build › Edge runtimes](./build#edge-runtimes)).
 
 ## Installation <Status issue="190" />
 

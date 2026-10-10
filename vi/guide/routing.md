@@ -26,7 +26,7 @@ export const api = Route.prefix('/api').group((r) => [
 ])
 ```
 
-Manifest lúc build import tĩnh các file route, nên không cần đăng ký gì bằng tay ([#125](https://github.com/Laratypes/Laratype/issues/125)).
+Manifest lúc build import tĩnh các file route, nên không cần đăng ký gì bằng tay ([#125](https://github.com/Laratypes/Laratype/issues/125), xem [Build › Manifest lúc build](./build#manifest-luc-build)).
 
 ## Đăng ký contract <Status issue="104" />
 
@@ -48,8 +48,8 @@ Chuỗi lời gọi ở đây theo spike S1. Thứ tự chính xác của nó ch
 
 Mỗi route đã đăng ký thành một mục trong route registry, gồm tên (`users.show`), method, path, định nghĩa endpoint, controller và middleware.
 
-- `sauf route:list` in registry ra.
-- Bước sinh OpenAPI ([#143](https://github.com/Laratypes/Laratype/issues/143)) và Detective ([#144](https://github.com/Laratypes/Laratype/issues/144)) cũng đọc nó.
+- `sauf route:list` in registry ra (xem [CLI sauf](./cli)).
+- Bước [sinh OpenAPI](./type-generation#openapi) ([#143](https://github.com/Laratypes/Laratype/issues/143)) và [Detective](./type-generation#detective) ([#144](https://github.com/Laratypes/Laratype/issues/144)) cũng đọc nó.
 - Registry là một service trong container, `RouteRegistry` ([#114](https://github.com/Laratypes/Laratype/issues/114)), thay cho biến global `__laratype_routes` của bản 0.5.
 
 ## Route không có contract <Status issue="139" />

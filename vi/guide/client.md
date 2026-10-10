@@ -38,7 +38,7 @@ Client và helper `route()` phía server dự kiến dùng chung một URL build
 
 Giữ `tsconfig` của frontend tách khỏi `tsconfig` của ứng dụng. Config của ứng dụng nạp type JSX của Hono, khiến type của server lọt vào chương trình frontend. Config của frontend dùng `types: []` và thư viện DOM ([#109](https://github.com/Laratypes/Laratype/issues/109)).
 
-Frontend nằm ở repository riêng thì không import được `appApi`. Nó dùng một file do `sauf types:generate` tạo ra ([#133](https://github.com/Laratypes/Laratype/issues/133)), sẽ được mô tả trong hướng dẫn sinh type. Runtime của client và contract dự kiến dưới 5 kB gzip, không tính thư viện schema ([#132](https://github.com/Laratypes/Laratype/issues/132)).
+Frontend nằm ở repository riêng thì không import được `appApi`. Nó dùng một file do `sauf types:generate` tạo ra ([#133](https://github.com/Laratypes/Laratype/issues/133)), xem [Sinh type](./type-generation). Runtime của client và contract dự kiến dưới 5 kB gzip, không tính thư viện schema ([#132](https://github.com/Laratypes/Laratype/issues/132), xem [Build › Target trình duyệt và ngân sách bundle](./build#target-trinh-duyet-va-ngan-sach-bundle)).
 
 ## Result union <Status issue="110" />
 
