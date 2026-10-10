@@ -4,7 +4,7 @@ Laratype v1 keeps the parts of Laravel that make an API pleasant to write: route
 
 v1 is a clean break from 0.5. Code written for 0.5.4 needs changes to run on v1, and the migration guide is tracked in [#154](https://github.com/Laratypes/Laratype/issues/154). [Upgrading from 0.5](./upgrade) lists what will change.
 
-Each section in this guide carries a badge. <Status available /> means the code is on Laratype's `master` branch, and its examples are type-checked there. <Status issue="83" /> means the design is decided but the code has not landed; the badge links to the issue, and to the pull request when one is open. Examples in planned sections are illustrative.
+Each section in this guide carries a badge. <Status available /> means the code is on Laratype's `master` branch. <Status issue="83" /> means the design is decided but the code has not landed; the badge links to the issue, and to the pull request when one is open. Examples in planned sections are illustrative.
 
 ## How a v1 app fits together
 

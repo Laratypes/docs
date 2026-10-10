@@ -117,7 +117,7 @@ The registry walks up the class hierarchy. A class with its own entry uses it. F
 You don't call `__laratype_deps` yourself. The example below includes the call the transform emits for `UserService`, so you can see what it records.
 
 ::: info Illustrative example
-The container, tokens and registry are in review in PRs [#196](https://github.com/Laratypes/Laratype/pull/196) and [#201](https://github.com/Laratypes/Laratype/pull/201). The example is type-checked against those pull requests.
+The container, tokens and registry are in review in PRs [#196](https://github.com/Laratypes/Laratype/pull/196) and [#201](https://github.com/Laratypes/Laratype/pull/201).
 :::
 
 ```ts
@@ -139,7 +139,7 @@ export class UserService {
   constructor(readonly users: UserRepository, readonly mailer: Mailer) {}
 }
 // The DI transform emits this call after the class. You don't write it.
-// Mailer is an interface, so the transform records MAILER only from `@Inject(MAILER)` on `mailer` (see @Inject below).
+// Mailer is an interface, so in app code `mailer` needs `@Inject(MAILER)` (see @Inject below); with it, the transform records `() => MAILER`.
 __laratype_deps(UserService, [() => UserRepository, () => MAILER], { params: ['users', 'mailer'] })
 
 // The container reads the emitted metadata through `depsRegistry`.

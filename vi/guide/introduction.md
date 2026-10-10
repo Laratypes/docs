@@ -4,7 +4,7 @@ Laratype v1 giữ lại những gì làm cho việc viết API bằng Laravel d�
 
 v1 không tương thích ngược với 0.5. Code viết cho 0.5.4 phải sửa mới chạy được trên v1. Hướng dẫn chuyển đổi được theo dõi ở [#154](https://github.com/Laratypes/Laratype/issues/154). Trang [Nâng cấp từ 0.5](./upgrade) liệt kê những gì sẽ thay đổi.
 
-Mỗi mục trong hướng dẫn có một badge. <Status available /> nghĩa là code đã có trên nhánh `master` của Laratype và ví dụ được kiểm tra type trên đó. <Status issue="83" /> nghĩa là thiết kế đã chốt nhưng code chưa merge; badge dẫn tới issue, và tới pull request nếu đang có. Ví dụ trong các mục đang lên kế hoạch chỉ mang tính minh hoạ.
+Mỗi mục trong hướng dẫn có một badge. <Status available /> nghĩa là code đã có trên nhánh `master` của Laratype. <Status issue="83" /> nghĩa là thiết kế đã chốt nhưng code chưa merge; badge dẫn tới issue, và tới pull request nếu đang có. Ví dụ trong các mục đang lên kế hoạch chỉ mang tính minh hoạ.
 
 ## Các phần của một ứng dụng v1
 

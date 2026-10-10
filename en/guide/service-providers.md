@@ -49,7 +49,7 @@ Two limits apply while the work is in review:
 - `RouteAppServiceProvider` still stores routes in a global. They move into the container in [#114](https://github.com/Laratypes/Laratype/issues/114).
 
 ::: info Illustrative example
-ServiceProvider v2 is in review in PR [#202](https://github.com/Laratypes/Laratype/pull/202). The example is type-checked against that pull request.
+ServiceProvider v2 is in review in PR [#202](https://github.com/Laratypes/Laratype/pull/202).
 :::
 
 ```ts
