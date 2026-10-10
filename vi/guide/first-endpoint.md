@@ -91,7 +91,7 @@ Route.prefix('/api').group((r) => [
 ])
 ```
 
-`r.contract()` đăng ký mọi endpoint của contract. Nó cũng kiểm tra controller lúc compile: endpoint nào cũng phải có handler, và mỗi handler nhận được đúng những gì nó yêu cầu từ middleware và binding của route. Các bước kiểm tra và thông báo lỗi nằm trong phần hướng dẫn routing.
+`r.contract()` đăng ký mọi endpoint của contract. Nó cũng kiểm tra controller lúc compile: endpoint nào cũng phải có handler, và mỗi handler nhận được đúng những gì nó yêu cầu từ middleware và binding của route. Các bước kiểm tra và thông báo lỗi có trong [Controller › Kiểm chứng ở route](./controllers#kiem-chung-o-route), còn file route có trong [Routing](./routing).
 
 ## 4. Gọi từ frontend <Status issue="109" />
 

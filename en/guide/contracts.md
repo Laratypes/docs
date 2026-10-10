@@ -137,7 +137,7 @@ A `Date` in a response schema is still typed `Date`, even though JSON delivers a
 
 ## Building URLs <Status issue="162" />
 
-A URL builder is planned. It would build a URL from an endpoint, or from a route name like `users.show`, with typed params and query. The client and a server-side `route()` helper would share it. The signature isn't settled yet.
+A URL builder is planned. It would build a URL from an endpoint, or from a route name like `users.show`, with typed params and query. The client and a server-side `route()` helper would share it. The signature isn't settled yet. See [Routing › Route names and URLs](./routing#route-names-and-urls) for `route()`.
 
 ## Type tests <Status issue="94" />
 

@@ -91,7 +91,7 @@ Route.prefix('/api').group((r) => [
 ])
 ```
 
-`r.contract()` registers every endpoint of the contract. It also checks the controller at compile time: every endpoint needs a handler, and each handler gets what it asks for from the route's middleware and bindings. The checks and their error messages are part of the routing guide.
+`r.contract()` registers every endpoint of the contract. It also checks the controller at compile time: every endpoint needs a handler, and each handler gets what it asks for from the route's middleware and bindings. The checks and their error messages are listed in [Controllers › Route proof](./controllers#route-proof), and the route file in [Routing](./routing).
 
 ## 4. Call it from the frontend <Status issue="109" />
 

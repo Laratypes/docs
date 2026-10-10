@@ -52,6 +52,17 @@ export default defineConfig({
             { text: 'Configuration', link: 'configuration' },
           ]
         },
+        {
+          text: 'HTTP',
+          base: '/guide/',
+          items: [
+            { text: 'Routing', link: 'routing' },
+            { text: 'Controllers', link: 'controllers' },
+            { text: 'Model Binding', link: 'model-binding' },
+            { text: 'Middleware', link: 'middleware' },
+            { text: 'Validation', link: 'validation' },
+          ]
+        },
       ],
       '/v0.5/getting-started/': [
         {

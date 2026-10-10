@@ -137,7 +137,7 @@ Hai hàm đọc API object:
 
 ## Tạo URL <Status issue="162" />
 
-Một hàm tạo URL đang được lên kế hoạch. Nó sẽ tạo URL từ một endpoint, hoặc từ tên route như `users.show`, với param và query có type. Client và hàm `route()` phía server sẽ dùng chung hàm này. Chữ ký hàm chưa chốt.
+Một hàm tạo URL đang được lên kế hoạch. Nó sẽ tạo URL từ một endpoint, hoặc từ tên route như `users.show`, với param và query có type. Client và hàm `route()` phía server sẽ dùng chung hàm này. Chữ ký hàm chưa chốt. Xem [Routing › Tên route và URL](./routing#ten-route-va-url) để biết về `route()`.
 
 ## Test type <Status issue="94" />
 
