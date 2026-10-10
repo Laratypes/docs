@@ -114,13 +114,54 @@ const app = new Container({ deps: depsRegistry })
 
 The registry walks up the class hierarchy. A class with its own entry uses it. For third-party classes compiled with decorator metadata, it falls back to `design:paramtypes` when `reflect-metadata` is loaded. A class with neither inherits its nearest ancestor's entry.
 
-You don't call `__laratype_deps` yourself. The example below calls it by hand only because the transform isn't part of the example's compile step.
+You don't call `__laratype_deps` yourself. The example below includes the call the transform emits for `UserService`, so you can see what it records.
 
 ::: info Illustrative example
 The container, tokens and registry are in review in PRs [#196](https://github.com/Laratypes/Laratype/pull/196) and [#201](https://github.com/Laratypes/Laratype/pull/201). The example is type-checked against those pull requests.
 :::
 
-<<< @/snippets/v1/di/proposed/container.ts
+```ts
+import { __laratype_deps, Container, DiError, depsRegistry, token } from '@laratype/core'
+
+// Interfaces have no runtime value: bind them through a typed token.
+export interface Mailer { send(to: string, body: string): Promise<void> }
+export const MAILER = token<Mailer>('mailer')
+
+export class SmtpMailer implements Mailer {
+  async send(_to: string, _body: string) {}
+}
+
+export class UserRepository {
+  find(id: number) { return { id } }
+}
+
+export class UserService {
+  constructor(readonly users: UserRepository, readonly mailer: Mailer) {}
+}
+// The DI transform emits this call after the class. You don't write it.
+// Mailer is an interface, so the transform records MAILER only from `@Inject(MAILER)` on `mailer` (see @Inject below).
+__laratype_deps(UserService, [() => UserRepository, () => MAILER], { params: ['users', 'mailer'] })
+
+// The container reads the emitted metadata through `depsRegistry`.
+export const app = new Container({ deps: depsRegistry })
+app.singleton(MAILER, () => new SmtpMailer())
+
+const service = app.make(UserService) // UserService; UserRepository is autowired (no binding needed)
+const mailer = app.make(MAILER) // Mailer
+
+// Child containers shadow bindings without touching the parent (tests, per-request overrides).
+export const testApp = app.createChild()
+testApp.instance(MAILER, { send: async () => {} })
+
+export function missingBinding() {
+  try {
+    new Container({ deps: depsRegistry }).make(UserService)
+  } catch (e) {
+    // DiError: No binding for InjectionToken(mailer).
+    return e instanceof DiError ? e.message : String(e)
+  }
+}
+```
 
 ## @Inject and @Injectable <Status issue="98" />
 
