@@ -1,6 +1,6 @@
 import { defineConfig, UserConfig } from 'vitepress'
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
-import { isNextPage, versionNav } from './versions'
+import { versionNav } from './versions'
 
 // https://vitepress.dev/reference/site-config
 
@@ -13,12 +13,6 @@ export default defineConfig({
   },
   // Repo docs and synced code snippets are not pages
   srcExclude: ['AGENTS.md', 'snippets/**'],
-  // v1 "next" pages stay out of search engines and the Algolia crawler (#210)
-  transformHead({ pageData }) {
-    if (isNextPage(pageData.relativePath)) {
-      return [['meta', { name: 'robots', content: 'noindex' }]]
-    }
-  },
   head: [
     [
       'link',
@@ -37,14 +31,14 @@ export default defineConfig({
     },
     logo: '/assets/logo.png',
     sidebar: {
-      // v1 "next" section (#210). DOC6 (#211) adds groups as pages land.
-      '/next/': [
-        { text: 'Overview', link: '/next/' },
+      // v1 guide (#210). DOC6 (#211) adds groups as pages land.
+      '/guide/': [
+        { text: 'Overview', link: '/guide/' },
       ],
-      '/getting-started/': [
+      '/v0.5/getting-started/': [
         {
           text: 'Introduction',
-          base: '/getting-started/introduction/',
+          base: '/v0.5/getting-started/introduction/',
           items: [
             { text: 'Quick Start', link: 'quick-start' },
             { text: 'Project Structure', link: 'project-structure' }
@@ -55,7 +49,7 @@ export default defineConfig({
           items: [
             {
               text: 'Http',
-              base: '/getting-started/essentials/http/',
+              base: '/v0.5/getting-started/essentials/http/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -67,7 +61,7 @@ export default defineConfig({
             },
             {
               text: 'Security',
-              base: '/getting-started/essentials/security/',
+              base: '/v0.5/getting-started/essentials/security/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -77,7 +71,7 @@ export default defineConfig({
             },
             {
               text: 'Database',
-              base: '/getting-started/essentials/database/',
+              base: '/v0.5/getting-started/essentials/database/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -88,7 +82,7 @@ export default defineConfig({
             },
             {
               text: 'Console',
-              base: '/getting-started/essentials/console/',
+              base: '/v0.5/getting-started/essentials/console/',
               collapsed: true,
               items: [
                 { text: 'Commands', link: 'commands' },
@@ -96,7 +90,7 @@ export default defineConfig({
             },
             {
               text: 'Other',
-              base: '/getting-started/essentials/other/',
+              base: '/v0.5/getting-started/essentials/other/',
               collapsed: true,
               items: [
                 { text: 'Service Providers', link: 'providers' },
@@ -106,7 +100,7 @@ export default defineConfig({
         },
         {
           text: 'Sauf',
-          base: '/getting-started/sauf/',
+          base: '/v0.5/getting-started/sauf/',
           items: [
             { text: 'Introduction', link: 'introduction' },
             { text: 'Core Commands', link: 'core' },
@@ -115,7 +109,7 @@ export default defineConfig({
         },
         {
           text: 'Deployment',
-          base: '/getting-started/deployment/',
+          base: '/v0.5/getting-started/deployment/',
           items: [
             { text: 'Building the application', link: 'build' },
             { text: 'Using Docker', link: 'docker' },
@@ -123,18 +117,18 @@ export default defineConfig({
           ]
         }
       ],
-      '/api/': [
+      '/v0.5/api/': [
         {
           text: 'Overview',
-          link: '/api/introduction',
+          link: '/v0.5/api/introduction',
         },
         {
           text: 'API Reference',
-          base: '/api/api-reference',
+          base: '/v0.5/api/api-reference',
           items: [
             {
               text: '@laratype/http',
-              base: '/api/api-reference/http/',
+              base: '/v0.5/api/api-reference/http/',
               collapsed: true,
               items: [
                 { text: 'Introduction', link: 'introduction' },
@@ -163,8 +157,7 @@ export default defineConfig({
     },
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Getting Started', link: '/getting-started/introduction/quick-start' },
-      { text: 'API', link: '/api/introduction' },
+      { text: 'Guide', link: '/guide/' },
       versionNav('en'),
     ]
   },
