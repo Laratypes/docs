@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "Laratype"
   text: "REST API có type, bắt đầu từ contract"
-  tagline: Cách viết quen thuộc của Laravel, thêm DI container và type đi suốt từ route tới client frontend.
+  tagline: Cách viết quen thuộc của Laravel, thêm DI container và type đi suốt từ contract tới client frontend.
   image:
     src: /assets/logo.png
     alt: Laratype Logo

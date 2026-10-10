@@ -35,6 +35,7 @@ Guidance for AI agents and contributors working on laratype.dev, the VitePress d
 - **0.5.4 is an archive** at `en/v0.5/**` (`/v0.5/`) and `vi/v0.5/**` (`/vi/v0.5/`). It documents the current npm release. Its internal links use `/v0.5/` and `/vi/v0.5/` paths.
 - A route-based banner on every page (`VersionBanner.vue`) points v1 readers to the archive and archive readers back to v1. The version dropdown has two entries: v1 (in development) → `/` and v0.5.4 → `/v0.5/`.
 - Both versions are indexed by search.
+- Never put v1 pages under `/getting-started/`, `/api/`, `/vi/getting-started/`, `/vi/api/` or `/en/`. `vercel.json` permanently redirects those paths to the 0.5.4 archive, so such a page would be unreachable in production.
 
 ## Branches and PRs
 

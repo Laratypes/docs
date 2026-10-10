@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "Laratype"
   text: "Type-safe REST APIs, contract first"
-  tagline: Laravel's ergonomics with a DI container and types carried from the route to the frontend client.
+  tagline: Laravel's ergonomics with a DI container and types carried from the contract to the frontend client.
   image:
     src: /assets/logo.png
     alt: Laratype Logo

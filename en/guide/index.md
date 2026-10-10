@@ -1,6 +1,6 @@
 # Laratype v1
 
-Laratype v1 is a redesign of the framework. You declare each endpoint once, as a contract, and that object drives validation, the handler's types, the typed frontend client and OpenAPI. Classes get their dependencies through constructor injection, and decorators are optional. Route files, FormRequest, Resources, Policies, facades and `sauf make:*` stay from 0.5.
+Laratype v1 is a redesign of the framework. You declare each endpoint once, as a contract, and that object drives validation, the handler's types, the typed frontend client and OpenAPI. Classes get their dependencies through constructor injection, and decorators are optional. v1 keeps Laravel's ergonomics: route files, FormRequest, Resources, Policies, facades and `sauf make:*`.
 
 v1 is not on npm yet. To build an application today, use the [0.5.4 docs](/v0.5/).
 
