@@ -31,7 +31,7 @@ $ bunx sauf dev
 ## Build Application
 
 - `build`: đóng gói bản build cho production: chép file `cli.js` và `index.js` vào `dist/` và sửa alias đường dẫn theo tsconfig. Lệnh này không biên dịch TypeScript, nên phải chạy sau `tsc -b ./tsconfig.build.json` (script `build` của dự án làm cả hai bước, xem [Build Deployment](../deployment/build.md)).
-  - `-p, --platform <platform>`: nền tảng đích, ví dụ node hoặc deno.
+  - `-p, --platform <platform>`: nền tảng đích, mặc định `node`. Hiện chỉ hỗ trợ `node`; giá trị khác sẽ báo lỗi "not supported yet".
 
 ::: code-group
 

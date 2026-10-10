@@ -31,7 +31,7 @@ $ bunx sauf dev
 ## Build Application
 
 - `build`: Package the build for production: copies the `cli.js` and `index.js` entry files into `dist/` and rewrites tsconfig path aliases. It does not compile TypeScript, so run it after `tsc -b ./tsconfig.build.json` (the project's `build` script does both, see [Build Deployment](../deployment/build.md)).
-  - `-p, --platform <platform>`: Specify the build platform (e.g., node, deno).
+  - `-p, --platform <platform>`: Target platform, default `node`. Only `node` is supported for now; any other value throws "not supported yet".
 
 ::: code-group
 
