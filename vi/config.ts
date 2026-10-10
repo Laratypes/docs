@@ -1,20 +1,25 @@
 import { defineAdditionalConfig } from "vitepress";
+import { versionNav } from "../.vitepress/versions";
 
 export default defineAdditionalConfig({
   themeConfig: {
     nav: [
-      { text: 'Home', link: '/' },
+      { text: 'Home', link: '/vi/' },
       { text: 'Getting Started', link: '/vi/getting-started/introduction/quick-start' },
       { text: 'API', link: '/vi/api/introduction' },
-      { text: 'v0.5.4', link: 'https://github.com/Laratypes/Laratype' },
+      versionNav('vi'),
     ],
     sidebar: {
+      // v1 "next" section (#210). DOC6 (#211) adds groups as pages land.
+      '/vi/next/': [
+        { text: 'Tổng quan', link: '/vi/next/' },
+      ],
       '/vi/getting-started/': [
         {
           text: 'Introduction',
           base: '/vi/getting-started/introduction/',
           items: [
-            { text: 'Quicks Start', link: 'quick-start' },
+            { text: 'Quick Start', link: 'quick-start' },
             { text: 'Project Structure', link: 'project-structure' }
           ]
         },
@@ -101,43 +106,6 @@ export default defineAdditionalConfig({
           base: '/vi/api/api-reference',
           items: [
             {
-              text: '@laratype/auth (coming soon)',
-              base: '/vi/api/api-reference/auth/',
-              collapsed: true,
-              items: [
-                { text: 'Introduction', link: 'introduction' },
-                { text: 'Getting Started', link: 'getting-started' },
-                { text: 'Configuration', link: 'configuration' },
-                { text: 'Authentication', link: 'authentication' },
-                { text: 'Authorization', link: 'authorization' },
-                { text: 'Password Hashing', link: 'password-hashing' },
-                { text: 'Password Reset', link: 'password-reset' },
-              ]
-            },
-            {
-              text: '@laratype/console (coming soon)',
-              base: '/vi/api/api-reference/console/',
-              collapsed: true,
-              items: [
-                { text: 'Introduction', link: 'introduction' },
-                { text: 'Getting Started', link: 'getting-started' },
-              ]
-            },
-            {
-              text: '@laratype/database (coming soon)',
-              base: '/vi/api/api-reference/database/',
-              collapsed: true,
-              items: [
-                { text: 'Introduction', link: 'introduction' },
-                { text: 'Getting Started', link: 'getting-started' },
-                { text: 'Configuration', link: 'configuration' },
-                { text: 'Query Builder', link: 'query-builder' },
-                { text: 'Eloquent ORM', link: 'eloquent' },
-                { text: 'Migrations', link: 'migrations' },
-                { text: 'Seeding', link: 'seeding' },
-              ]
-            },
-            {
               text: '@laratype/http',
               base: '/vi/api/api-reference/http/',
               collapsed: true,
@@ -148,26 +116,6 @@ export default defineAdditionalConfig({
                 { text: 'Request', link: 'request' },
                 { text: 'Response', link: 'response' },
                 { text: 'Controllers', link: 'controllers' },
-              ]
-            },
-            {
-              text: '@laratype/log (coming soon)',
-              base: '/vi/api/api-reference/log/',
-              collapsed: true,
-              items: [
-                { text: 'Introduction', link: 'introduction' },
-                { text: 'Getting Started', link: 'getting-started' },
-                { text: 'Configuration', link: 'configuration' },
-                { text: 'Usage', link: 'usage' },
-              ]
-            },
-            {
-              text: '@laratype/support (coming soon)',
-              base: '/vi/api/api-reference/support/',
-              collapsed: true,
-              items: [
-                { text: 'Introduction', link: 'introduction' },
-                { text: 'Helpers', link: 'helpers' },
               ]
             },
           ]

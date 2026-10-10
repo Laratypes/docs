@@ -1,5 +1,6 @@
 import { defineConfig, UserConfig } from 'vitepress'
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
+import { isNextPage, versionNav } from './versions'
 
 // https://vitepress.dev/reference/site-config
 
@@ -9,6 +10,14 @@ export default defineConfig({
   description: "A Laratype document site",
   rewrites: {
     'en/:rest*': ':rest*'
+  },
+  // Repo docs and synced code snippets are not pages
+  srcExclude: ['AGENTS.md', 'snippets/**'],
+  // v1 "next" pages stay out of search engines and the Algolia crawler (#210)
+  transformHead({ pageData }) {
+    if (isNextPage(pageData.relativePath)) {
+      return [['meta', { name: 'robots', content: 'noindex' }]]
+    }
   },
   head: [
     [
@@ -28,18 +37,21 @@ export default defineConfig({
     },
     logo: '/assets/logo.png',
     sidebar: {
+      // v1 "next" section (#210). DOC6 (#211) adds groups as pages land.
+      '/next/': [
+        { text: 'Overview', link: '/next/' },
+      ],
       '/getting-started/': [
         {
           text: 'Introduction',
           base: '/getting-started/introduction/',
           items: [
-            { text: 'Quicks Start', link: 'quick-start' },
+            { text: 'Quick Start', link: 'quick-start' },
             { text: 'Project Structure', link: 'project-structure' }
           ]
         },
         {
           text: 'Essentials',
-          base: '/essentials/',
           items: [
             {
               text: 'Http',
@@ -121,43 +133,6 @@ export default defineConfig({
           base: '/api/api-reference',
           items: [
             {
-              text: '@laratype/auth (coming soon)',
-              base: '/auth/',
-              collapsed: true,
-              items: [
-                { text: 'Introduction', link: 'introduction' },
-                { text: 'Getting Started', link: 'getting-started' },
-                { text: 'Configuration', link: 'configuration' },
-                { text: 'Authentication', link: 'authentication' },
-                { text: 'Authorization', link: 'authorization' },
-                { text: 'Password Hashing', link: 'password-hashing' },
-                { text: 'Password Reset', link: 'password-reset' },
-              ]
-            },
-            {
-              text: '@laratype/console (coming soon)',
-              base: '/console/',
-              collapsed: true,
-              items: [
-                { text: 'Introduction', link: 'introduction' },
-                { text: 'Getting Started', link: 'getting-started' },
-              ]
-            },
-            {
-              text: '@laratype/database (coming soon)',
-              base: '/database/',
-              collapsed: true,
-              items: [
-                { text: 'Introduction', link: 'introduction' },
-                { text: 'Getting Started', link: 'getting-started' },
-                { text: 'Configuration', link: 'configuration' },
-                { text: 'Query Builder', link: 'query-builder' },
-                { text: 'Eloquent ORM', link: 'eloquent' },
-                { text: 'Migrations', link: 'migrations' },
-                { text: 'Seeding', link: 'seeding' },
-              ]
-            },
-            {
               text: '@laratype/http',
               base: '/api/api-reference/http/',
               collapsed: true,
@@ -168,26 +143,6 @@ export default defineConfig({
                 { text: 'Request', link: 'request' },
                 { text: 'Response', link: 'response' },
                 { text: 'Controllers', link: 'controllers' },
-              ]
-            },
-            {
-              text: '@laratype/log (coming soon)',
-              base: '/log/',
-              collapsed: true,
-              items: [
-                { text: 'Introduction', link: 'introduction' },
-                { text: 'Getting Started', link: 'getting-started' },
-                { text: 'Configuration', link: 'configuration' },
-                { text: 'Usage', link: 'usage' },
-              ]
-            },
-            {
-              text: '@laratype/support (coming soon)',
-              base: '/support/',
-              collapsed: true,
-              items: [
-                { text: 'Introduction', link: 'introduction' },
-                { text: 'Helpers', link: 'helpers' },
               ]
             },
           ]
@@ -210,7 +165,7 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Getting Started', link: '/getting-started/introduction/quick-start' },
       { text: 'API', link: '/api/introduction' },
-      { text: 'v0.5.4', link: 'https://github.com/Laratypes/Laratype' },
+      versionNav('en'),
     ]
   },
   locales: {

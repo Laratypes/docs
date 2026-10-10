@@ -2,6 +2,7 @@
 import DefaultTheme from 'vitepress/theme'
 import { useData, inBrowser } from 'vitepress'
 import { watchEffect } from 'vue'
+import UnreleasedBanner from './components/UnreleasedBanner.vue'
 
 const { lang } = useData()
 watchEffect(() => {
@@ -12,5 +13,9 @@ watchEffect(() => {
 </script>
 
 <template>
-  <DefaultTheme.Layout />
+  <DefaultTheme.Layout>
+    <template #layout-top>
+      <UnreleasedBanner />
+    </template>
+  </DefaultTheme.Layout>
 </template>
