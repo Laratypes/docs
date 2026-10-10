@@ -26,7 +26,7 @@ A handler is a class method. Its first parameter is the request context, annotat
 
 ```ts
 // app/http/controllers/UserController.ts
-import { type Ctx, type ControllerOf } from '@laratype/http'
+import { type Ctx, type ControllerOf } from '@laratype/http' // package per #105, not final
 import { users } from '../../contracts/users'
 
 export class UserController implements ControllerOf<typeof users> {
@@ -77,7 +77,7 @@ The status comes from the contract: `store` answers `201` because its response i
 To answer with an error, the handler returns `fail(errorDef, body)`:
 
 ```ts
-import { type Ctx, fail } from '@laratype/http'
+import { type Ctx, fail } from '@laratype/http' // package per #105, not final
 import { errors } from '@laratype/contract'
 
 // inside UserController
