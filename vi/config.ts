@@ -4,7 +4,7 @@ import { versionNav } from "../.vitepress/versions";
 export default defineAdditionalConfig({
   themeConfig: {
     nav: [
-      { text: 'Home', link: '/' },
+      { text: 'Home', link: '/vi/' },
       { text: 'Getting Started', link: '/vi/getting-started/introduction/quick-start' },
       { text: 'API', link: '/vi/api/introduction' },
       versionNav('vi'),
