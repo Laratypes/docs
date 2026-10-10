@@ -49,7 +49,7 @@ Trong lúc phần này còn đang review, có hai giới hạn:
 - `RouteAppServiceProvider` vẫn lưu route vào một biến toàn cục. Route sẽ chuyển vào container ở [#114](https://github.com/Laratypes/Laratype/issues/114).
 
 ::: info Ví dụ minh hoạ
-ServiceProvider v2 đang được review trong PR [#202](https://github.com/Laratypes/Laratype/pull/202). Ví dụ được kiểm tra type theo pull request đó.
+ServiceProvider v2 đang được review trong PR [#202](https://github.com/Laratypes/Laratype/pull/202).
 :::
 
 ```ts
