@@ -16,10 +16,7 @@ The container lives in `@laratype/core`, and the build transform in `sauf`. On `
 
 A token is a typed key for a value that has no runtime class, such as an interface, a primitive or a config object:
 
-```ts
-export interface Mailer { send(to: string, body: string): Promise<void> }
-export const MAILER = token<Mailer>('mailer')
-```
+<<< @/snippets/v1/di/container.ts#tokens
 
 `container.make(MAILER)` returns a `Mailer`. Tokens are compared by identity, not by name, so two calls to `token('x')` give two different keys. The container doesn't accept plain strings or symbols as keys.
 
@@ -58,6 +55,8 @@ testApp.instance(MAILER, { send: async () => {} })
 
 The container doesn't support async factories.
 
+<<< @/snippets/v1/di/container.ts#the-container
+
 ### Errors
 
 Resolution failures throw a `DiError` with one of these messages:
@@ -72,6 +71,8 @@ Resolution failures throw a `DiError` with one of these messages:
 | `Circular dependency: A -> B -> A` | Two services depend on each other. |
 
 Messages with fix hints are planned in [#100](https://github.com/Laratypes/Laratype/issues/100).
+
+<<< @/snippets/v1/di/container.ts#errors
 
 ## How constructor injection works <Status issue="101" pr="194" />
 
@@ -120,48 +121,7 @@ You don't call `__laratype_deps` yourself. The example below includes the call t
 The container, tokens and registry are in review in PRs [#196](https://github.com/Laratypes/Laratype/pull/196) and [#201](https://github.com/Laratypes/Laratype/pull/201).
 :::
 
-```ts
-import { __laratype_deps, Container, DiError, depsRegistry, token } from '@laratype/core'
-
-// Interfaces have no runtime value: bind them through a typed token.
-export interface Mailer { send(to: string, body: string): Promise<void> }
-export const MAILER = token<Mailer>('mailer')
-
-export class SmtpMailer implements Mailer {
-  async send(_to: string, _body: string) {}
-}
-
-export class UserRepository {
-  find(id: number) { return { id } }
-}
-
-export class UserService {
-  constructor(readonly users: UserRepository, readonly mailer: Mailer) {}
-}
-// The DI transform emits this call after the class. You don't write it.
-// Mailer is an interface, so in app code `mailer` needs `@Inject(MAILER)` (see @Inject below); with it, the transform records `() => MAILER`.
-__laratype_deps(UserService, [() => UserRepository, () => MAILER], { params: ['users', 'mailer'] })
-
-// The container reads the emitted metadata through `depsRegistry`.
-export const app = new Container({ deps: depsRegistry })
-app.singleton(MAILER, () => new SmtpMailer())
-
-const service = app.make(UserService) // UserService; UserRepository is autowired (no binding needed)
-const mailer = app.make(MAILER) // Mailer
-
-// Child containers shadow bindings without touching the parent (tests, per-request overrides).
-export const testApp = app.createChild()
-testApp.instance(MAILER, { send: async () => {} })
-
-export function missingBinding() {
-  try {
-    new Container({ deps: depsRegistry }).make(UserService)
-  } catch (e) {
-    // DiError: No binding for InjectionToken(mailer).
-    return e instanceof DiError ? e.message : String(e)
-  }
-}
-```
+<<< @/snippets/v1/di/container.ts#the-dependency-registry
 
 ## @Inject and @Injectable <Status issue="98" />
 
