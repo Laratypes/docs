@@ -4,17 +4,7 @@ Service providers set up the application. In v1 each provider receives the [cont
 
 ## Writing a provider <Status issue="99" pr="202" />
 
-```ts
-export class ClockServiceProvider extends ServiceProvider {
-  register() {
-    this.app.singleton(CLOCK, () => ({ now: () => new Date() }))
-  }
-
-  boot() {
-    this.app.make(CLOCK).now()
-  }
-}
-```
+<<< @/snippets/v1/di/provider.ts#writing-a-provider
 
 `this.app` is the container, not the Hono app. Boot runs in two phases:
 
@@ -52,33 +42,7 @@ Two limits apply while the work is in review:
 ServiceProvider v2 is in review in PR [#202](https://github.com/Laratypes/Laratype/pull/202).
 :::
 
-```ts
-import { Container, token } from '@laratype/core'
-import { bootProviders, ServiceProvider } from '@laratype/support'
-
-export interface Clock { now(): Date }
-export const CLOCK = token<Clock>('clock')
-
-export class ClockServiceProvider extends ServiceProvider {
-  // register(): bindings only. Every provider registers before any provider boots.
-  register() {
-    this.app.singleton(CLOCK, () => ({ now: () => new Date() }))
-  }
-
-  // boot(): every binding from every provider is available here.
-  boot() {
-    this.app.make(CLOCK).now()
-  }
-}
-
-export async function main() {
-  const app = new Container()
-  // Instantiates each provider with the container, runs all register(), then all boot(), in order.
-  const downs = await bootProviders(app, [ClockServiceProvider])
-  // Cleanups come back in reverse boot order.
-  for (const down of downs) await down()
-}
-```
+<<< @/snippets/v1/di/provider.ts#how-the-application-boots
 
 ## Modules <Status issue="153" />
 
