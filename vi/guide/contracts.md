@@ -2,7 +2,7 @@
 
 Contract mô tả một nhóm endpoint: method và path, schema cho dữ liệu vào và ra, và các lỗi có thể trả về. Contract là một giá trị lúc chạy, nên router, client frontend, bước sinh type và OpenAPI đều đọc cùng một object.
 
-Contract nằm trong `@laratype/contract`. Package này không có dependency lúc chạy và không bao giờ import `node:*` hay code server, nên frontend import trực tiếp được. Schema có thể đến từ bất kỳ thư viện nào hiện thực [Standard Schema](https://standardschema.dev), ví dụ zod 3.25 trở lên, valibot hoặc arktype.
+Contract nằm trong `@laratype/contract`. Package này không có dependency lúc chạy và không bao giờ import `node:*` hay code server, nên frontend import trực tiếp được. Schema có thể đến từ bất kỳ thư viện nào hiện thực [Standard Schema](https://standardschema.dev), ví dụ zod, valibot hoặc arktype; các ví dụ dùng zod 4.
 
 ## Endpoint <Status available />
 
@@ -15,15 +15,15 @@ Một endpoint bắt đầu bằng HTTP method và path, rồi bạn thêm các 
 | `.body(schema)` | Schema của request body |
 | `.headers(schema)` | Schema của request header |
 | `.response(schema, status?)` | Schema của response và status thành công (mặc định `200`) |
-| `.errors(...defs)` | Các lỗi endpoint này có thể trả về |
+| `.throws(...errors)` | Các domain error endpoint này có thể ném |
 
-Builder là bất biến: mỗi lời gọi trả về một endpoint mới và giữ nguyên endpoint cũ. Bạn gọi các phần theo thứ tự nào cũng được. Gọi lại cùng một phần thì giá trị mới thay giá trị cũ, trừ `.errors()` là nối thêm.
+Builder là bất biến: mỗi lời gọi trả về một endpoint mới và giữ nguyên endpoint cũ. Bạn gọi các phần theo thứ tự nào cũng được. Gọi lại cùng một phần thì giá trị mới thay giá trị cũ, trừ `.throws()` là nối thêm.
 
-Status thành công khác `200` giữ nguyên literal type, nên `.response(UserDto, 201)` có type `201`. Middleware và auth không nằm trong endpoint mà thuộc về route.
+Status thành công khác `200` giữ nguyên literal type, nên `.response(UserDto, 201)` có type `201`. Middleware không nằm trong endpoint mà thuộc về route. Auth, authorize và throttle là capability của endpoint, và capability không đặt sẽ được kế thừa từ contract hoặc từ scope của thư mục.
 
 <<< @/snippets/v1/contract/endpoint.ts#endpoints
 
-Thuộc tính `def` chứa mô tả lúc chạy (method, path, schema, status và lỗi) dưới dạng dữ liệu thuần đã bị freeze. Ghi vào nó sẽ ném `TypeError` ở strict mode.
+Thuộc tính `def` chứa mô tả lúc chạy (method, path, schema, status, throws và capability) dưới dạng dữ liệu thuần đã bị freeze. Ghi vào nó sẽ ném `TypeError` ở strict mode.
 
 ## Path param <Status available />
 
@@ -40,18 +40,17 @@ Vì vậy `/users/:user/posts/:post?` cho ra `{ user: string; post?: string }`. 
 
 ## Lỗi <Status available />
 
-`.errors()` liệt kê các response lỗi mà endpoint có thể trả về. Mỗi lỗi gồm status và code, kèm type của body chỉ tồn tại lúc compile. Các lỗi có sẵn:
+Tập lỗi của endpoint được suy ra từ những gì nó khai báo: schema của body, query hoặc header cho 422, path param cho 404, `auth` cho 401, `authorize` cho 403 và `.throttle()` cho 429; `.throws(...)` thêm một domain error. Mỗi lỗi gồm status và code, kèm type của body chỉ tồn tại lúc compile. Các lỗi có sẵn:
 
 | Lỗi | Status | Code | Body |
 |---|---|---|---|
 | `errors.unauthorized` | 401 | `UNAUTHORIZED` | `{ message }` |
 | `errors.forbidden` | 403 | `FORBIDDEN` | `{ message }` |
 | `errors.notFound` | 404 | `NOT_FOUND` | `{ message }` |
-| `errors.conflict` | 409 | `CONFLICT` | `{ message }` |
 | `errors.validation` | 422 | `VALIDATION_ERROR` | `{ message, errors }` |
 | `errors.tooManyRequests` | 429 | `TOO_MANY_REQUESTS` | `{ message }` |
 
-Với các lỗi khác, tự định nghĩa bằng `defineError(status, code)`. Type của body mặc định là `{ message: string }`:
+Với các lỗi khác, tự định nghĩa bằng `defineError(status, code)` và khai báo bằng `.throws()`. Type của body mặc định là `{ message: string }`:
 
 ```ts
 const paymentRequired = defineError<402, { message: string; checkoutUrl: string }>(402, 'PAYMENT_REQUIRED')
@@ -90,33 +89,33 @@ API này đang được review trong PR [#205](https://github.com/Laratypes/Lara
 
 ## Khai báo contract <Status issue="93" pr="204" />
 
-`defineContract(name, endpoints)` gom các endpoint dưới một tên:
+`defineContract<Prefix>()(endpoints, options?)` gom các endpoint theo thư mục chứa chúng (`defineContract()` ở gốc cây), và `defineScope<ScopePrefix>()(options)` đặt capability cho cả một thư mục:
 
 <<< @/snippets/v1/contract/proposed/contracts.ts#defining-a-contract
 
-Mỗi endpoint có một **tên route** dạng `<contract>.<endpoint>`, ở đây là `users.index` và `users.show`. Router, client, bước sinh type và URL theo tên đều dùng các tên này.
+Mỗi endpoint có một **tên route** gồm tree name của contract cộng với key của endpoint, ở đây là `users.index` và `users.show`. Router, client, bước sinh type và URL theo tên đều dùng các tên này.
 
 Các quy tắc:
 
-- Tên contract không được rỗng và không có đoạn rỗng giữa các dấu chấm. Tên có dấu chấm như `admin.users` vẫn hợp lệ.
+- Contract không có tên riêng: tree name của nó là tên các thư mục cộng với tên file, nối bằng `.`; tên không được rỗng, và tên có dấu chấm như `users.posts` vẫn hợp lệ.
 - Key của endpoint không được chứa `.`.
 - Mọi giá trị phải là endpoint.
 
-Vi phạm quy tắc sẽ ném `TypeError` bắt đầu bằng `[@laratype/contract]`, ví dụ `defineContract("users"): endpoint key "a.b" must not contain "."`. Bản thân contract bị freeze và giữ các endpoint theo đúng thứ tự bạn viết.
+Vi phạm quy tắc sẽ ném `TypeError` bắt đầu bằng `[@laratype/contract]`, ví dụ `defineContract: endpoint key "a.b" must be non-empty and must not contain "."`. Bản thân contract bị freeze và giữ các endpoint theo đúng thứ tự bạn viết.
 
 ## API object <Status issue="93" pr="204" />
 
-`app/contracts/index.ts` gom mọi contract bằng `defineApi()` và export type của nó:
+`.laratype/api/index.gen.ts` được `sauf types:generate` sinh ra; nó mount mọi contract bằng `defineApi()` và export type của API:
 
 <<< @/snippets/v1/contract/proposed/contracts.ts#the-api-object
 
 Đây là module server duy nhất mà frontend import. Đừng đưa cho frontend `typeof routes` hay bất cứ thứ gì khác từ server, vì nó sẽ kéo file server vào bước kiểm tra type của frontend.
 
-Mỗi key phải trùng tên contract của nó, nên `appApi.users.show` và tên route `users.show` luôn khớp nhau. Key sai tên là lỗi type, và lúc chạy cũng ném `TypeError` (`defineApi: key "people" must match the contract name "users"`).
+Mỗi key là tree name của contract, nên `appApi.users.posts` và các tên route `users.posts.*` luôn khớp nhau. Entry có `path` không bắt đầu bằng prefix thư mục của contract là lỗi type, và tree name sai định dạng ném `TypeError` lúc chạy (`defineApi: invalid tree name "..."`).
 
 Hai hàm đọc API object:
 
-- `apiRoutes(appApi)` liệt kê mọi cặp `[routeName, endpoint]` theo thứ tự khai báo.
+- `apiRoutes(appApi)` liệt kê mọi route với `name`, `method`, `path`, `endpoint` và capability đã resolve, theo thứ tự khai báo.
 - `apiEndpoint(appApi, 'users.show')` trả về endpoint ứng với một tên route. Tên không tồn tại là lỗi type.
 
 ::: info Ví dụ minh hoạ

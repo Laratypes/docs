@@ -2,7 +2,7 @@
 
 A contract describes a group of endpoints: their methods and paths, the schemas for what comes in and goes out, and the errors they can return. It is a runtime value, so the router, the frontend client, type generation and OpenAPI all read the same object.
 
-Contracts live in `@laratype/contract`. The package has no runtime dependencies and never imports `node:*` or server code, so the frontend can import it directly. Schemas can come from any library that implements [Standard Schema](https://standardschema.dev), such as zod 3.25 or later, valibot or arktype.
+Contracts live in `@laratype/contract`. The package has no runtime dependencies and never imports `node:*` or server code, so the frontend can import it directly. Schemas can come from any library that implements [Standard Schema](https://standardschema.dev), such as zod, valibot or arktype; the examples use zod 4.
 
 ## Endpoints <Status available />
 
@@ -15,15 +15,15 @@ An endpoint starts with an HTTP method and a path, and you add the other parts w
 | `.body(schema)` | The request body schema |
 | `.headers(schema)` | The request headers schema |
 | `.response(schema, status?)` | The response schema and the success status (default `200`) |
-| `.errors(...defs)` | The errors this endpoint can return |
+| `.throws(...errors)` | The domain errors this endpoint can throw |
 
-The builder is immutable: every call returns a new endpoint and leaves the old one as it was. You can call the slots in any order, and calling the same slot again replaces it, except `.errors()`, which appends.
+The builder is immutable: every call returns a new endpoint and leaves the old one as it was. You can call the slots in any order, and calling the same slot again replaces it, except `.throws()`, which appends.
 
-A success status other than `200` keeps its literal type, so `.response(UserDto, 201)` is typed `201`. Middleware and auth are not part of an endpoint; they belong to the route.
+A success status other than `200` keeps its literal type, so `.response(UserDto, 201)` is typed `201`. Middleware is not part of an endpoint; it belongs to the route. Auth, authorize and throttle are endpoint capabilities, and an unset one is inherited from the contract or a folder scope.
 
 <<< @/snippets/v1/contract/endpoint.ts#endpoints
 
-The `def` property holds the runtime description (method, path, schemas, status and errors) as frozen plain data. Writing to it throws a `TypeError` in strict mode.
+The `def` property holds the runtime description (method, path, schemas, status, throws and capabilities) as frozen plain data. Writing to it throws a `TypeError` in strict mode.
 
 ## Path params <Status available />
 
@@ -40,18 +40,17 @@ So `/users/:user/posts/:post?` gives `{ user: string; post?: string }`. Param va
 
 ## Errors <Status available />
 
-`.errors()` lists the error responses an endpoint can return. Each error is a status and a code, with a body type that only exists at compile time. The built-in set:
+The endpoint's error set is derived from what it declares: a body, query or headers schema gives 422, a path param gives 404, `auth` gives 401, `authorize` gives 403 and `.throttle()` gives 429; `.throws(...)` adds a domain error. Each error is a status and a code, with a body type that only exists at compile time. The built-in set:
 
 | Error | Status | Code | Body |
 |---|---|---|---|
 | `errors.unauthorized` | 401 | `UNAUTHORIZED` | `{ message }` |
 | `errors.forbidden` | 403 | `FORBIDDEN` | `{ message }` |
 | `errors.notFound` | 404 | `NOT_FOUND` | `{ message }` |
-| `errors.conflict` | 409 | `CONFLICT` | `{ message }` |
 | `errors.validation` | 422 | `VALIDATION_ERROR` | `{ message, errors }` |
 | `errors.tooManyRequests` | 429 | `TOO_MANY_REQUESTS` | `{ message }` |
 
-For anything else, define your own with `defineError(status, code)`. The body type defaults to `{ message: string }`:
+For anything else, define your own with `defineError(status, code)` and declare it with `.throws()`. The body type defaults to `{ message: string }`:
 
 ```ts
 const paymentRequired = defineError<402, { message: string; checkoutUrl: string }>(402, 'PAYMENT_REQUIRED')
@@ -90,33 +89,33 @@ This API is in review in PR [#205](https://github.com/Laratypes/Laratype/pull/20
 
 ## Defining a contract <Status issue="93" pr="204" />
 
-`defineContract(name, endpoints)` groups endpoints under a name:
+`defineContract<Prefix>()(endpoints, options?)` groups endpoints under the folder they live in (`defineContract()` at the root), and `defineScope<ScopePrefix>()(options)` sets capabilities for a whole folder:
 
 <<< @/snippets/v1/contract/proposed/contracts.ts#defining-a-contract
 
-Each endpoint gets a **route name** of the form `<contract>.<endpoint>`, here `users.index` and `users.show`. The router, the client, type generation and named URLs all use these names.
+Each endpoint gets a **route name**: the contract's tree name plus the endpoint key, here `users.index` and `users.show`. The router, the client, type generation and named URLs all use these names.
 
 The rules:
 
-- The contract name can't be empty or contain empty dot segments. A dotted name like `admin.users` is fine.
+- A contract has no name of its own: its tree name is the folder names plus the file name, joined with `.`; it can't be empty, and a dotted name like `users.posts` is fine.
 - Endpoint keys can't contain `.`.
 - Every value must be an endpoint.
 
-Breaking a rule throws a `TypeError` that starts with `[@laratype/contract]`, for example `defineContract("users"): endpoint key "a.b" must not contain "."`. The contract itself is frozen and keeps its endpoints in the order you wrote them.
+Breaking a rule throws a `TypeError` that starts with `[@laratype/contract]`, for example `defineContract: endpoint key "a.b" must be non-empty and must not contain "."`. The contract itself is frozen and keeps its endpoints in the order you wrote them.
 
 ## The API object <Status issue="93" pr="204" />
 
-`app/contracts/index.ts` collects every contract with `defineApi()` and exports its type:
+`.laratype/api/index.gen.ts` is generated by `sauf types:generate`; it mounts every contract with `defineApi()` and exports the API type:
 
 <<< @/snippets/v1/contract/proposed/contracts.ts#the-api-object
 
 This is the only server module the frontend imports. Don't hand the frontend `typeof routes` or anything else from the server; that pulls server files into the frontend's type-check.
 
-Each key must equal its contract's name, so `appApi.users.show` and the route name `users.show` always agree. A mismatched key is a type error and a runtime `TypeError` (`defineApi: key "people" must match the contract name "users"`).
+Each key is the contract's tree name, so `appApi.users.posts` and the route names `users.posts.*` always agree. An entry whose `path` doesn't start with the contract's folder prefix is a type error, and a malformed tree name is a runtime `TypeError` (`defineApi: invalid tree name "..."`).
 
 Two helpers read the API object:
 
-- `apiRoutes(appApi)` lists every `[routeName, endpoint]` pair, in definition order.
+- `apiRoutes(appApi)` lists every route with its `name`, `method`, `path`, `endpoint` and resolved capabilities, in definition order.
 - `apiEndpoint(appApi, 'users.show')` returns the endpoint behind a route name. An unknown name is a type error.
 
 ::: info Illustrative example
